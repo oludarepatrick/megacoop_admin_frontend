@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
@@ -19,13 +20,19 @@ export const routes = createBrowserRouter([
       </Suspense>
     )
   },
-  { 
-    path: "/access-code", 
-    element: (
-      <Suspense fallback={<PageLoader />}>
-        <AccessCodePage />
-      </Suspense>
-    )
+  {
+    path: "/",
+    element: <AuthProtectedRoute />,
+    children: [
+      {
+        path: "access-code",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <AccessCodePage />
+          </Suspense>
+        )
+      },
+    ]
   },
   {
     path: "/",
