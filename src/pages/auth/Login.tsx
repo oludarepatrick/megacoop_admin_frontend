@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useLogin } from "@/hooks/useLogin"
 import { loginSchema, type LoginFormData } from "@/validations/login-schema"
+import { getErrorMessage } from "@/utils/errorUtils"
 
 const Login = () => {
     const {mutate, isPending, error} = useLogin();
@@ -70,7 +71,7 @@ const Login = () => {
                         </Button>
                         
                     </div>
-                    {error && <p className="text-sm text-red-500 mt-4 text-center">{error?.response?.data?.message || error?.message || 'Login failed. Please try again.'}</p>}
+                    {error && <p className="text-sm text-red-500 mt-4 text-center">{getErrorMessage(error, 'Login failed. Please try again.')}</p>}
                 </form>
 
                 <footer>
