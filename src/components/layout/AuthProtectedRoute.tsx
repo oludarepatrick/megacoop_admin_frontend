@@ -3,7 +3,6 @@ import { Navigate, Outlet } from "react-router-dom"
 import PageLoader from "../PageLoader"
 
 // for standalone layout but still have protected routes
-
 const AuthProtectedRoute = () => {
     const { isAuthenticated, isLoading } = useAuthStore()
 

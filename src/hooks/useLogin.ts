@@ -26,3 +26,18 @@ export const useLogin = () => {
     })
 
 }
+
+export const useLogout = () => {
+    const logoutState = useAuthStore((state) => state.logout);
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: authAPI.logout,
+        onSuccess: () => { 
+            logoutState();
+            navigate("/login");
+        },
+        onError: (error: AppError) => {
+            console.error("Logout failed:", error);
+        }
+    })
+}

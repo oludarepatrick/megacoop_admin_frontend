@@ -23,23 +23,20 @@ export type Admin = {
 }
 
 export type accessCodeResponse = {
-  success: boolean
   message: string
-  data: {
-    access_code: string
-    expires_at: string
-  }
+  code: string
+  expires_in_mins: number
 }
 
 // API Error Types
-export interface ApiErrorResponse {
+export type ApiErrorResponse = {
   success: false
   message: string
   data?: unknown
   errors?: Record<string, string[]>
 }
 
-export interface ApiError extends Error {
+export type ApiError = Error & {
   response?: {
     data: ApiErrorResponse
     status: number
@@ -49,5 +46,4 @@ export interface ApiError extends Error {
   statusText?: string
 }
 
-// Generic error type for handling various error scenarios
 export type AppError = ApiError | Error | { message: string }

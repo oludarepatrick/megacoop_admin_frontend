@@ -9,6 +9,8 @@ import { Switch } from "../ui/switch";
 import { useThemeStore } from "@/store/themeStore";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useAuthStore } from "@/store/authStore";
+import { useLogout } from "@/hooks/useLogin";
+
 // import logo from "/Logo.svg"
 
 type SidebarProps={
@@ -17,7 +19,13 @@ type SidebarProps={
 
 const Sidebar = ({onClose}:SidebarProps) => {
     const admin= useAuthStore((state) => state.admin);
-    const logout= useAuthStore((state) => state.logout);
+    const { mutate} = useLogout();
+
+    // const logout= useAuthStore((state) => state.logout);
+
+    const handleLogout = () => {
+        mutate();
+    }
 
     const {theme, toggleTheme} = useThemeStore()
 
@@ -103,7 +111,7 @@ const Sidebar = ({onClose}:SidebarProps) => {
                     </div>
                             
                     <Button
-                        onClick={logout}
+                        onClick={handleLogout}
                         variant="ghost"
                         className="w-full justify-start text-white hover:bg-white/10 font-jakarta"
                     >
@@ -112,8 +120,6 @@ const Sidebar = ({onClose}:SidebarProps) => {
                     </Button>
                 </div>
             </div>
-
-
         </aside>
     )
 }

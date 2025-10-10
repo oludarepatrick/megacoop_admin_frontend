@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form"
+import { useState } from "react"
 import {zodResolver} from "@hookform/resolvers/zod"
 import { Label } from "@/components/ui/label"
 import elips from "../../assets/elips-bcg.svg"
@@ -22,6 +23,9 @@ const AccessCode = () => {
     const {isSuccessOpen, openSuccessModal, closeSuccessModal} = useSuccessModal();
     const {isErrorOpen, errorMessage, openErrorModal, closeErrorModal} = useErrorModal();
     const navigate = useNavigate();
+    
+    // Separate state to preserve form data for success modal
+    const [successFormData, setSuccessFormData] = useState<accessCodeFormData | null>(null);
 
     const {
         register,
@@ -40,6 +44,8 @@ const AccessCode = () => {
         if(formData){
             mutate(formData, {
                 onSuccess: () => {
+                    // Preserve form data for success modal before closing confirmation modal
+                    setSuccessFormData(formData);
                     closeModal();
                     openSuccessModal();
                 },
@@ -54,6 +60,7 @@ const AccessCode = () => {
 
     const handleSuccessClose = () => {
         closeSuccessModal();
+        setSuccessFormData(null); // Clear the preserved form data
         navigate("/");
     }
 
@@ -69,7 +76,7 @@ const AccessCode = () => {
     return (
         <section className="min-h-screen flex font-poppins relative">
             <div className="flex-1 flex flex-col justify-between gap-6 items-center px-8 pt-10 pb-10 relative z-10">
-                <header className="self-start">
+                <header className="md:self-start">
                     <img src="/Logo.svg" alt="megacoop-logo" className="h-16" />
                 </header>
 
@@ -212,14 +219,14 @@ const AccessCode = () => {
                 />
             )}
 
-            { isSuccessOpen && formData && (
+            {isSuccessOpen && successFormData && (
                 <SuccessModal
                     isOpen={isSuccessOpen}
                     onClose={closeSuccessModal}
                     onConfirm={handleSuccessClose}
-                    formData={formData}
+                    formData={successFormData}
                 />
-            ) }
+            )}
 
             <ErrorModal
                 isOpen={isErrorOpen}
