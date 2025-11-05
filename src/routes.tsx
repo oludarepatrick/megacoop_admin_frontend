@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
+import Transactions from "./pages/Transactions";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
@@ -51,6 +52,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <KYCPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "transactions", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <Transactions />
           </Suspense>
         )
       },
