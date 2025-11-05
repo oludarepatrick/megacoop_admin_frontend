@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import clsx from "clsx";
+import { Toaster } from "../ui/sonner";
 
 const MainLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -33,7 +34,8 @@ const MainLayout = () => {
                 <Header onMenuToggle={toggleSidebar} />
                 <main className="flex-1 p-4 sm:p-6 overflow-y-auto mt-18">
                     <div className="max-w-[1440px] mx-auto">
-                        <Outlet /> 
+                        <Outlet />
+                        <Toaster/>
                     </div>
                 </main>
             </div>

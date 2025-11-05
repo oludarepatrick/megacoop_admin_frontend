@@ -11,5 +11,5 @@ export const authAPI = {
     logout: async (): Promise<void> => {
         const response = await axios.get("/admin/logout")
         return response.data
-    }
+    },
 } 

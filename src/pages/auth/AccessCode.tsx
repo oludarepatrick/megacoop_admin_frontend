@@ -198,7 +198,6 @@ const AccessCode = () => {
                     </p>
                 </footer>
             </div>
-
             <div 
                 className="absolute bottom-0 right-0 w-80 h-80 z-[-1]"
                 style={{

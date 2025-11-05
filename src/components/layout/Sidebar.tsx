@@ -1,9 +1,8 @@
 import clsx from "clsx";
-import { X, ShieldCheck, LogOut, Moon } from "lucide-react";
+import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ArrowRightLeft, CircleDollarSign } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
-import kycIcon from "../../assets/kyc-icon.svg"
 import helpIcon from "../../assets/help-icon.svg"
 import { Switch } from "../ui/switch";
 import { useThemeStore } from "@/store/themeStore";
@@ -30,7 +29,7 @@ const Sidebar = ({onClose}:SidebarProps) => {
     const {theme, toggleTheme} = useThemeStore()
 
     const activeClass= ({isActive}:{isActive: boolean}) =>
-        clsx("flex gap-3 cursor-pointer", {
+        clsx("flex gap-3 cursor-pointer items-center", {
         "text-megagreen bg-main-bg p-3 rounded-lg": isActive,
         "text-white": !isActive,
     });
@@ -60,9 +59,24 @@ const Sidebar = ({onClose}:SidebarProps) => {
                     Dashboard
                 </NavLink>
 
+                <NavLink to="access-code" className={activeClass } onClick={onClose}>
+                    <Key className="w-5 h-5" /> 
+                    Access Code
+                </NavLink>
+
                 <NavLink to="kyc" className={activeClass } onClick={onClose}>
-                    <img src={kycIcon} alt="" aria-hidden="true" className="w-5 h-5" />
+                    <UserRoundCheck className="w-5 h-5" />
                     KYC Verification
+                </NavLink>
+
+                <NavLink to="investment" className={activeClass } onClick={onClose}>
+                    <CircleDollarSign className="w-5 h-5" />
+                    Investment
+                </NavLink>
+
+                <NavLink to="transactions" className={activeClass } onClick={onClose}>
+                    <ArrowRightLeft className="w-5 h-5" />
+                    Transaction
                 </NavLink>
 
                 <hr className="my-6 border-white/20" />
@@ -108,6 +122,7 @@ const Sidebar = ({onClose}:SidebarProps) => {
                                 {admin?.email || "admin@megacoop.com"}
                             </p>
                         </div>
+                        <ChevronDown/>
                     </div>
                             
                     <Button
