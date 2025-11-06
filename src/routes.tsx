@@ -4,6 +4,8 @@ import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 import Transactions from "./pages/Transactions";
+import Investments from "./pages/Investments";
+import LoanPage from "./pages/Loan";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
@@ -60,6 +62,22 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <Transactions />
+          </Suspense>
+        )
+      },
+      {
+        path: "investment", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <Investments />
+          </Suspense>
+        )
+      },
+      {
+        path: "loan", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <LoanPage />
           </Suspense>
         )
       },

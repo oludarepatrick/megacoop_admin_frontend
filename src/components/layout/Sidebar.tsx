@@ -121,7 +121,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
                         <NavLink to="loan" className={activeClass} onClick={onClose} >
                             <UserCog className="w-5 h-5" />
-                            Loan transaction
+                            Loan
                         </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
