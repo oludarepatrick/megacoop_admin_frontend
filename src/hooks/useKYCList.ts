@@ -48,20 +48,3 @@ export const useDeclineKYC = (onSuccess: () => void ) => {
         }
     })
 }
-
-//  return useMutation({
-//     mutationFn: kycApi.approveKYC,
-//     onSuccess: () => {
-//       toast({
-//         title: "✅ KYC Approved",
-//         description: "The user's KYC has been successfully approved.",
-//       });
-//     },
-//     onError: (error: AppError) => {
-//       toast({
-//         variant: "destructive",
-//         title: "❌ Approval Failed",
-//         description: error?.message || "Something went wrong while approving the KYC.",
-//       });
-//     },
-//   });
