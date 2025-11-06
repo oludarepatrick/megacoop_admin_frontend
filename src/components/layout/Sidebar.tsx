@@ -1,5 +1,6 @@
+import { useState } from "react";
 import clsx from "clsx";
-import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ArrowRightLeft, CircleDollarSign } from "lucide-react";
+import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
@@ -9,30 +10,33 @@ import { useThemeStore } from "@/store/themeStore";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useAuthStore } from "@/store/authStore";
 import { useLogout } from "@/hooks/useLogin";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
-// import logo from "/Logo.svg"
-
-type SidebarProps={
+type SidebarProps = {
     onClose: () => void
 }
 
-const Sidebar = ({onClose}:SidebarProps) => {
-    const admin= useAuthStore((state) => state.admin);
-    const { mutate} = useLogout();
+const Sidebar = ({ onClose }: SidebarProps) => {
+    const admin = useAuthStore((state) => state.admin);
+    const { mutate } = useLogout();
+    const [userMgmtOpen, setUserMgmtOpen] = useState(false);
+    const [adminMgmtOpen, setAdminMgmtOpen] = useState(false);
+    const [loanMgmtOpen, setLoanMgmtOpen] = useState(false);
+    const [transactionOpen, setTransactionOpen] = useState(false);
 
-    // const logout= useAuthStore((state) => state.logout);
+    const handleLogout = () => mutate();
 
-    const handleLogout = () => {
-        mutate();
-    }
+    const { theme, toggleTheme } = useThemeStore()
 
-    const {theme, toggleTheme} = useThemeStore()
-
-    const activeClass= ({isActive}:{isActive: boolean}) =>
+    const activeClass = ({ isActive }: { isActive: boolean }) =>
         clsx("flex gap-3 cursor-pointer items-center", {
-        "text-megagreen bg-main-bg p-3 rounded-lg": isActive,
-        "text-white": !isActive,
-    });
+            "text-megagreen bg-main-bg p-3 rounded-lg": isActive,
+            "text-white": !isActive,
+        });
 
     const getInitials = () => {
         if (admin?.first_name && admin?.last_name) {
@@ -46,43 +50,116 @@ const Sidebar = ({onClose}:SidebarProps) => {
 
     return (
         <aside className="w-[306px] h-full bg-megaPrimary text-white pt-28 px-12 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
-            <Button 
-                variant="ghost" 
+            <Button variant="ghost" onClick={onClose}
                 className="hover:bg-transparent lg:hidden absolute top-4 right-10"
-                onClick={onClose}
             >
                 <X className="text-whitebg !w-8 !h-8" />
             </Button>
             <nav className="font-jakarta flex flex-col gap-6">
                 <NavLink to="dashboard" className={activeClass} onClick={onClose}>
-                    <LayoutGrid className="w-5 h-5" /> 
+                    <LayoutGrid className="w-5 h-5" />
                     Dashboard
                 </NavLink>
 
-                <NavLink to="access-code" className={activeClass } onClick={onClose}>
-                    <Key className="w-5 h-5" /> 
-                    Access Code
-                </NavLink>
+                {/* User Management with Collapsible */}
+                <Collapsible open={userMgmtOpen} onOpenChange={setUserMgmtOpen}>
+                    <CollapsibleTrigger asChild>
+                        <div className="flex gap-3 cursor-pointer items-center text-white">
+                            <Users className="w-5 h-5" />
+                            <span className="flex-1">User Mngt.</span>
+                            <ChevronRight className={clsx("w-4 h-4 transition-transform", {
+                                    "rotate-90": userMgmtOpen
+                                })}
+                            />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
+                        <NavLink to="access-code" className={activeClass} onClick={onClose}>
+                            <Key className="w-5 h-5" />
+                            Access Code
+                        </NavLink>
 
-                <NavLink to="kyc" className={activeClass } onClick={onClose}>
-                    <UserRoundCheck className="w-5 h-5" />
-                    KYC Verification
-                </NavLink>
+                        <NavLink to="kyc" className={activeClass} onClick={onClose} >
+                            <UserRoundCheck className="w-5 h-5" />
+                            KYC Verification
+                        </NavLink>
+                    </CollapsibleContent>
+                </Collapsible>
 
-                <NavLink to="investment" className={activeClass } onClick={onClose}>
+                {/* Admin Management with Collapsible */}
+                <Collapsible open={adminMgmtOpen} onOpenChange={setAdminMgmtOpen}>
+                    <CollapsibleTrigger asChild>
+                        <div className="flex gap-3 cursor-pointer items-center text-white">
+                            <UserCog className="w-5 h-5" />
+                            <span className="flex-1">Admin Mngt.</span>
+                            <ChevronRight className={clsx("w-4 h-4 transition-transform", {
+                                    "rotate-90": adminMgmtOpen
+                                })}
+                            />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
+                        <NavLink to="profile" className={activeClass} onClick={onClose} >
+                            <UserCog className="w-5 h-5" />
+                            Profile
+                        </NavLink>
+                    </CollapsibleContent>
+                </Collapsible>
+
+                {/* Loan Management with Collapsible */}
+                <Collapsible open={loanMgmtOpen} onOpenChange={setLoanMgmtOpen}>
+                    <CollapsibleTrigger asChild>
+                        <div className="flex gap-3 cursor-pointer items-center text-white">
+                            <Wallet className="w-5 h-5" />
+                            <span className="flex-1">Loan Mngt.</span>
+                            <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
+                                    "rotate-90": loanMgmtOpen
+                                })}
+                            />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
+                        <NavLink to="loan" className={activeClass} onClick={onClose} >
+                            <UserCog className="w-5 h-5" />
+                            Loan transaction
+                        </NavLink>
+                    </CollapsibleContent>
+                </Collapsible>
+
+                {/* Transaction Management with Collapsible */}
+                <Collapsible open={transactionOpen} onOpenChange={setTransactionOpen}>
+                    <CollapsibleTrigger asChild>
+                        <div className="flex gap-3 cursor-pointer items-center text-white">
+                            <ArrowRightLeft className="w-5 h-5" />
+                            <span className="flex-1">Transation</span>
+                            <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
+                                    "rotate-90": transactionOpen
+                                })}
+                            />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
+                        <NavLink to="transactions" className={activeClass} onClick={onClose}>
+                            <ArrowRightLeft className="w-5 h-5" />
+                            Transaction
+                        </NavLink>
+                        <NavLink to="withdrwal-transaction" className={activeClass} onClick={onClose}>
+                            <ArrowUpRight className="w-5 h-5" />
+                            Withdrawal
+                        </NavLink>
+                    </CollapsibleContent>
+                </Collapsible>
+
+                <NavLink to="investment" className={activeClass} onClick={onClose}>
                     <CircleDollarSign className="w-5 h-5" />
                     Investment
                 </NavLink>
 
-                <NavLink to="transactions" className={activeClass } onClick={onClose}>
-                    <ArrowRightLeft className="w-5 h-5" />
-                    Transaction
-                </NavLink>
 
                 <hr className="my-6 border-white/20" />
-                        
+
                 <div className="flex items-center gap-3 px-3 text-white hover:bg-white/10 rounded-lg cursor-pointer">
-                    <ShieldCheck className="w-5 h-5" /> 
+                    <ShieldCheck className="w-5 h-5" />
                     Security
                 </div>
 
@@ -90,8 +167,8 @@ const Sidebar = ({onClose}:SidebarProps) => {
                     <img src={helpIcon} alt="" aria-hidden="true" className="w-5 h-5" />
                     Help
                 </div>
-                        
-                    <div className="flex items-center justify-between px-3 ">
+
+                <div className="flex items-center justify-between px-3 ">
                     <div className="flex items-center gap-3">
                         <Moon className="w-5 h-5" />
                         Dark Mode
@@ -102,18 +179,16 @@ const Sidebar = ({onClose}:SidebarProps) => {
 
             {/* Admin Profile */}
             <div className="flex items-center justify-between gap-3 pt-30 pb-10 ">
-                  
+
                 <div className="border-white/20 pt-4 pb-6">
                     <div className="flex items-center space-x-3 mb-4 font-jakarta">
                         <Avatar className="w-10 h-10">
                             <AvatarImage src={admin?.avatar || ""} alt="" />
-                            <AvatarFallback className="font-medium">
-                                {getInitials()}
-                            </AvatarFallback>
+                            <AvatarFallback className="font-medium"> {getInitials()} </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium truncate">
-                                {admin?.first_name && admin?.last_name 
+                                {admin?.first_name && admin?.last_name
                                     ? `${admin.first_name}`
                                     : admin?.first_name || "MegaCoop Admin"
                                 }
@@ -122,16 +197,13 @@ const Sidebar = ({onClose}:SidebarProps) => {
                                 {admin?.email || "admin@megacoop.com"}
                             </p>
                         </div>
-                        <ChevronDown/>
+                        <ChevronDown />
                     </div>
-                            
-                    <Button
-                        onClick={handleLogout}
-                        variant="ghost"
+
+                    <Button onClick={handleLogout} variant="ghost"
                         className="w-full justify-start text-white hover:bg-white/10 font-jakarta"
                     >
-                        <LogOut className="w-4 h-4 mr-3" />
-                        Logout
+                        <LogOut className="w-4 h-4 mr-3" /> Logout
                     </Button>
                 </div>
             </div>
@@ -140,4 +212,3 @@ const Sidebar = ({onClose}:SidebarProps) => {
 }
 
 export default Sidebar;
-
