@@ -8,6 +8,7 @@ import Investments from "./pages/Investments";
 import LoanPage from "./pages/Loan";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
+const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
@@ -20,6 +21,14 @@ export const routes = createBrowserRouter([
     element: (
       <Suspense fallback={<PageLoader />}>
         <LoginPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/forgot-password", 
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ForgotPasswordPage />
       </Suspense>
     )
   },
