@@ -26,10 +26,9 @@ const chartData = [
 
 const totalAmount = chartData.reduce((sum, item) => sum + item.amount, 0);
 
-// ✅ compute each slice's percentage dynamically
 const processedData = chartData.map((item) => ({
   ...item,
-  percent: ((item.amount / totalAmount) * 100).toFixed(0), // round to whole number
+  percent: ((item.amount / totalAmount) * 100).toFixed(0), 
 }));
 
 const chartConfig = {
@@ -40,15 +39,16 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const DashboardExpenseStatistic = () => {
+  
   return (
     <Card className="px-4 py-4">
         <CardHeader className="flex justify-between px-2">
             <CardTitle className="text-xl font-semibold">Expense Statistics</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-0">
             <ChartContainer
                 config={chartConfig}
-                className="[&_.recharts-text]:fill-background mx-auto aspect-11/12 min-h-[300px] max-h-[450px] w-full"
+                className="[&_.recharts-text]:fill-background mx-auto aspect-square min-h-[300px] max-h-[450px] w-full"
             >
             <PieChart>
                 <ChartTooltip

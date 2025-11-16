@@ -14,7 +14,6 @@ type KYCModalDetailProps ={
     onClose: () => void
     kycList: KYCList
     status: KYCStatus
-
 }
 
 const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps) => {

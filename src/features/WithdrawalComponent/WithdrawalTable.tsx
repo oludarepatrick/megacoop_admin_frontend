@@ -10,16 +10,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { Transaction } from "@/pages/Transactions";
+import type { Withdrawal } from "@/pages/Withdrawal";
 // import { Link } from "react-router-dom";
 
-type TransactionTableProps = {
-    transactions: Transaction[];
-    onClick: (transaction: Transaction) => void
+type WithdrawalTableProps = {
+    transactions: Withdrawal[];
+    onClick: (transaction: Withdrawal) => void
 }
 
 
-const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
+const WithdrawalTable = ({transactions, onClick}: WithdrawalTableProps) => {
     if(transactions.length === 0) {
         return (
             <div className="flex justify-center items-center py-6 text-muted-foreground">
@@ -32,8 +32,9 @@ const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
         // <section className="">
         <Card className="p-0 px-4 pb-2 border-0 shadow-none ">
             {/* <CardHeader className="flex justify-between px-2">
-                <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
+                <CardTitle className="text-xl font-semibold">Withdrawals</CardTitle>
                 <div className="flex gap-4 items-center">
+                    
                     <Link to="/transactions" className="text-footertext text-sm hover:text-megagreen ">See All</Link>
                 </div>
             </CardHeader> */}
@@ -44,7 +45,7 @@ const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
                                 <TableHead>First Name</TableHead>
                                 <TableHead>Last Name</TableHead>
                                 <TableHead>Email</TableHead>
-                                <TableHead>Phone</TableHead>
+                                <TableHead>Wallet Balance</TableHead>
                                 <TableHead>Amount</TableHead>
                                 <TableHead>Date</TableHead>
                                 <TableHead className="text-megagreen">Status</TableHead>
@@ -57,8 +58,8 @@ const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
                                 <TableCell className="">{transaction.first_name}</TableCell>
                                 <TableCell>{transaction.last_name}</TableCell>
                                 <TableCell>{transaction.email}</TableCell>
-                                <TableCell>{transaction.phone}</TableCell>
-                                <TableCell className="text-megagreen"> {transaction.amount}</TableCell>
+                                <TableCell>₦{transaction.wallet_balance}</TableCell>
+                                <TableCell className="text-megagreen">₦{transaction.amount}</TableCell>
                                 <TableCell> {transaction.date}</TableCell>
                                 <TableCell className={
                                     transaction.status === "approved" ? "text-megagreen" 
@@ -82,4 +83,4 @@ const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
     )
 }
 
-export default TransactionTable;
+export default WithdrawalTable;
