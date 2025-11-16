@@ -1,31 +1,39 @@
 import PaginationComponent from "@/components/PaginationComponent";
 import ReusableTabs from "@/components/ReusableTabs";
 import { Input } from "@/components/ui/input";
-import TransactionDetailModal from "@/features/TransactionComponent/TransactionDetailModal";
-import TransactionTable from "@/features/TransactionComponent/TransactionTable";
+import WithdrawalDetailModal from "@/features/WithdrawalComponent/WithdrawalDetailModal";
+import WithdrawalTable from "@/features/WithdrawalComponent/WithdrawalTable";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-export type Transaction ={
+export type Withdrawal ={
     id: string;
-    first_name: string;
-    last_name: string;
+    first_name: string
+    last_name: string
     email: string;
-    phone: string;
-    amount: number;
-    date: string;
-    status: "approved" | "pending" |  "denied";
+    phone: string
+    wallet_balance: number
+    amount: number
+    date: string
+    bank: string;
+    account_no: number
+    account_name: string
+    status: "approved" | "pending" |  "denied" ;
 }
 
-const allTransactions: Transaction[] = [
+const allWithdrawals: Withdrawal[] = [
   {
     id: "638dedidkl",
     first_name: "Frank",
     last_name: "Junior",
     email: "frankJ@gmail.com",
-    phone: "090 1234 5678",
+    phone: "08128374057",
+    wallet_balance: 12000,
     amount: 800.09,
     date: "28 Oct 12:20PM",
+    bank: "First Bank",
+    account_no: 1023456789,
+    account_name: "Frank Junior",
     status: "approved"
   },
   {
@@ -33,18 +41,22 @@ const allTransactions: Transaction[] = [
     first_name: "Kylian",
     last_name: "Mbappe",
     email: "kylianm@gmail.com",
-    phone: "090 1234 5678",
+    phone: "09123847563",
+    wallet_balance: 200000,
     amount: 800.09,
+    bank: "Union Bank",
+    account_no: 1023421289,
+    account_name: "Kylian Mbappe",
     date: "28 Oct 12:20PM",
     status: "pending"
   },
 ];
 
 
-const Transactions = () => {
-    const [activeTab, setActiveTab] = useState<Transaction["status"] | "all">("all");
+const Withdrawal = () => {
+    const [activeTab, setActiveTab] = useState<Withdrawal["status"] | "all">("all");
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    const [selectedTransaction, setSelectedTransaction] = useState<Withdrawal | null>(null)
 
     const transactionTabs = [
         { value: "all" as const, label: "All Transactions" },
@@ -55,7 +67,7 @@ const Transactions = () => {
     
     const ITEMS_PER_PAGE = 10;
 
-    const filteredTransaction = allTransactions.filter(txn => 
+    const filteredTransaction = allWithdrawals.filter(txn => 
         activeTab === "all" ? true : txn.status === activeTab
     )
 
@@ -69,7 +81,7 @@ const Transactions = () => {
     return (
         <div className="font-jakarta space-y-6">
             <div className="flex justify-between">
-                <h2 className="font-semibold text-[20px]">Transactions</h2>
+                <h2 className="font-semibold text-[20px]">Withdrawals</h2>
                 <div className="relative hidden sm:flex bg-white rounded-full">
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-icon w-4 h-4" />
                     <Input type="text"
@@ -82,10 +94,10 @@ const Transactions = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 tabs={transactionTabs}
-                data={allTransactions}
+                data={allWithdrawals}
                 countKey="status"
             />
-            <TransactionTable
+            <WithdrawalTable
                 transactions={paginatedTransactions}
                 onClick={(transaction)=> setSelectedTransaction(transaction)}
             />
@@ -97,19 +109,18 @@ const Transactions = () => {
             />
 
             {selectedTransaction && (
-                <TransactionDetailModal
+                <WithdrawalDetailModal
                     isOpen={!!selectedTransaction}
                     onClose={() => setSelectedTransaction(null)}
                     transactions={selectedTransaction} 
 
                 />
             )}
-
-
         </div>
+
     );
 }
-export default Transactions;
+export default Withdrawal;
 
 
 

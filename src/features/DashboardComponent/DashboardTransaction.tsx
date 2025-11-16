@@ -61,7 +61,7 @@ const DashboardTransation= () => {
                 )}
                 {isError && (
                     <div className="flex flex-col justify-center items-center">
-                        <p className="font-medium text-muted-foreground">
+                        <p className="font-medium text-muted-foreground pb-4">
                             Error fetching Loan History
                         </p>
                     </div>

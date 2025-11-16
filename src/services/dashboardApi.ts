@@ -1,5 +1,5 @@
 import axios from "@/lib/axiosInstance";
-import type { DashboardStat } from "@/types/dashboard";
+import type { DashboardCharts, DashboardStat } from "@/types/dashboard";
 
 export const dashboardAPI = {
     getUserWalllet: async (): Promise<DashboardStat> => {
@@ -11,5 +11,10 @@ export const dashboardAPI = {
             params: {limit},
         })
         return response.data.data
+    },
+    getDashboardStats: async (): Promise<DashboardCharts> => {
+        const response = await axios.get("/admin/get-dashboard-dummy");
+        return response.data.data
     }
+
 }

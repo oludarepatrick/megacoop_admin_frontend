@@ -27,6 +27,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
     const [adminMgmtOpen, setAdminMgmtOpen] = useState(false);
     const [loanMgmtOpen, setLoanMgmtOpen] = useState(false);
     const [transactionOpen, setTransactionOpen] = useState(false);
+    const [investmentOpen, setInvestmentOpen] = useState(false);
 
     const handleLogout = () => mutate();
 
@@ -49,13 +50,13 @@ const Sidebar = ({ onClose }: SidebarProps) => {
     };
 
     return (
-        <aside className="w-[306px] h-full bg-megaPrimary text-white pt-28 px-12 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
+        <aside className="w-[306px] h-full bg-megaPrimary text-white pt-28 px-10 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
             <Button variant="ghost" onClick={onClose}
                 className="hover:bg-transparent lg:hidden absolute top-4 right-10"
             >
                 <X className="text-whitebg !w-8 !h-8" />
             </Button>
-            <nav className="font-jakarta flex flex-col gap-6">
+            <nav className="font-jakarta flex flex-col gap-6 ">
                 <NavLink to="dashboard" className={activeClass} onClick={onClose}>
                     <LayoutGrid className="w-5 h-5" />
                     Dashboard
@@ -66,7 +67,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     <CollapsibleTrigger asChild>
                         <div className="flex gap-3 cursor-pointer items-center text-white">
                             <Users className="w-5 h-5" />
-                            <span className="flex-1">User Mngt.</span>
+                            <span className="flex-1">User Management</span>
                             <ChevronRight className={clsx("w-4 h-4 transition-transform", {
                                     "rotate-90": userMgmtOpen
                                 })}
@@ -91,7 +92,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     <CollapsibleTrigger asChild>
                         <div className="flex gap-3 cursor-pointer items-center text-white">
                             <UserCog className="w-5 h-5" />
-                            <span className="flex-1">Admin Mngt.</span>
+                            <span className="flex-1">Admin Management</span>
                             <ChevronRight className={clsx("w-4 h-4 transition-transform", {
                                     "rotate-90": adminMgmtOpen
                                 })}
@@ -111,7 +112,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     <CollapsibleTrigger asChild>
                         <div className="flex gap-3 cursor-pointer items-center text-white">
                             <Wallet className="w-5 h-5" />
-                            <span className="flex-1">Loan Mngt.</span>
+                            <span className="flex-1">Loan Management</span>
                             <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
                                     "rotate-90": loanMgmtOpen
                                 })}
@@ -143,17 +144,39 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             <ArrowRightLeft className="w-5 h-5" />
                             Transaction
                         </NavLink>
-                        <NavLink to="withdrwal-transaction" className={activeClass} onClick={onClose}>
+                        <NavLink to="withdrawal" className={activeClass} onClick={onClose}>
                             <ArrowUpRight className="w-5 h-5" />
                             Withdrawal
                         </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
 
-                <NavLink to="investment" className={activeClass} onClick={onClose}>
+                {/* Investment Management with Collapsible */}
+                <Collapsible open={investmentOpen} onOpenChange={setInvestmentOpen}>
+                    <CollapsibleTrigger asChild>
+                        <div className="flex gap-3 cursor-pointer items-center text-white">
+                            <CircleDollarSign className="w-5 h-5" />
+                            <span className="flex-1">Invest Management</span>
+                            <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
+                                    "rotate-90": transactionOpen
+                                })}
+                            />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
+                        <NavLink to="investment" className={activeClass} onClick={onClose}>
+                            Investment
+                        </NavLink>
+                        <NavLink to="investment-list" className={activeClass} onClick={onClose}>
+                            Investment List
+                        </NavLink>
+                    </CollapsibleContent>
+                </Collapsible>
+
+                {/* <NavLink to="investment" className={activeClass} onClick={onClose}>
                     <CircleDollarSign className="w-5 h-5" />
                     Investment
-                </NavLink>
+                </NavLink> */}
 
 
                 <hr className="my-6 border-white/20" />

@@ -11,8 +11,9 @@ import { useSearchParams } from "react-router-dom";
 const KYC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [selectedUser, setSelectedUser] = useState<KYCList | null>(null);
+    
     const currentTab = (searchParams.get("status") as KYCStatus) || "pending";
-    const [selectedUser, setSelectedUser] = useState<KYCList | null>(null);    
     const {data, isLoading, isError, error} = useKYCList(currentTab);
 
     const ITEMS_PER_PAGE = 10;
