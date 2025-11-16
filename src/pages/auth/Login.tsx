@@ -7,9 +7,11 @@ import { Button } from "@/components/ui/button"
 import { useLogin } from "@/hooks/useLogin"
 import { loginSchema, type LoginFormData } from "@/validations/login-schema"
 import { getErrorMessage } from "@/utils/errorUtils"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-    const {mutate, isPending, error} = useLogin();
+    const { mutate, isPending, error } = useLogin();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -21,6 +23,10 @@ const Login = () => {
 
     const onSubmit = (data: LoginFormData) => {
         mutate(data);
+    }
+
+    const handleNavigate = (value: string) => {
+        navigate(value);
     }
 
     return (
@@ -62,6 +68,14 @@ const Login = () => {
                             />
                             {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
                         </div>
+                        <Button 
+                            variant="link" 
+                            className="flex justify-end items-center text-sm text-megagreen hover:underline p-0 m-0 w-full"
+                            onClick={() => handleNavigate('/forgot-password')}
+                            disabled={isPending}
+                        >
+                            Forgot Password?
+                        </Button>
                         <Button 
                             type="submit" 
                             className="w-full bg-megagreen hover:bg-megagreen/90 text-white font-semibold py-2 px-4 rounded-md focus:!outline-none focus:!ring-1 focus:!ring-megagreen focus:!shadow-lg"

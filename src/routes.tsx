@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/layout/ProtectedRoute";
 import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
+const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
@@ -22,6 +23,14 @@ export const routes = createBrowserRouter([
     element: (
       <Suspense fallback={<PageLoader />}>
         <LoginPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/forgot-password", 
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <ForgotPasswordPage />
       </Suspense>
     )
   },
