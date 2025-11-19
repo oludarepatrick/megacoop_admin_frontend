@@ -217,19 +217,26 @@ export const loanService = {
   getLoanStatistics: async (): Promise<LoanStatistics> => {
     try {
       // TODO: Replace with actual API call
-      const response = await axios.get<any>('/admin/loans');
-      console.log("Loan statistics response:", response);
+      // const response = await axios.get<any>('/admin/loans');
+      // fetch 2 different endpoint for statistics with promises.all
+      const [response1, response2] = await Promise.all([
+        axios.get<any>('/admin/loans'),
+        axios.get<any>('/admin/loans/dashboard'),
+      ]);
+      // console.log("Loan statistics response:", response1);
+      console.log("Loan dashboard response:", response2);
       // Use response.data and provide safe fallbacks to avoid runtime/TS errors
-      const data = response?.data ?? {}
+      const data = response1?.data ?? {}
       const totals = data?.totals ?? {}
+      const dashboardData = response2?.data ?? {}
 
       // Dummy / mapped data
       return {
         totalApplicants: totals?.total_loan_app_value ?? 1000000,
-        totalLoans: totals?.total_loan_approved_value ?? 350000,
-        totalDisbursed: data?.total_disbursed ?? 850000,
+        totalLoans: dashboardData?.total_approved_loans ?? 350000,
+        totalDisbursed: dashboardData?.total_disbursed ?? 850000,
         totalDefaulted: data?.total_defaulted ?? 320000,
-        interestEarned: data?.interest_earned ?? 320000,
+        interestEarned: dashboardData?.total_interest ?? 320000,
       }
     } catch (error) {
       console.error("Error fetching loan statistics:", error)
@@ -241,11 +248,11 @@ export const loanService = {
     //   getLoanAnalytics: async (): Promise<LoanAnalytics> => {
     getLoanAnalytics: async () => {
     try {
-      const response = await axios.get<any>('/admin/loans');
-      console.log("Loan statistics response:", response);
+      const response = await axios.get<any>('/admin/loans/dashboard');
+      console.log("Loan statistics response:", response.data.piechart);
       // Use response.data and provide safe fallbacks to avoid runtime/TS errors
-      const data = response?.data ?? {}
-      const totals = data?.totals ?? {}
+      const data = response?.data.piechart ?? {}
+      // const totals = data?.totals ?? {}
       // Dummy data
       return {
         monthlyApprovals: [
@@ -257,9 +264,9 @@ export const loanService = {
           { month: "Jun", approved: 200, pending: 80, rejected: 35 },
         ],
         loansByStatus: [
-          { name: "Total Loan", value: totals?.total_loan_approved_value ?? 350000, fill: "#22c55e" },
-          { name: "Total Default", value: totals?.total_defaulted ?? 320000, fill: "#f59e0b" },
-          { name: "Loan Profit", value: totals?.loan_profit ?? 300000, fill: "#3b82f6" },
+          { name: "Total Loan", value: data?.totalloan ?? 350000, fill: "#22c55e" },
+          { name: "Total Default", value: data?.totalpayback ?? 320000, fill: "#f59e0b" },
+          { name: "Loan Profit", value: data?.totalinterest ?? 300000, fill: "#3b82f6" },
           // { name: "Denied", value: 10, fill: "#ef4444" },
         ],
         disbursalTrend: [
