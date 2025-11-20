@@ -61,18 +61,21 @@ export function LoanStatisticsCards({ statistics, isLoading }: LoanStatisticsCar
 
   return (
     
-      <div className="flex overflow-x-auto overflow-y-hidden gap-4 scrollbar-hide w-full h-full ">
+    // <div className="flex overflow-x-auto overflow-y-hidden border gap-4 scrollbar-hide w-full h-full ">
+      <div className="w-full h-full gap-4 flex overflow-y-hidden overflow-x-auto xl:overflow-visible xl:grid xl:grid-cols-5 scrollbar-hide">
+
       {cards.map((card, index) => (
             <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1, duration: 0.4 }}
-                        className="flex items-stretch"
+                        className="flex items-stretch justify-between flex-shrink-3"
+                        // className="flex-shrink-0 lg:flex-shrink"
                     >
               <Card
                   //   className="flex-shrink-0  min-w-[280px] md:min-w-0 border border-gray-200"
-                  className=" min-w-[120px] max-w-[200px] flex-shrink-3 rounded-2xl shadow-sm border border-gray-200 w-[290px]"
+                  className=" md:min-w-[120px] max-w-[240px] rounded-2xl shadow-sm w-[240px] "
               >
             <CardContent className="px-2 space-y-3">
               <div className="flex items-center justify-between">
@@ -90,7 +93,7 @@ export function LoanStatisticsCards({ statistics, isLoading }: LoanStatisticsCar
                 {isLoading ? (
                   <LoaderIcon />
                 ) : (
-                  <p className="text-lg md:text-xl font-bold text-gray-900">{card.value}</p>
+                  <p className="text-lg md:text-md font-bold">{card.value}</p>
                 )}
               </div>
             </CardContent>

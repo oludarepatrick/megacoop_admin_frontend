@@ -63,13 +63,13 @@ export function LoanTableTabs({
       </div>
 
       <div className="mt-6 overflow-x-auto scrollbar-hide">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm border border-green-200">
           <thead>
             <tr className="border-b border-gray-200">
               <th className="px-4 py-3 text-left">
                 {/* <Checkbox /> */}
               </th>
-              <th className="w-full truncate pr-4 py-3 text-center font-semibold">First Name</th>
+              <th className=" pr-4 py-3 text-center font-semibold">First Name</th>
               <th className="py-3 text-center font-semibold">Last Name</th>
               <th className=" py-3 text-center font-semibold">Email</th>
               <th className=" py-3 text-center font-semibold">Phone</th>
@@ -87,13 +87,13 @@ export function LoanTableTabs({
                   <td className="px-4 py-3">
                     <Checkbox />
                   </td>
-                  <td className="px-4 py-3 text-blue-900">{loan.firstName}</td>
-                  <td className="px-4 py-3 text-blue-900">{loan.lastName}</td>
-                  <td className="px-4 py-3 text-gray-600 text-xs md:text-sm">{loan.email}</td>
-                  <td className="px-4 py-3 text-gray-600 text-xs md:text-sm">{loan.phone}</td>
-                  <td className="px-4 py-3 text-green-600 font-semibold">₦{loan.amount.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-gray-600 text-xs md:text-sm truncate">{loan.date}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 text-center text-blue-900 border">{loan.firstName}</td>
+                  <td className="px-4 py-3 text-center text-blue-900 border">{loan.lastName}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 text-xs md:text-sm border">{loan.email}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 text-xs md:text-sm border">{loan.phone}</td>
+                  <td className="px-4 py-3 text-center text-green-600 font-semibold border">₦{loan.amount.toLocaleString()}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 text-xs md:text-sm truncate border">{loan.date}</td>
+                  <td className="px-4 py-3 text-center border">
                     <Badge className={`${colors.badge} ${colors.text} capitalize`}>{loan.status}</Badge>
                   </td>
                   <td className="px-4 py-3 text-center">
