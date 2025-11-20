@@ -8,6 +8,18 @@ export type TopTrendingInvestment = {
   status: string;
 }
 
+export type InvestmentDashboard = {
+  total_approved_investors: number
+  total_paid_roi: number
+  total_amount_raised: number
+  piechart: {
+    amount_raised: number
+    total_roi: number
+    amount_percentage: number
+    roi_percentage: number
+  }  
+}
+
 export type InvestmentStatus = "pending" | "approved" | "rejected";
 
 export type ListInvestment = {

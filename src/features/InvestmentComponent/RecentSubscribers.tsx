@@ -43,7 +43,7 @@ const RecentSubscribers = () => {
           </div>
         </CardHeader>
         <div className="overflow-x-auto green-scrollbar border rounded-lg shadow-sm p-3 pb-0">
-          {!isLoading && applications.length === 0 && (
+          {!isLoading && !isError && applications.length === 0 && (
             <div className="flex justify-center items-center py-6 text-muted-foreground">
               No subscribers found for this category.
             </div>

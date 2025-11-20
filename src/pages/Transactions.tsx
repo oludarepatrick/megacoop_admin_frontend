@@ -3,48 +3,23 @@ import ReusableTabs from "@/components/ReusableTabs";
 import { Input } from "@/components/ui/input";
 import TransactionDetailModal from "@/features/TransactionComponent/TransactionDetailModal";
 import TransactionTable from "@/features/TransactionComponent/TransactionTable";
+import { useTransaction } from "@/hooks/useTransaction";
+import type { TransactionList } from "@/types/transactions";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-export type Transaction ={
-    id: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    amount: number;
-    date: string;
-    status: "approved" | "pending" |  "denied";
-}
-
-const allTransactions: Transaction[] = [
-  {
-    id: "638dedidkl",
-    first_name: "Frank",
-    last_name: "Junior",
-    email: "frankJ@gmail.com",
-    phone: "090 1234 5678",
-    amount: 800.09,
-    date: "28 Oct 12:20PM",
-    status: "approved"
-  },
-  {
-    id: "2e323tefr",
-    first_name: "Kylian",
-    last_name: "Mbappe",
-    email: "kylianm@gmail.com",
-    phone: "090 1234 5678",
-    amount: 800.09,
-    date: "28 Oct 12:20PM",
-    status: "pending"
-  },
-];
-
 
 const Transactions = () => {
-    const [activeTab, setActiveTab] = useState<Transaction["status"] | "all">("all");
+    const [activeTab, setActiveTab] = useState<TransactionList["status"] | "all">("all");
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    const [selectedTransaction, setSelectedTransaction] = useState<TransactionList | null>(null)
+    const [searchValue, setSearchValue] = useState("")
+
+    const {data, isLoading, isError} = useTransaction(currentPage);
+    console.log(data)
+
+    const allTransactions = data?.data || [];
+    const totalPages = data?.last_page || 1;
 
     const transactionTabs = [
         { value: "all" as const, label: "All Transactions" },
@@ -52,18 +27,35 @@ const Transactions = () => {
         { value: "pending" as const, label: "Pending", showCount: true },
         { value: "denied" as const, label: "Denied" },
     ];
-    
-    const ITEMS_PER_PAGE = 10;
 
-    const filteredTransaction = allTransactions.filter(txn => 
-        activeTab === "all" ? true : txn.status === activeTab
-    )
+    const handleTabChange = (tab: TransactionList["status"] | "all") => {
+        setActiveTab(tab)
+    }
 
-    const totalPages = Math.ceil(filteredTransaction.length / ITEMS_PER_PAGE);
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const paginatedTransactions = filteredTransaction.slice(startIndex, endIndex)
+    // filter by tab
+    const filterbyTab = activeTab === "all"
+    ? allTransactions : allTransactions.filter(list => list.status === activeTab);
 
+    // filter by search
+
+    const filteredTransaction = searchValue ?
+    filterbyTab.filter(list => 
+        list.user.email?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        list.user.first_name?.toLowerCase().includes(searchValue.toLowerCase())||
+        list.user.middle_name?.toLowerCase().includes(searchValue.toLowerCase()) ||
+        list.user.last_name?.toLowerCase().includes(searchValue.toLowerCase())
+    ) : filterbyTab
+
+    // const ITEMS_PER_PAGE = 10;
+
+    // const filteredTransaction = allTransactions.filter(txn => 
+    //     activeTab === "all" ? true : txn.status === activeTab
+    // )
+
+    // const totalPages = Math.ceil(filteredTransaction.length / ITEMS_PER_PAGE);
+    // const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    // const endIndex = startIndex + ITEMS_PER_PAGE;
+    // const paginatedTransactions = filteredTransaction.slice(startIndex, endIndex)
 
 
     return (
@@ -74,20 +66,24 @@ const Transactions = () => {
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-icon w-4 h-4" />
                     <Input type="text"
                         placeholder="Search transaction..."
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
                         className="pr-10 w-60 shadow-none placeholder:text-megagreen border-icon/45 rounded-xl"
                     />
                 </div>
             </div>
             <ReusableTabs
                 activeTab={activeTab}
-                setActiveTab={setActiveTab}
+                setActiveTab={handleTabChange}
                 tabs={transactionTabs}
                 data={allTransactions}
                 countKey="status"
             />
             <TransactionTable
-                transactions={paginatedTransactions}
+                transactions={filteredTransaction}
                 onClick={(transaction)=> setSelectedTransaction(transaction)}
+                isLoading={isLoading}
+                isError={isError}
             />
 
             <PaginationComponent

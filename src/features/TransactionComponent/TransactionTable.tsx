@@ -1,3 +1,4 @@
+import { LoaderIcon } from "@/components/PageLoader";
 import { Card, 
     // CardHeader, 
     // CardTitle 
@@ -10,16 +11,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { Transaction } from "@/pages/Transactions";
+import { formatDate } from "@/lib/common";
+import type { TransactionList } from "@/types/transactions";
 // import { Link } from "react-router-dom";
 
 type TransactionTableProps = {
-    transactions: Transaction[];
-    onClick: (transaction: Transaction) => void
+    transactions: TransactionList[];
+    onClick: (transaction: TransactionList) => void
+    isLoading: boolean
+    isError: boolean
 }
 
 
-const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
+const TransactionTable = ({transactions, onClick, isLoading, isError}: TransactionTableProps) => {
+    if(isLoading) {
+        return (
+            <div className="flex flex-col justify-center items-center">
+                <LoaderIcon/>
+            </div>
+        )
+    } 
+    if(isError) {
+        return (
+            <div className="flex flex-col justify-center items-center">
+                <p className="font-medium text-muted-foreground">
+                    Error fetching Investment History
+                </p>
+            </div>
+        )
+    }
+        
     if(transactions.length === 0) {
         return (
             <div className="flex justify-center items-center py-6 text-muted-foreground">
@@ -29,14 +50,7 @@ const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
     }
     
     return (
-        // <section className="">
         <Card className="p-0 px-4 pb-2 border-0 shadow-none ">
-            {/* <CardHeader className="flex justify-between px-2">
-                <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
-                <div className="flex gap-4 items-center">
-                    <Link to="/transactions" className="text-footertext text-sm hover:text-megagreen ">See All</Link>
-                </div>
-            </CardHeader> */}
             <div className="overflow-x-auto green-scrollbar border rounded-lg shadow-sm p-3 pb-0">
                 <Table>
                         <TableHeader className="[&_tr]:border-b-0 bg-muted-foreground/20">
@@ -54,12 +68,12 @@ const TransactionTable = ({transactions, onClick}: TransactionTableProps) => {
                     <TableBody className="">
                         {transactions.map((transaction) => (
                             <TableRow key={transaction.id} className="hover:bg-transparent [&_td]:text-xs [&_td]:py-4">
-                                <TableCell className="">{transaction.first_name}</TableCell>
-                                <TableCell>{transaction.last_name}</TableCell>
-                                <TableCell>{transaction.email}</TableCell>
-                                <TableCell>{transaction.phone}</TableCell>
+                                <TableCell className="">{transaction.user.first_name}</TableCell>
+                                <TableCell>{transaction.user.last_name}</TableCell>
+                                <TableCell>{transaction.user.email}</TableCell>
+                                <TableCell>{transaction.user.phone}</TableCell>
                                 <TableCell className="text-megagreen"> {transaction.amount}</TableCell>
-                                <TableCell> {transaction.date}</TableCell>
+                                <TableCell> {formatDate(transaction.created_at)}</TableCell>
                                 <TableCell className={
                                     transaction.status === "approved" ? "text-megagreen" 
                                     : transaction.status === "pending" ? "text-megaorange" 

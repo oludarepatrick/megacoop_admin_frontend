@@ -36,7 +36,7 @@ const ReusableTabs = <T extends string>({
     "data-[state=active]:shadow-none",
     "data-[state=active]:border-b-megagreen",
     "data-[state=active]:dark:border-b-megagreen",
-    "rounded-none border-2 flex items-center gap-1 relative"
+    "rounded-none border-b-2 flex items-center gap-1 relative"
   );
 
   return (

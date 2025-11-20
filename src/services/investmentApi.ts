@@ -1,9 +1,14 @@
 import axios from "@/lib/axiosInstance";
-import type { InvestmentApplicationResponse, ApproveRejectInvestment, ListInvestmentResponse, TopTrendingInvestment } from "@/types/investment";
+import type { InvestmentApplicationResponse, ApproveRejectInvestment, ListInvestmentResponse, TopTrendingInvestment, InvestmentDashboard } from "@/types/investment";
 import type { EditFormData, InvestmentFinalFormData } from "@/validations/investment-schema";
 
 export const investmentAPI = {
-    getTrendingInvestment: async (): Promise<TopTrendingInvestment[]> => {
+  getInvestmentData: async () : Promise<InvestmentDashboard> => {
+    const response = await axios.get("/admin/investments/dashboard");
+    return response.data
+  },
+
+  getTrendingInvestment: async (): Promise<TopTrendingInvestment[]> => {
     const response = await axios.get('/investments/top');
     return response.data.data
   },
