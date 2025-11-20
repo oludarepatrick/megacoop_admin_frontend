@@ -4,6 +4,13 @@ import type { EditFormData, InvestmentFinalFormData } from "@/validations/invest
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+export function useInvestmentData(){
+    return useQuery({
+        queryKey: ["investment-dashboard"],
+        queryFn: investmentAPI.getInvestmentData,
+    })
+}
+
 export function useTrendingInvestment(){
     return useQuery({
         queryKey: ["top-investment"],

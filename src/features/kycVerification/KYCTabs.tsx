@@ -28,7 +28,7 @@ const KYCTabs = ({activeTab, setActiveTab, kycList}: KYCTabsProps) => {
                     data-[state=active]:bg-transparent 
                     data-[state=active]:shadow-none 
                     data-[state=active]:border-b-megagreen data-[state=active]:dark:border-b-megagreen
-                    rounded-none border-2 flex items-center gap-1`}>Approved KYC</TabsTrigger>
+                    rounded-none border-b-2 flex items-center gap-1`}>Approved KYC</TabsTrigger>
             </TabsList>
         </Tabs>
     )

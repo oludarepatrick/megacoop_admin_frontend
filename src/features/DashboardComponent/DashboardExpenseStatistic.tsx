@@ -9,13 +9,6 @@ import {
 } from "@/components/ui/chart";
 import {Cell, LabelList, Pie, PieChart } from "recharts";
 
-// const chartData = [
-//   { title: "Total Loan", amount: 245000, fill: "#FFBB38" },
-//   { title: "Total Earn", amount: 293000, fill: "#343C6A" },
-//   { title: "Total Saved", amount: 325000, fill: "#052014" },
-//   { title: "Total Disbursed", amount: 323000, fill: "#14AE5C" },
-// ];
-
 const chartData = [
   { title: "Total Loan", amount: 245000, fill: "#FFBB38", offset: 5 },
   { title: "Total Earn", amount: 293000, fill: "#343C6A", offset: -5 },

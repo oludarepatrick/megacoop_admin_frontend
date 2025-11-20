@@ -1,17 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import type { ChartConfig } from "@/components/ui/chart";
+import { useInvestmentData } from "@/hooks/useInvestment";
 import { Cell, LabelList, Pie, PieChart } from "recharts";
 
-const chartData = [
-    { title: "ROI", value: 30000, fill: "#10B981"},
-    { title: "Total Raised", value: 120000, fill: "#212735"},
-]
-
-const totalAmount = chartData.reduce((sum, item) => sum + item.value, 0);
-const cummulativeData = chartData.map(item => ({
-    ...item,
-    percent: ((item.value / totalAmount) * 100).toFixed(0),
-}));
 
 const chartConfig = {
     "total-raised" : {label: "Total Raised", color: "#212735"},
@@ -24,6 +15,24 @@ type LegendProps ={
 }
 
 const InvestmenStatistic = () => {
+    const {data, isLoading } = useInvestmentData();
+
+    if(isLoading || !data) return <p>Loading analytics...</p>
+
+    const value = data.piechart
+
+
+    const chartData = [
+        { title: "ROI", value: value.total_roi, fill: "#10B981"},
+        { title: "Total Raised", value: value.amount_raised, fill: "#212735"},
+    ]
+
+    const totalAmount = chartData.reduce((sum, item) => sum + item.value, 0);
+    const cummulativeData = chartData.map(item => ({
+        ...item,
+        percent: ((item.value / totalAmount) * 100).toFixed(0),
+    }));
+
     const CustomLegend = ({config, className}:LegendProps) => {
         return (
             <div className={`flex flex-col gap-3 ${className}`}>

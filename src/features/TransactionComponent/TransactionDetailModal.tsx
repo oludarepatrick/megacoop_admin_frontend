@@ -1,12 +1,13 @@
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog"
-import type { Transaction } from "@/pages/Transactions";
 import bcgImg from "@/assets/money-stack-img.png"
+import type { TransactionList } from "@/types/transactions";
+import { formatDate } from "@/lib/common";
 
 
 interface TransactionDetailModalProps {
     isOpen: boolean
     onClose: () => void
-    transactions: Transaction
+    transactions: TransactionList
 
 }
 
@@ -28,11 +29,11 @@ const TransactionDetailModal = ({isOpen, onClose, transactions}: TransactionDeta
                     <div className="py-4 space-y-3 text-xs">
                         <div>
                             <p className="text-muted-foreground">Full Name</p>
-                            <p className="font-medium">{transactions.first_name} {transactions.last_name}</p>
+                            <p className="font-medium">{transactions.user.first_name} {transactions.user.last_name}</p>
                         </div>
                         <div>
-                            <p className="text-muted-foreground">Service</p>
-                            <p className="font-medium">Google Subscription</p>
+                            <p className="text-muted-foreground">Email</p>
+                            <p className="font-medium">{transactions.user.email}</p>
                         </div>
                         <div>
                             <p className="text-muted-foreground">Amount</p>
@@ -40,15 +41,15 @@ const TransactionDetailModal = ({isOpen, onClose, transactions}: TransactionDeta
                         </div>
                         <div>
                             <p className="text-muted-foreground">Transaction ID</p>
-                            <p className="font-medium">{transactions.id}</p>
+                            <p className="font-medium">{transactions.reference}</p>
                         </div>
                         <div>
                             <p className="text-muted-foreground">Transaction Date</p>
-                            <p className="font-medium">{transactions.date}</p>
+                            <p className="font-medium">{formatDate(transactions.created_at)}</p>
                         </div>
                         <div>
                             <p className="text-muted-foreground">Description</p>
-                            <p className="font-medium">Monthly Subscription Payment</p>
+                            <p className="font-medium">{transactions.description}</p>
                         </div>
                         <div className="space-y-2">
                             <p className="text-muted-foreground">Status</p>
