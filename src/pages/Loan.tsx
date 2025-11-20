@@ -23,7 +23,7 @@ export default function LoansPage() {
   
 
   // Fetch statistics
-  const { data: statistics, isLoading: isLoadingStatistics } = useQuery({
+  const { data: statisticsData, isLoading: isLoadingStatistics } = useQuery({
     queryKey: ["loanStatistics"],
     queryFn: () => loanService.getLoanStatistics(),
   })
@@ -74,7 +74,7 @@ export default function LoansPage() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6 space-y-8">
+    <div className="min-h-screen p-4 md:p-6 space-y-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold ">Loan</h1>
@@ -86,7 +86,7 @@ export default function LoansPage() {
       {/* {statistics ? <LoanStatisticsCards statistics={statistics} /> : <div className="flex items-center w-full">Loading statistics...</div>} */}
       <LoanStatisticsCards
         statistics={
-          statistics ?? {
+          statisticsData ?? {
             totalApplicants: 0,
             totalLoans: 0,
             totalDisbursed: 0,

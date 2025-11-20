@@ -6,7 +6,7 @@ import { loanService } from "@/services/loanService"
 import { useState } from "react"
 import { LoanRejectionModal } from "./loanRejectionModal"
 import { Star } from "lucide-react"
-// import { Input } from "../ui/input"
+import { Checkbox } from "../ui/checkbox"
 
 interface LoanDetailModalProps {
   open: boolean
@@ -165,7 +165,7 @@ export function LoanDetailModal({ open, onOpenChange, loanId, onApprove, onRejec
                 {/* create a checkbox with good label inside a span below */}
                 {!loanDetail.guarantorsApproved && (
                   <div className="mt-2 flex items-center gap-2">
-                    <input
+                    {/* <input
                       type="checkbox"
                       id="bypassGuarantorApproval"
                       name="bypassGuarantorApproval"
@@ -173,6 +173,12 @@ export function LoanDetailModal({ open, onOpenChange, loanId, onApprove, onRejec
                       readOnly
                       onClick={(e) => e.preventDefault()}
                       className="w-4 h-4 border-2 border-green-600 bg-green-500 text-green-600 rounded focus:ring-0 cursor-not-allowed"
+                    /> */}
+                    <Checkbox
+                      id="bypassGuarantorApproval"
+                      name="bypassGuarantorApproval"
+                      checked={true}
+                      onClick={(e) => e.preventDefault()}
                     />
                     <span className="text-xs text-gray-500">Bypass the guarantor approval process at your own risk.</span>
                   </div>
