@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import type { Loan } from "@/services/loanService"
 
+
 interface LoanTableTabsProps {
   activeTab: string
   onTabChange: (tab: string) => void
@@ -11,6 +12,7 @@ interface LoanTableTabsProps {
   onViewLoan: (loan: Loan) => void
   isLoading: boolean
   searchPerformed: boolean
+  filter: string
 }
 
 const statusColors: Record<string, { bg: string; text: string; badge: string }> = {
@@ -27,8 +29,11 @@ export function LoanTableTabs({
   onViewLoan,
   isLoading,
   searchPerformed,
+  filter,
 }: LoanTableTabsProps) {
+  console.log("Rendering LoanTableTabs with loans:", isLoading)
   if (isLoading) {
+    console.log("Loading loans...")
     return <div className="text-center py-8 text-gray-600">Loading loans...</div>
   }
 
@@ -38,6 +43,21 @@ export function LoanTableTabs({
 
   if (loans.length === 0) {
     return <div className="text-center py-8 text-gray-600">No loans available</div>
+  }
+
+  // sort loans based on filter
+  let sortedLoans = [...loans]
+  if (filter === "newest") {
+    sortedLoans.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  } else if (filter === "oldest") {
+    sortedLoans.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  } else if (filter === "highest") {
+    sortedLoans.sort((a, b) => b.amount - a.amount)
+  } else if (filter === "lowest") {
+    sortedLoans.sort((a, b) => a.amount - b.amount)
+  } else {
+    // default to original order or any other logic
+    sortedLoans = [...loans]
   }
 
   return (
@@ -80,7 +100,36 @@ export function LoanTableTabs({
             </tr>
           </thead>
           <tbody>
-            {loans.map((loan) => {
+            {/* {loans.map((loan) => {
+              const colors = statusColors[loan.status]
+              return (
+                <tr key={loan.id} className="border-b border-gray-200 hover:bg-gray-50">
+                  <td className="px-4 py-3">
+                    <Checkbox />
+                  </td>
+                  <td className="px-4 py-3 text-center text-blue-900 border">{loan.firstName}</td>
+                  <td className="px-4 py-3 text-center text-blue-900 border">{loan.lastName}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 text-xs md:text-sm border">{loan.email}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 text-xs md:text-sm border">{loan.phone}</td>
+                  <td className="px-4 py-3 text-center text-green-600 font-semibold border">₦{loan.amount.toLocaleString()}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 text-xs md:text-sm truncate border">{loan.date}</td>
+                  <td className="px-4 py-3 text-center border">
+                    <Badge className={`${colors.badge} ${colors.text} capitalize`}>{loan.status}</Badge>
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-green-600 border-green-600 hover:bg-green-50 bg-transparent rounded-full"
+                      onClick={() => onViewLoan(loan)}
+                    >
+                      View
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })} */}
+            {sortedLoans.map((loan) => {
               const colors = statusColors[loan.status]
               return (
                 <tr key={loan.id} className="border-b border-gray-200 hover:bg-gray-50">
