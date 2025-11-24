@@ -47,6 +47,7 @@ const InvestmentList = () => {
 
     const handleTabChange = (tab: ListInvestment["status"] | "all") => {
         setActiveTab(tab)
+        setCurrentPage(1)
     }
 
     const handleSubmitForm = (data: EditFormData) => {
@@ -94,7 +95,10 @@ const InvestmentList = () => {
                     <Input type="text"
                         placeholder="Search investment..."
                         value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={(e) => {
+                            setSearchValue(e.target.value)
+                            setCurrentPage(1)
+                        }}
                         className="pr-10 w-60 shadow-none placeholder:text-megagreen border-icon/45 rounded-xl"
                     />
                 </div>

@@ -121,7 +121,7 @@ const InvestmentDetailModal = ({isOpen, onClose, application}: InvestmentDetailM
                         </div>
 
                         <div className="flex gap-4 flex-wrap pt-4">
-                            <Button className="bg-megagreen hover:bg-megagreen/80" onClick={()=>setIsConfirmModalOpen(true)} disabled={isPending}>Approve Investment</Button>
+                            <Button className={`bg-megagreen hover:bg-megagreen/80 ${application.status === "approved" ? "hidden": ""}`} onClick={()=>setIsConfirmModalOpen(true)} disabled={isPending}>Approve Investment</Button>
                             <Button className="bg-megaorange hover:bg-megaorange/80" onClick={()=>setIsDeclineModalOpen(true)} disabled={isPending}>Deny Investment</Button>
                         </div>
                     </div>

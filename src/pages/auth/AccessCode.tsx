@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import {zodResolver} from "@hookform/resolvers/zod"
 import { Label } from "@/components/ui/label"
-import elips from "../../assets/elips-bcg.svg"
+// import elips from "../../assets/elips-bcg.svg"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -76,9 +76,9 @@ const AccessCode = () => {
     return (
         <section className="min-h-screen flex font-poppins relative">
             <div className="flex-1 flex flex-col justify-between gap-6 items-center px-8 pt-10 pb-10 relative z-10">
-                <header className="md:self-start">
+                {/* <header className="md:self-start">
                     <img src="/Logo.svg" alt="megacoop-logo" className="h-16" />
-                </header>
+                </header> */}
 
                 {/* Login form */}
                 <form className="w-full max-w-md" onSubmit={handleSubmit(onFormSubmit)}>
@@ -198,7 +198,7 @@ const AccessCode = () => {
                     </p>
                 </footer>
             </div>
-            <div 
+            {/* <div 
                 className="absolute bottom-0 right-0 w-80 h-80 z-[-1]"
                 style={{
                     backgroundImage: `url("${elips}")`,
@@ -206,7 +206,7 @@ const AccessCode = () => {
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'bottom right',
                 }}
-            />
+            /> */}
 
             {formData && (
                 <AccessCodeConfirmationModal

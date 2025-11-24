@@ -7,14 +7,14 @@ import DeclineModal from "../InvestmentComponent/DeclineModal";
 import { useState } from "react";
 
 
-interface TransactionDetailModalProps {
+interface WithdrawalDetailModalProps {
     isOpen: boolean
     onClose: () => void
     transactions: Withdrawal
 
 }
 
-const WithdrawalDetailModal = ({isOpen, onClose, transactions}: TransactionDetailModalProps) => {
+const WithdrawalDetailModal = ({isOpen, onClose, transactions}: WithdrawalDetailModalProps) => {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
     return (

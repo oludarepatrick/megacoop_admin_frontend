@@ -16,7 +16,6 @@ const Transactions = () => {
     const [searchValue, setSearchValue] = useState("")
 
     const {data, isLoading, isError} = useTransaction(currentPage);
-    console.log(data)
 
     const allTransactions = data?.data || [];
     const totalPages = data?.last_page || 1;
@@ -29,7 +28,8 @@ const Transactions = () => {
     ];
 
     const handleTabChange = (tab: TransactionList["status"] | "all") => {
-        setActiveTab(tab)
+        setActiveTab(tab);
+        setCurrentPage(1)
     }
 
     // filter by tab
@@ -37,25 +37,18 @@ const Transactions = () => {
     ? allTransactions : allTransactions.filter(list => list.status === activeTab);
 
     // filter by search
-
+    const query = searchValue.toLowerCase();
     const filteredTransaction = searchValue ?
-    filterbyTab.filter(list => 
-        list.user.email?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        list.user.first_name?.toLowerCase().includes(searchValue.toLowerCase())||
-        list.user.middle_name?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        list.user.last_name?.toLowerCase().includes(searchValue.toLowerCase())
-    ) : filterbyTab
-
-    // const ITEMS_PER_PAGE = 10;
-
-    // const filteredTransaction = allTransactions.filter(txn => 
-    //     activeTab === "all" ? true : txn.status === activeTab
-    // )
-
-    // const totalPages = Math.ceil(filteredTransaction.length / ITEMS_PER_PAGE);
-    // const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    // const endIndex = startIndex + ITEMS_PER_PAGE;
-    // const paginatedTransactions = filteredTransaction.slice(startIndex, endIndex)
+    filterbyTab.filter(list => {
+        const user = list.user
+        return [
+            user.email,
+            user.first_name,
+            user.middle_name,
+            user.last_name
+        ].some(value => value?.toLowerCase().includes(query))
+    }
+    ): filterbyTab
 
 
     return (
@@ -67,7 +60,10 @@ const Transactions = () => {
                     <Input type="text"
                         placeholder="Search transaction..."
                         value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={(e) => {
+                            setSearchValue(e.target.value)
+                            setCurrentPage(1);
+                        }}
                         className="pr-10 w-60 shadow-none placeholder:text-megagreen border-icon/45 rounded-xl"
                     />
                 </div>

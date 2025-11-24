@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
-import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
+// import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
 const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
@@ -10,10 +10,12 @@ const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
 const Investments = lazy(() => import("./pages/Investments"));
+const InvestTransaction = lazy(() => import("./pages/InvestTransaction"));
 const Transactions = lazy(() => import("./pages/Transactions"));
 const Withdrawal = lazy(() => import("./pages/Withdrawal"));
 const InvestmentList = lazy(() => import("./pages/InvestmentList"));
 const LoanPage = lazy(() => import("./pages/Loan"));
+const ROIPage = lazy(() => import("./pages/ROIPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 export const routes = createBrowserRouter([
@@ -34,20 +36,20 @@ export const routes = createBrowserRouter([
       </Suspense>
     )
   },
-  {
-    path: "/",
-    element: <AuthProtectedRoute />,
-    children: [
-      {
-        path: "access-code",
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <AccessCodePage />
-          </Suspense>
-        )
-      },
-    ]
-  },
+  // {
+  //   path: "/",
+  //   element: <AuthProtectedRoute />,
+  //   children: [
+  //     {
+  //       path: "access-code",
+  //       element: (
+  //         <Suspense fallback={<PageLoader />}>
+  //           <AccessCodePage />
+  //         </Suspense>
+  //       )
+  //     },
+  //   ]
+  // },
   {
     path: "/",
     element: <ProtectedRoute/>,
@@ -57,6 +59,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <DashboardPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "access-code",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <AccessCodePage />
           </Suspense>
         )
       },
@@ -93,6 +103,14 @@ export const routes = createBrowserRouter([
         )
       },
       {
+        path: "investment-transactions", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <InvestTransaction />
+          </Suspense>
+        )
+      },
+      {
         path: "investment-list", 
         element: (
           <Suspense fallback={<PageLoader />}>
@@ -105,6 +123,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <LoanPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "roi-processing", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ROIPage />
           </Suspense>
         )
       },
