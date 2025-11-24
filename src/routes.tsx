@@ -9,6 +9,7 @@ const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
+const UsersPage = lazy(() => import("./pages/Users"));
 const Investments = lazy(() => import("./pages/Investments"));
 const Transactions = lazy(() => import("./pages/Transactions"));
 const Withdrawal = lazy(() => import("./pages/Withdrawal"));
@@ -65,6 +66,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <KYCPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "users", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <UsersPage />
           </Suspense>
         )
       },

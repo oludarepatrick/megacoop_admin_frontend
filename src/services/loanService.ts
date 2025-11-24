@@ -284,16 +284,19 @@ export const loanService = {
 
   // Get loans with pagination, search, and filters
     //   async getLoans(page = 1, search?: string, status?: string, perPage = 10): Promise<LoanPaginatedResponse> {
-    getLoans: async (page = 1, search?: string, status?: string, perPage = 10): Promise<LoanPaginatedResponse> => {
+    getLoans: async (page = 1, search?: string, status?: string, perPage = 20): Promise<LoanPaginatedResponse> => {
     try {
       // TODO: Replace with actual API call
-      // const response = await this.axiosInstance.get('/loans', {
+      const response = await axios.get('/admin/loans/applicants', {
       //   params: { page, search, status, per_page: perPage },
-      // });
+        params: {page, status},
+      });
+      console.log("Loans response:", response.data.data.data);
       // return response.data;
 
       // Dummy pagination logic
       let filteredLoans = dummyLoans
+      // let filteredLoans: Loan[] = response.data.data.data;
 
       // Filter by search (full name)
       if (search) {
