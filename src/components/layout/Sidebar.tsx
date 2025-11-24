@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine } from "lucide-react";
+import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
@@ -83,6 +83,12 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                         <NavLink to="kyc" className={activeClass} onClick={onClose} >
                             <UserRoundCheck className="w-5 h-5" />
                             KYC Verification
+                        </NavLink>
+
+                        {/* sub admins/users */}
+                        <NavLink to="users" className={activeClass} onClick={onClose} >
+                            <User2Icon className="w-5 h-5" />
+                            Sub-Admin/Users
                         </NavLink>
                     </CollapsibleContent>
                 </Collapsible>

@@ -19,6 +19,7 @@ export default function LoansPage() {
   const [selectedLoan, setSelectedLoan] = useState<Loan | null>(null)
   const [activeTab, setActiveTab] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
+  const [selectFilter, setSelectFilter] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   
 
@@ -37,7 +38,8 @@ export default function LoansPage() {
   // Fetch loans with pagination and filters
   const { data: loansData, isLoading: isLoadingLoans } = useQuery({
     queryKey: ["loans", currentPage, searchQuery, activeTab],
-    queryFn: () => loanService.getLoans(currentPage, searchQuery, activeTab !== "all" ? activeTab : undefined, 10),
+    // queryFn: () => loanService.getLoans(currentPage, searchQuery, activeTab !== "all" ? activeTab : undefined, 10),
+    queryFn: () => loanService.getLoans(currentPage, searchQuery, activeTab, 20),
   })
 
   console.log("Loans Data:", loansData)
@@ -119,7 +121,11 @@ export default function LoansPage() {
       {/* Search and Filters */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-xl font-bold">Recent Loans</h2>
-        <LoanSearchFilter onSearchChange={setSearchQuery} onFilterChange={() => {}} onDateChange={() => {}} />
+        <LoanSearchFilter
+            onSearchChange={setSearchQuery}
+            onFilterChange={setSelectFilter}
+            onDateChange={() => { }}
+          />
       </div>
 
       {/* Loans Table */}
@@ -135,6 +141,7 @@ export default function LoansPage() {
             onViewLoan={handleViewLoan}
             isLoading={isLoadingLoans}
             searchPerformed={searchQuery.length > 0 && loansData.data.length === 0}
+            filter={selectFilter}
           />
 
           {/* Pagination */}
