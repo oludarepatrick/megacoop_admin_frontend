@@ -35,7 +35,7 @@ const RecentSubscribers = () => {
           </CardTitle>
           <div className="flex gap-4 items-center">
             <Link
-              to="/investment?view=transaction"
+              to="/investment-transactions"
               className="text-megagreen text-sm hover:text-megagreen "
             >
               View All

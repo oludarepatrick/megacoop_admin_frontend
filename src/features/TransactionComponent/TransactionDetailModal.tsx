@@ -49,7 +49,7 @@ const TransactionDetailModal = ({isOpen, onClose, transactions}: TransactionDeta
                         </div>
                         <div>
                             <p className="text-muted-foreground">Description</p>
-                            <p className="font-medium">{transactions.description}</p>
+                            <p className="font-medium max-w-55">{transactions.description}</p>
                         </div>
                         <div className="space-y-2">
                             <p className="text-muted-foreground">Status</p>

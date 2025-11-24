@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, User2Icon } from "lucide-react";
+import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
@@ -56,7 +56,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
             >
                 <X className="text-whitebg !w-8 !h-8" />
             </Button>
-            <nav className="font-jakarta flex flex-col gap-6 ">
+            <nav className="font-jakarta flex flex-col gap-6 text-sm">
                 <NavLink to="dashboard" className={activeClass} onClick={onClose}>
                     <LayoutGrid className="w-5 h-5" />
                     Dashboard
@@ -154,6 +154,10 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             <ArrowUpRight className="w-5 h-5" />
                             Withdrawal
                         </NavLink>
+                        <NavLink to="investment-transactions" className={activeClass} onClick={onClose}>
+                            <ChartNoAxesCombined className="w-5 h-5" />
+                            Investment
+                        </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
 
@@ -179,10 +183,10 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     </CollapsibleContent>
                 </Collapsible>
 
-                {/* <NavLink to="investment" className={activeClass} onClick={onClose}>
-                    <CircleDollarSign className="w-5 h-5" />
-                    Investment
-                </NavLink> */}
+                <NavLink to="roi-processing" className={activeClass} onClick={onClose}>
+                    <ChartLine className="w-5 h-5" />
+                    ROI Processing
+                </NavLink>
 
 
                 <hr className="my-6 border-white/20" />
