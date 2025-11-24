@@ -9,21 +9,35 @@ import {
     type ChartConfig 
 } from "@/components/ui/chart";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useDashboardChart } from "@/hooks/useDashboard";
+import { LoaderIcon } from "@/components/PageLoader";
 
-const userAnalytics= [
-    { month: "Jan", income: 40000, outcome: 30000 },
-    { month: "Feb", income: 32000, outcome: 35000 },
-    { month: "Mar", income: 35000, outcome: 28000 },
-    { month: "Apr", income: 30000, outcome: 48000 },
-    { month: "May", income: 45000, outcome: 37000 },
-    { month: "Jun", income: 31000, outcome: 22000 },
-    { month: "Jul", income: 50000, outcome: 34000 },
-    { month: "Aug", income: 30000, outcome: 32000 },
-    { month: "Sept", income: 31000, outcome: 22000 },
-    { month: "Oct", income: 50000, outcome: 34000 },
-    { month: "Nov", income: 30000, outcome: 32000 },
-    { month: "Dec", income: 30000, outcome: 32000 },
-]
+// const userAnalytics= [
+//     { month: "Jan", income: 40000, outcome: 30000 },
+//     { month: "Feb", income: 32000, outcome: 35000 },
+//     { month: "Mar", income: 35000, outcome: 28000 },
+//     { month: "Apr", income: 30000, outcome: 48000 },
+//     { month: "May", income: 45000, outcome: 37000 },
+//     { month: "Jun", income: 31000, outcome: 22000 },
+//     { month: "Jul", income: 50000, outcome: 34000 },
+//     { month: "Aug", income: 30000, outcome: 32000 },
+//     { month: "Sept", income: 31000, outcome: 22000 },
+//     { month: "Oct", income: 50000, outcome: 34000 },
+//     { month: "Nov", income: 30000, outcome: 32000 },
+//     { month: "Dec", income: 30000, outcome: 32000 },
+// ]
+
+const transformAnalytics =(data:{
+    months: string[]
+    income: number[]
+    outcome: number[]
+}) => {
+    return data.months.map((month, index)=> ({
+        month,
+        income: data.income[index],
+        outcome: data.outcome[index]
+    }))
+}
 
 const chartConfig = {
     income:{
@@ -44,6 +58,10 @@ type LegendProps ={
 
 
 const DashboardAnalytics = () => {
+    const {data, isLoading} = useDashboardChart()
+    console.log(data)
+    const userAnalytics = transformAnalytics(data?.interest_earn ?? { months: [], income: [], outcome: [] }) 
+
     const CustomLegend = ({config, className}:LegendProps) => {
         return (
             <div className={`flex items-center gap-4 ${className} `}>
@@ -80,6 +98,11 @@ const DashboardAnalytics = () => {
                 </div>
             </CardHeader>
             <div className="overflow-x-auto green-scrollbar">
+                {isLoading ? (
+                    <div className="flex flex-col justify-center items-center">
+                        <LoaderIcon/>
+                    </div>
+                ) : (
                 <ChartContainer config={chartConfig} className="h-[300px] md:h-auto lg:h-[300px] 2xl:h-auto md:min-h-[200px] 2xl:min-h-[200px]  min-w-[800px] mb-4"  >
                     <BarChart accessibilityLayer data={userAnalytics} barGap={0} className="p-0">
                         <CartesianGrid vertical={false} strokeDasharray="3" stroke="#25282c7f" opacity={0.3} />
@@ -101,6 +124,8 @@ const DashboardAnalytics = () => {
                     </BarChart>
 
                 </ChartContainer>
+
+                )}
             </div>
         </Card>
         // </section>

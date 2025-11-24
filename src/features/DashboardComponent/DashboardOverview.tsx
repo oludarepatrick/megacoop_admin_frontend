@@ -9,7 +9,6 @@ import { useDashboardStat } from "@/hooks/useDashboard";
 
 const DashboardOverview = () => {
     const { data } = useDashboardStat();
-    console.log(data)
 
     const dataOverview = [
     { 

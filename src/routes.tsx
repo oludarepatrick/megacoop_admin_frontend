@@ -3,9 +3,6 @@ import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
-import Transactions from "./pages/Transactions";
-import Investments from "./pages/Investments";
-import LoanPage from "./pages/Loan";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
 const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
@@ -13,6 +10,11 @@ const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
 const UsersPage = lazy(() => import("./pages/Users"));
+const Investments = lazy(() => import("./pages/Investments"));
+const Transactions = lazy(() => import("./pages/Transactions"));
+const Withdrawal = lazy(() => import("./pages/Withdrawal"));
+const InvestmentList = lazy(() => import("./pages/InvestmentList"));
+const LoanPage = lazy(() => import("./pages/Loan"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 export const routes = createBrowserRouter([
@@ -84,10 +86,26 @@ export const routes = createBrowserRouter([
         )
       },
       {
+        path: "withdrawal", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <Withdrawal />
+          </Suspense>
+        )
+      },
+      {
         path: "investment", 
         element: (
           <Suspense fallback={<PageLoader />}>
             <Investments />
+          </Suspense>
+        )
+      },
+      {
+        path: "investment-list", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <InvestmentList />
           </Suspense>
         )
       },
