@@ -1,54 +1,53 @@
 import PaginationComponent from "@/components/PaginationComponent";
-import ReusableTabs from "@/components/ReusableTabs";
+// import ReusableTabs from "@/components/ReusableTabs";
 import { Input } from "@/components/ui/input";
-import TransactionDetailModal from "@/features/TransactionComponent/TransactionDetailModal";
-import TransactionTable from "@/features/TransactionComponent/TransactionTable";
-import { useTransaction } from "@/hooks/useTransaction";
-import type { TransactionList } from "@/types/transactions";
+import ROITable from "@/features/ROIComponent/ROITable";
+// import TransactionDetailModal from "@/features/TransactionComponent/TransactionDetailModal";
+import { useActiveUserInvestment } from "@/hooks/useROI";
+// import type { ActiveUserInvestment } from "@/types/returnInvestment";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
 
 const ROIPage = () => {
-    const [activeTab, setActiveTab] = useState<TransactionList["status"] | "all">("all");
+    // const [activeTab, setActiveTab] = useState<ActiveUserInvestment["status"] | "all">("all");
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedTransaction, setSelectedTransaction] = useState<TransactionList | null>(null)
+    // const [selectedTransaction, setSelectedTransaction] = useState<ActiveUserInvestment | null>(null)
     const [searchValue, setSearchValue] = useState("")
 
-    const {data, isLoading, isError} = useTransaction(currentPage);
+    const {data, isLoading, isError} = useActiveUserInvestment(currentPage);
 
-    const allTransactions = data?.data || [];
+    const allActiveInvestment = data?.data || [];
     const totalPages = data?.last_page || 1;
 
-    const transactionTabs = [
-        { value: "all" as const, label: "All Transactions" },
-        { value: "approved" as const, label: "Approved" },
-        { value: "pending" as const, label: "Pending", showCount: true },
-        { value: "denied" as const, label: "Denied" },
-    ];
+    // const transactionTabs = [
+    //     { value: "all" as const, label: "All Transactions" },
+    //     { value: "approved" as const, label: "Approved" },
+    //     { value: "pending" as const, label: "Pending", showCount: true },
+    //     { value: "denied" as const, label: "Denied" },
+    // ];
 
-    const handleTabChange = (tab: TransactionList["status"] | "all") => {
-        setActiveTab(tab);
-        setCurrentPage(1)
-    }
+    // const handleTabChange = (tab: ["status"] | "all") => {
+    //     setActiveTab(tab);
+    //     setCurrentPage(1)
+    // }
 
     // filter by tab
-    const filterbyTab = activeTab === "all"
-    ? allTransactions : allTransactions.filter(list => list.status === activeTab);
+    // const filterbyTab = activeTab === "all"
+    // ? allActiveInvestment : allActiveInvestment.filter(list => list.status === activeTab);
 
     // filter by search
     const query = searchValue.toLowerCase();
     const filteredTransaction = searchValue ?
-    filterbyTab.filter(list => {
-        const user = list.user
+    allActiveInvestment.filter(list => {
         return [
-            user.email,
-            user.first_name,
-            user.middle_name,
-            user.last_name
+            list.email,
+            list.first_name,
+            list.middle_name,
+            list.last_name
         ].some(value => value?.toLowerCase().includes(query))
     }
-    ): filterbyTab
+    ): allActiveInvestment
 
 
     return (
@@ -58,7 +57,7 @@ const ROIPage = () => {
                 <div className="relative hidden sm:flex bg-white rounded-full">
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-icon w-4 h-4" />
                     <Input type="text"
-                        placeholder="Search investor..."
+                        placeholder="Search active user..."
                         value={searchValue}
                         onChange={(e) => {
                             setSearchValue(e.target.value)
@@ -68,16 +67,16 @@ const ROIPage = () => {
                     />
                 </div>
             </div>
-            <ReusableTabs
+            {/* <ReusableTabs
                 activeTab={activeTab}
                 setActiveTab={handleTabChange}
                 tabs={transactionTabs}
                 data={allTransactions}
                 countKey="status"
-            />
-            <TransactionTable
+            /> */}
+            <ROITable
                 transactions={filteredTransaction}
-                onClick={(transaction)=> setSelectedTransaction(transaction)}
+                // onClick={(transaction)=> setSelectedTransaction(transaction)}
                 isLoading={isLoading}
                 isError={isError}
             />
@@ -88,14 +87,14 @@ const ROIPage = () => {
                 setCurrentPage={setCurrentPage}
             />
 
-            {selectedTransaction && (
+            {/* {selectedTransaction && (
                 <TransactionDetailModal
                     isOpen={!!selectedTransaction}
                     onClose={() => setSelectedTransaction(null)}
                     transactions={selectedTransaction} 
 
                 />
-            )}
+            )} */}
 
 
         </div>

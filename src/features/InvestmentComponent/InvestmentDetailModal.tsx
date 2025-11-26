@@ -10,7 +10,7 @@ import { useApproveDeclineInvestment } from "@/hooks/useInvestment";
 import { toast } from "sonner";
 
 
-interface InvestmentDetailModalProps {
+type InvestmentDetailModalProps = {
     isOpen: boolean
     onClose: () => void
     application: InvestmentApplication

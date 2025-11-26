@@ -3,60 +3,26 @@ import ReusableTabs from "@/components/ReusableTabs";
 import { Input } from "@/components/ui/input";
 import WithdrawalDetailModal from "@/features/WithdrawalComponent/WithdrawalDetailModal";
 import WithdrawalTable from "@/features/WithdrawalComponent/WithdrawalTable";
+import { useDownloadWithdrawalReport, useWithdrawalTransaction } from "@/hooks/useTransaction";
+import type { WithdrawalList } from "@/types/transactions";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-export type Withdrawal ={
-    id: string;
-    first_name: string
-    last_name: string
-    email: string;
-    phone: string
-    wallet_balance: number
-    amount: number
-    date: string
-    bank: string;
-    account_no: number
-    account_name: string
-    status: "approved" | "pending" |  "denied" ;
-}
-
-const allWithdrawals: Withdrawal[] = [
-  {
-    id: "638dedidkl",
-    first_name: "Frank",
-    last_name: "Junior",
-    email: "frankJ@gmail.com",
-    phone: "08128374057",
-    wallet_balance: 12000,
-    amount: 800.09,
-    date: "28 Oct 12:20PM",
-    bank: "First Bank",
-    account_no: 1023456789,
-    account_name: "Frank Junior",
-    status: "approved"
-  },
-  {
-    id: "2e323tefr",
-    first_name: "Kylian",
-    last_name: "Mbappe",
-    email: "kylianm@gmail.com",
-    phone: "09123847563",
-    wallet_balance: 200000,
-    amount: 800.09,
-    bank: "Union Bank",
-    account_no: 1023421289,
-    account_name: "Kylian Mbappe",
-    date: "28 Oct 12:20PM",
-    status: "pending"
-  },
-];
-
-
 const Withdrawal = () => {
-    const [activeTab, setActiveTab] = useState<Withdrawal["status"] | "all">("all");
+    const [activeTab, setActiveTab] = useState<WithdrawalList["status"] | "all">("all");
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedTransaction, setSelectedTransaction] = useState<Withdrawal | null>(null)
+    const [selectedTransaction, setSelectedTransaction] = useState<WithdrawalList | null>(null)
+    const [searchValue, setSearchValue] = useState("")
+
+    const {data, isLoading, isError} = useWithdrawalTransaction(currentPage);
+    const {mutate, isPending} = useDownloadWithdrawalReport();
+
+    const handleDownload = () => {
+        mutate();
+    }
+
+    const allWithdrawals = data?.data || [];
+    const totalPages = data?.last_page || 1;
 
     const transactionTabs = [
         { value: "all" as const, label: "All Transactions" },
@@ -64,20 +30,30 @@ const Withdrawal = () => {
         { value: "pending" as const, label: "Pending", showCount: true },
         { value: "denied" as const, label: "Denied" },
     ];
+
+    const handleTabChange = (tab: WithdrawalList["status"] | "all") => {
+        setActiveTab(tab);
+        setCurrentPage(1)
+    }
+
+    // filter by tab
+    const filterbyTab = activeTab === "all"
+    ? allWithdrawals : allWithdrawals.filter(list => list.status === activeTab);
+
+    // filter by search
+    const query = searchValue.toLowerCase();
+    const filteredTransaction = searchValue ?
+    filterbyTab.filter(list => {
+        const user = list.user
+        return [
+            user.email,
+            user.first_name,
+            user.middle_name,
+            user.last_name
+        ].some(value => value?.toLowerCase().includes(query))
+    }
+    ): filterbyTab
     
-    const ITEMS_PER_PAGE = 10;
-
-    const filteredTransaction = allWithdrawals.filter(txn => 
-        activeTab === "all" ? true : txn.status === activeTab
-    )
-
-    const totalPages = Math.ceil(filteredTransaction.length / ITEMS_PER_PAGE);
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const paginatedTransactions = filteredTransaction.slice(startIndex, endIndex)
-
-
-
     return (
         <div className="font-jakarta space-y-6">
             <div className="flex justify-between">
@@ -86,20 +62,29 @@ const Withdrawal = () => {
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-icon w-4 h-4" />
                     <Input type="text"
                         placeholder="Search transaction..."
+                        value={searchValue}
+                        onChange={(e) => {
+                            setSearchValue(e.target.value)
+                            setCurrentPage(1);
+                        }}
                         className="pr-10 w-60 shadow-none placeholder:text-megagreen border-icon/45 rounded-xl"
                     />
                 </div>
             </div>
             <ReusableTabs
                 activeTab={activeTab}
-                setActiveTab={setActiveTab}
+                setActiveTab={handleTabChange}
                 tabs={transactionTabs}
                 data={allWithdrawals}
                 countKey="status"
             />
             <WithdrawalTable
-                transactions={paginatedTransactions}
+                withdrawals={filteredTransaction}
                 onClick={(transaction)=> setSelectedTransaction(transaction)}
+                isLoading= {isLoading}
+                isError={isError}
+                onDownload= {handleDownload}
+                isPending= {isPending}
             />
 
             <PaginationComponent

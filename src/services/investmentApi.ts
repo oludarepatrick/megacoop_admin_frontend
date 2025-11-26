@@ -21,7 +21,7 @@ export const investmentAPI = {
     return response.data
   },
 
-  approveRejectKYC: async (id: number, data: ApproveRejectInvestment) => {
+  approveRejectInvestment: async (id: number, data: ApproveRejectInvestment) => {
     const response = await axios.post(`/admin/investments/status/${id}`, data)
     return response.data;
   },

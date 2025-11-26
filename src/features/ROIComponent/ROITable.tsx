@@ -1,18 +1,20 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { formatDate } from "@/lib/common";
-import type { TransactionList } from "@/types/transactions";
+// import { formatDate } from "@/lib/common";
+import type { ActiveUserInvestment } from "@/types/returnInvestment";
 
-type TransactionTableProps = {
-    transactions: TransactionList[];
-    onClick: (transaction: TransactionList) => void
+type ROITableProps = {
+    transactions: ActiveUserInvestment[];
+    onClick?: (transaction: ActiveUserInvestment) => void
     isLoading: boolean
     isError: boolean
 }
 
-const TransactionTable = ({transactions, onClick, isLoading, isError}: TransactionTableProps) => {
+const ROITable = ({transactions, 
+    // onClick, 
+    isLoading, isError}: ROITableProps) => {
 
    if (isLoading) {
         return (
@@ -91,24 +93,26 @@ const TransactionTable = ({transactions, onClick, isLoading, isError}: Transacti
                             <TableHead>Last Name</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Phone</TableHead>
-                            <TableHead>Amount</TableHead>
-                            <TableHead>Date</TableHead>
+                            {/* <TableHead>Amount</TableHead> */}
+                            <TableHead>Active</TableHead>
+                            {/* <TableHead>Date</TableHead>
                             <TableHead className="text-megagreen">Status</TableHead>
-                            <TableHead>Details</TableHead>
+                            <TableHead>Details</TableHead> */}
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {transactions.map((transaction) => (
-                            <TableRow key={transaction.id} className="hover:bg-muted/50 [&_td]:text-xs [&_td]:py-4 transition-colors">
-                                <TableCell>{transaction.user.first_name}</TableCell>
-                                <TableCell>{transaction.user.last_name}</TableCell>
-                                <TableCell>{transaction.user.email}</TableCell>
-                                <TableCell>{transaction.user.phone}</TableCell>
-                                <TableCell className="font-medium text-megagreen">
+                            <TableRow key={transaction.member_id} className="hover:bg-muted/50 [&_td]:text-xs [&_td]:py-4 transition-colors">
+                                <TableCell>{transaction.first_name}</TableCell>
+                                <TableCell>{transaction.last_name}</TableCell>
+                                <TableCell>{transaction.email}</TableCell>
+                                <TableCell>{transaction.phone}</TableCell>
+                                <TableCell className="text-megagreen">Active</TableCell>
+                                {/* <TableCell className="font-medium text-megagreen">
                                     ₦{Number(transaction.amount).toLocaleString()}
-                                </TableCell>
-                                <TableCell>{formatDate(transaction.created_at)}</TableCell>
-                                <TableCell>
+                                </TableCell> */}
+                                {/* <TableCell>{formatDate(transaction.created_at)}</TableCell> */}
+                                {/* <TableCell>
                                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                                         transaction.status === "approved" 
                                             ? "bg-green-100 text-green-700" 
@@ -118,8 +122,8 @@ const TransactionTable = ({transactions, onClick, isLoading, isError}: Transacti
                                     }`}>
                                         {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
                                     </span>
-                                </TableCell>
-                                <TableCell>
+                                </TableCell> */}
+                                {/* <TableCell>
                                     <Button
                                         onClick={() => onClick(transaction)}
                                         variant="outline"
@@ -127,7 +131,7 @@ const TransactionTable = ({transactions, onClick, isLoading, isError}: Transacti
                                     >
                                         View
                                     </Button>
-                                </TableCell>
+                                </TableCell> */}
                             </TableRow>
                         ))}
                     </TableBody>
@@ -137,4 +141,4 @@ const TransactionTable = ({transactions, onClick, isLoading, isError}: Transacti
     )
 }
 
-export default TransactionTable;
+export default ROITable;

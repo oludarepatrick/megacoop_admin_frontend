@@ -36,7 +36,7 @@ export function useInvestmentApplication() {
 export function useApproveDeclineInvestment(){
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: ({ id, data }: { id: number; data: ApproveRejectInvestment }) => investmentAPI.approveRejectKYC(id, data),
+        mutationFn: ({ id, data }: { id: number; data: ApproveRejectInvestment }) => investmentAPI.approveRejectInvestment(id, data),
         onSuccess:() => {
             console.log("successful")
             queryClient.invalidateQueries({ queryKey: ["applications"] })
