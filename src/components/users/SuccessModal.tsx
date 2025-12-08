@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import backgroundSuccess from "@/assets/user-success-bg-image.png"
 import { PlusCircle } from "lucide-react"
@@ -15,21 +14,16 @@ import type { UserFormValues } from "@/types/User"
 interface SuccessModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-    values: UserFormValues
-    reset: () => void
+  values: UserFormValues
+  onClose: () => void
 }
 
-export function SuccessModal({ open, onOpenChange, values, reset }: SuccessModalProps) {
+export function SuccessModal({ open, onOpenChange, values, onClose }: SuccessModalProps) {
     console.log("SuccessModal values:", values);
   
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => onOpenChange(true)}>
-          Show Success Modal
-        </Button>
-      </DialogTrigger>
       <DialogContent className=" font-poppins sm:max-w-md bg-no-repeat bg-center bg-cover h-[500px] max-h-screen flex flex-col justify items-center gap-10 pt-34" style={{backgroundImage: `url(${backgroundSuccess})` }}>
         <DialogHeader className="text-center">
                   <DialogTitle className="text-2xl font-semibold flex flex-col items-center ">
@@ -47,14 +41,11 @@ export function SuccessModal({ open, onOpenChange, values, reset }: SuccessModal
         </div>
                   </DialogTitle>
           <DialogDescription className="mt-2 text-gray-600 text-center w-[65%] mx-auto">
-            <p>New user has been added <span className="text-megagreen">Successfully. Password has been sent to this email.</span>{values.email ? ` (${values.email})` : ""}</p>
+            New user has been added <span className="text-megagreen">Successfully. Password has been sent to this email.</span>{values.email ? ` (${values.email})` : ""}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="justify-center w-full ">
-          <Button variant="outline" onClick={() => {
-            onOpenChange(false);
-            reset();
-          }}
+          <Button variant="outline" onClick={onClose}
           className="w-full border-green-600 text-green-600 hover:bg-green-50 hover:text-green-700 bg-transparent"
           >
             Close

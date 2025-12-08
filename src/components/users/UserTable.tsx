@@ -1,19 +1,18 @@
-// import { Button } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-// import { formatDate } from "@/lib/common";
-import type { ActiveUserInvestment } from "@/types/returnInvestment";
+import type { User } from "@/types/User";
+import { StatusSwitch } from "./UserStatusSwitch";
 
-type ROITableProps = {
-    transactions: ActiveUserInvestment[];
-    onClick: (transaction: ActiveUserInvestment) => void
+type UserAdminTableProps = {
+    userList: User[];
+    onClick?: (user: User) => void
     isLoading: boolean
     isError: boolean
 }
 
-const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) => {
+const UserAdminTable = ({userList, onClick, isLoading, isError}: UserAdminTableProps) => {
 
    if (isLoading) {
         return (
@@ -21,17 +20,18 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
                 <div className="overflow-x-auto green-scrollbar border rounded-lg shadow-sm p-3 pb-0">
                     <Table>
                         <TableHeader className="[&_tr]:border-b-0 bg-muted-foreground/20">
-                            <TableRow className="bg-transparent [&_th]:text-xs ">
-                                <TableHead>First Name</TableHead>
-                                <TableHead>Last Name</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Phone</TableHead>
-                                <TableHead>No of Investment</TableHead>
-                                <TableHead>Details</TableHead>
+                            <TableRow className="bg-transparent [&_th]:text-xs [&_th]:uppercase ">
+                                <TableHead className="text-gray-900">ID</TableHead>
+                                <TableHead className="text-gray-900">Name</TableHead>
+                                <TableHead className="text-gray-900">Email</TableHead>
+                                <TableHead className="text-gray-900">Phone</TableHead>
+                                <TableHead className="text-gray-900">Role</TableHead>
+                                <TableHead className="text-center text-[#F4C566]">STATUS</TableHead>
+                                <TableHead className="text-gray-900">ACTIONS</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {Array.from({ length: 8 }).map((_, index) => (
+                            {Array.from({ length: 5 }).map((_, index) => (
                                 <TableRow key={index}>
                                     <TableCell><Skeleton className="h-4 w-20" /></TableCell>
                                     <TableCell><Skeleton className="h-4 w-20" /></TableCell>
@@ -39,6 +39,7 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
                                     <TableCell><Skeleton className="h-4 w-24" /></TableCell>
                                     <TableCell><Skeleton className="h-4 w-20" /></TableCell>
                                     <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-16" /></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -65,7 +66,7 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
     }
 
     // Show empty state
-    if(transactions.length === 0) {
+    if(userList.length === 0) {
         return (
             <Card className="p-0 px-4 pb-2 border-0 shadow-none">
                 <div className="flex justify-center items-center py-12 text-muted-foreground">
@@ -79,31 +80,34 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
     }
     
     return (
-        <Card className="p-0 px-4 pb-2 border-0 shadow-none ">
+        <Card className="p-0 pb-2 border-0 shadow-none ">
             <div className="overflow-x-auto green-scrollbar border rounded-lg shadow-sm p-3 pb-0">
                 <Table>
                     <TableHeader className="[&_tr]:border-b-0 bg-muted-foreground/20">
-                        <TableRow className="bg-transparent [&_th]:text-xs ">
-                            <TableHead>First Name</TableHead>
-                            <TableHead>Last Name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Phone</TableHead>
-                            <TableHead>No of Investment</TableHead>
-                            <TableHead>Details</TableHead>
+                        <TableRow className="bg-gray-50 [&_th]:text-xs [&_th]:uppercase [&_th]:font-semibold ">
+                            <TableHead className="text-gray-900">ID</TableHead>
+                            <TableHead className="text-gray-900">Name</TableHead>
+                            <TableHead className="text-gray-900">Email</TableHead>
+                            <TableHead className="text-gray-900">Phone</TableHead>
+                            <TableHead className="text-gray-900">Role</TableHead>
+                            <TableHead className="text-center text-megaorange">STATUS</TableHead>
+                            <TableHead className="text-gray-900">ACTIONS</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {transactions.map((transaction) => (
-                            <TableRow key={transaction.member_id} className="hover:bg-muted/50 [&_td]:text-xs [&_td]:py-4 transition-colors">
-                                <TableCell>{transaction.first_name}</TableCell>
-                                <TableCell>{transaction.last_name}</TableCell>
-                                <TableCell>{transaction.email}</TableCell>
-                                <TableCell>{transaction.phone}</TableCell>
-                                <TableCell className="text-megagreen text-center">{transaction.investments.length}</TableCell>
-                                
+                        {userList.map((user) => (
+                            <TableRow key={user.id} className="hover:bg-muted/50 [&_td]:text-xs [&_td]:py-4 transition-colors">
+                                <TableCell>{[user.first_name, user.middle_name, user.last_name].filter(Boolean).join(" ")}</TableCell>
+                                <TableCell>{[user.first_name, user.middle_name, user.last_name].filter(Boolean).join(" ")}</TableCell>
+                                <TableCell>{user.email}</TableCell>
+                                <TableCell>{user.phone}</TableCell>
+                                <TableCell>{user.role.name}</TableCell>
+                                <TableCell className="font-medium text-megagreen">
+                                    <StatusSwitch status={user.status_text} />
+                                </TableCell>
                                 <TableCell>
                                     <Button
-                                        onClick={() => onClick(transaction)}
+                                        onClick={() => onClick?.(user)}
                                         variant="outline"
                                         className="border border-megagreen text-megagreen py-[6px] px-4 h-auto rounded-full text-xs font-medium hover:bg-megagreen hover:text-white transition-all"
                                     >
@@ -119,4 +123,4 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
     )
 }
 
-export default ROITable;
+export default UserAdminTable;

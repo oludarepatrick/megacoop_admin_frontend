@@ -1,25 +1,49 @@
 import PaginationComponent from "@/components/PaginationComponent";
 // import ReusableTabs from "@/components/ReusableTabs";
 import { Input } from "@/components/ui/input";
+// import ROIDetailView from "@/features/ROIComponent/ROIDetailView";
 import ROITable from "@/features/ROIComponent/ROITable";
 // import TransactionDetailModal from "@/features/TransactionComponent/TransactionDetailModal";
 import { useActiveUserInvestment } from "@/hooks/useROI";
-// import type { ActiveUserInvestment } from "@/types/returnInvestment";
+import type { ActiveUserInvestment } from "@/types/returnInvestment";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const ROIPage = () => {
     // const [activeTab, setActiveTab] = useState<ActiveUserInvestment["status"] | "all">("all");
     const [currentPage, setCurrentPage] = useState(1);
-    // const [selectedTransaction, setSelectedTransaction] = useState<ActiveUserInvestment | null>(null)
     const [searchValue, setSearchValue] = useState("")
 
-    const {data, isLoading, isError} = useActiveUserInvestment(currentPage);
+    const navigate = useNavigate();
 
+    
+    const {data, isLoading, isError} = useActiveUserInvestment(currentPage);
+    
     const allActiveInvestment = data?.data || [];
     const totalPages = data?.last_page || 1;
+    
+    
 
+    const handleClick = (user: ActiveUserInvestment) => {
+        navigate(`user-investment/${user.investments[0]?.user_id}`);
+
+    };
+    // const handleBack = () => {
+    //     setSelectedUser(null);
+    //     // navigate(-1);
+    //     // setSearchParams({});
+    // };
+
+    // if (selectedUser) {
+    //     return (
+    //         <ROIDetailView 
+    //             user={selectedUser} 
+    //             onBack={handleBack}
+    //         />
+    //     );
+    // }
     // const transactionTabs = [
     //     { value: "all" as const, label: "All Transactions" },
     //     { value: "approved" as const, label: "Approved" },
@@ -38,7 +62,7 @@ const ROIPage = () => {
 
     // filter by search
     const query = searchValue.toLowerCase();
-    const filteredTransaction = searchValue ?
+    const filteredUser = searchValue ?
     allActiveInvestment.filter(list => {
         return [
             list.email,
@@ -75,8 +99,8 @@ const ROIPage = () => {
                 countKey="status"
             /> */}
             <ROITable
-                transactions={filteredTransaction}
-                // onClick={(transaction)=> setSelectedTransaction(transaction)}
+                transactions={filteredUser}
+                onClick={handleClick}
                 isLoading={isLoading}
                 isError={isError}
             />
@@ -95,7 +119,6 @@ const ROIPage = () => {
 
                 />
             )} */}
-
 
         </div>
     );

@@ -1,12 +1,11 @@
 import { Users, PlusCircle } from "lucide-react"
-import { fetchUsers } from "@/services/UserService"
+import type { UserResponse } from "@/types/User";
 
 interface UsersStatsBannerProps {
-  data?: Awaited<ReturnType<typeof fetchUsers>>
+  data?: UserResponse;
 }
 
 export function UsersStatsBanner({ data }: UsersStatsBannerProps) {
-    console.log("UsersStatsBanner data:", data);
   return (
     <div className="w-full h-48 rounded-2xl bg-gradient-to-r from-[#111827] to-[#1F2937] relative overflow-hidden shadow-lg flex items-center px-8 md:px-12 mb-8 mt-6">
       {/* Decorative background elements */}

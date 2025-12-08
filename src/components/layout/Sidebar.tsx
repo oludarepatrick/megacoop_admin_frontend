@@ -84,12 +84,6 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             <UserRoundCheck className="w-5 h-5" />
                             KYC Verification
                         </NavLink>
-
-                        {/* sub admins/users */}
-                        <NavLink to="users" className={activeClass} onClick={onClose} >
-                            <User2Icon className="w-5 h-5" />
-                            Sub-Admin/Users
-                        </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
 
@@ -109,6 +103,18 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                         <NavLink to="profile" className={activeClass} onClick={onClose} >
                             <UserCog className="w-5 h-5" />
                             Profile
+                        </NavLink>
+                        
+                        {/* sub admins/users */}
+                        <NavLink to="users" className={activeClass} onClick={onClose} >
+                            <User2Icon className="w-5 h-5" />
+                            Sub-Admin/Users
+                        </NavLink>
+
+                        {/* market product listing */}
+                        <NavLink to="product-listing" className={activeClass} onClick={onClose} >
+                            <Wallet className="w-5 h-5" />
+                            Product Listing
                         </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
