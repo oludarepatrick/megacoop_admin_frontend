@@ -1,21 +1,26 @@
 import { cn } from "@/lib/utils"
 
 interface StatusSwitchProps {
-  status: "active" | "inactive"
+  status: "Active" | "Inactive"
+  onToggle?: () => void
+  isPending?: boolean
 }
 
-export function StatusSwitch({ status }: StatusSwitchProps) {
-  const isActive = status === "active"
+export function StatusSwitch({ status, onToggle, isPending }: StatusSwitchProps) {
+  const isActive = status === "Active"
 
   return (
     <div className="flex items-center gap-3">
       <span className={cn("text-xs font-medium uppercase", isActive ? "text-green-600" : "text-red-500")}>
         {isActive ? "Active" : "Deactivated"}
       </span>
-      <div
+      <button
+        onClick={onToggle}
+        disabled={isPending}
         className={cn(
-          "w-11 h-6 rounded-full p-1 flex items-center transition-colors duration-200 ease-in-out pointer-events-none", // pointer-events-none for read-only
+          "w-11 h-6 rounded-full p-1 flex items-center transition-colors duration-200 ease-in-out", 
           isActive ? "bg-green-500" : "bg-red-500",
+          isPending && "opacity-50 pointer-events-none"
         )}
       >
         <div
@@ -24,7 +29,7 @@ export function StatusSwitch({ status }: StatusSwitchProps) {
             isActive ? "translate-x-5" : "translate-x-0",
           )}
         />
-      </div>
+      </button>
     </div>
   )
 }

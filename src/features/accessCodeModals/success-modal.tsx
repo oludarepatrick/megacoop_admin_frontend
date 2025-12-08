@@ -34,7 +34,7 @@ export function SuccessModal({
                 Access Code Generated Successfully
             </DialogDescription>
 
-          <span className="text-center text-gray-600 text-xs text-green-800">
+          <span className="text-center text-xs text-green-800">
               And has been sent to : <span className="font-semibold text-megagreen">
                 {formData.email.replace(/(.{3})(.*)(?=@)/, "$1****")}
               </span>

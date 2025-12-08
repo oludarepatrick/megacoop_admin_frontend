@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+// import ROIDetailView from "./features/ROIComponent/ROIDetailView";
 // import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
@@ -17,6 +18,8 @@ const Withdrawal = lazy(() => import("./pages/Withdrawal"));
 const InvestmentList = lazy(() => import("./pages/InvestmentList"));
 const LoanPage = lazy(() => import("./pages/Loan"));
 const ROIPage = lazy(() => import("./pages/ROIPage"));
+const ROIDetailPage = lazy(() => import("./pages/ROIDetailPage"));
+const ProductListing = lazy(() => import("./pages/ProductListing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 export const routes = createBrowserRouter([
@@ -88,6 +91,14 @@ export const routes = createBrowserRouter([
         )
       },
       {
+        path: "product-listing", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ProductListing />
+          </Suspense>
+        )
+      },
+      {
         path: "transactions", 
         element: (
           <Suspense fallback={<PageLoader />}>
@@ -140,6 +151,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <ROIPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "roi-processing/user-investment/:userId", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ROIDetailPage />
           </Suspense>
         )
       },
