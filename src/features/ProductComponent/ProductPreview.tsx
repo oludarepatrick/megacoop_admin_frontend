@@ -1,75 +1,74 @@
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/components/ui/dialog"
-import type { ProductList } from "@/types/product";
+import type { ProductFormData } from "@/validations/product-schema";
 
 
-type ProductDetailModalProps = {
+type ProductPreviewModalProps = {
     isOpen: boolean
     onClose: () => void
-    product: ProductList
+    formData: ProductFormData
 }
 
-const ProductDetailModal = ({isOpen, onClose, product}: ProductDetailModalProps) => {
-
+const ProductPreviewModal = ({isOpen, onClose, formData}: ProductPreviewModalProps) => {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="font-jakarta sm:max-w-xl p-0 pb-8 max-h-[90vh] overflow-y-auto scrollbar-hide" aria-describedby={undefined}>
+            <DialogContent className="font-jakarta sm:max-w-lg p-0 pb-8 max-h-[90vh] overflow-y-auto scrollbar-hide" 
+                aria-describedby={undefined}
+                onInteractOutside={(e) => e.preventDefault()} 
+                onEscapeKeyDown={(e) => e.preventDefault()}
+            >
                 <DialogHeader className="py-4 border-b border-icon/30 bg-megagreen">
-                    <DialogTitle className="font-semibold text-white text-center">Product View</DialogTitle>
+                    <DialogTitle className="font-semibold text-white text-center">Product Preview</DialogTitle>
                 </DialogHeader>
 
                 <div className="flex flex-col gap-4 pb-4 px-4 shadow-md border-b-2 border-b-megagreen/60">
                     <div className="flex self-center">
-                        {product?.images?.map((img, i) => (
+                        {formData?.images?.map((img, i) => (
                             <img 
                                 key={i}
-                                src={img === "" ? "" : img} alt=""
+                                src={typeof img === "string" ? img : URL.createObjectURL(img)} alt=""
                                 className="w-16 h-16 rounded-full object-cover border-2 border-gray-300 -ml-6 first:ml-0 relative"
                                 style={{zIndex: i + 1}}
                             />
                         ))}
                     </div>
-                    <div className="pt-4 max-w-[307px] mx-auto [&_div]:grid [&_div]:grid-cols-2 [&_div]:gap-4 space-y-3 text-sm">
+                    <div className="pt-4 max-w-[307px] mx-auto [&_div]:grid [&_div]:grid-cols-2 space-y-3 text-sm">
                         <div>
                             <h4>Product Name:</h4>
-                            <span className="font-medium text-megagreen">{product?.product_name}</span>
+                            <span className="font-medium text-megagreen">{formData.product_name}</span>
                         </div>
                         <div>
                             <h4>Product Category:</h4>
-                            <span className="font-medium text-megagreen">{product?.product_category}</span>
+                            <span className="font-medium text-megagreen">{formData.product_category}</span>
                         </div>
                         <div>
                             <h4>Available Stock:</h4>
-                            <span className="font-medium text-megagreen">{product?.available_stock}</span>
+                            <span className="font-medium text-megagreen">{formData.available_stock}</span>
                         </div>
                         <div>
                             <h4>Price:</h4>
-                            <span className="font-medium text-megagreen">₦{parseInt(product?.price).toLocaleString()}</span>
+                            <span className="font-medium text-megagreen">₦{formData.price}</span>
                         </div>
                         <div>
                             <h4>Seller Name:</h4>
-                            <span className="font-medium text-megagreen">{product?.seller?.name}</span>
+                            <span className="font-medium text-megagreen">{formData.seller_name}</span>
                         </div>
                         <div>
                             <h4>Delivery fee:</h4>
-                            <span className="font-medium text-megagreen">₦{parseInt(product?.delivery_fee).toLocaleString()}</span>
+                            <span className="font-medium text-megagreen">₦{formData.delivery_fee}</span>
                         </div>
                         <div>
                             <h4>Size:</h4>
-                            <span className="font-medium text-megagreen">{product?.size || "Nil"}</span>
+                            <span className="font-medium text-megagreen">{formData.size || "Nil"}</span>
                         </div>
                         <div>
                             <h4>Color:</h4>
-                            <span className="font-medium text-megagreen">{product?.color || "Nil"}</span>
-                        </div>
-                        <div>
-                            <h4>Product Status:</h4>
-                            <span className="font-medium text-megagreen">{product.status === "active" ? "Visible" : product.status === "pending" ? "Not visible": product.status}</span>
+                            <span className="font-medium text-megagreen">{formData.color || "Nil"}</span>
                         </div>
                     </div>
                 </div>
                 <DialogFooter className="sm:flex-col flex-col text-center text-sm px-4">
                     <h4 className="text-megagreen font-semibold ">Description</h4>
-                    <p>{product.full_description}</p>
+                    <p>{formData.full_description}</p>
                 </DialogFooter>
             </DialogContent>
 
@@ -77,4 +76,4 @@ const ProductDetailModal = ({isOpen, onClose, product}: ProductDetailModalProps)
     )
 }
 
-export default ProductDetailModal;
+export default ProductPreviewModal;

@@ -61,10 +61,11 @@ const KYCVerificationTable = ({status, kycList, isLoading, isError, error, onvie
                                 <TableCell>{list.email}</TableCell>
                                 <TableCell>{list.phone}</TableCell>
                                 <TableCell className="text-megagreen" >
-                                    {list.admin_approval_status === 'approved' ? 
+                                    {/* {list.admin_approval_status === 'approved' ? 
                                         <span className="bg-megagreen/30 p-1 px-2 rounded-md text-megagreen">Approved</span> : 
                                         "Request"
-                                    }
+                                    } */}
+                                    {list.admin_approval_status}
                                 </TableCell>
                                 <TableCell className=" w-[120px] cursor-pointer">
                                     <span className="text-megagreen rounded-2xl underline underline-offset-3 " onClick={()=> onviewDetails?.(list)}>

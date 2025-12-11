@@ -1,6 +1,6 @@
 import { ROIAPI } from "@/services/ROIApi";
 import type { ROIPaymentFormData } from "@/validations/roi-payment-schema";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { toast } from "sonner";
 
@@ -19,11 +19,13 @@ export function useSingleUserInvestment(id: number) {
 }
 
 export function useROIProcessPayment() {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (data: ROIPaymentFormData) => ROIAPI.roiProcessPayment(data),
         onSuccess: () => {
             console.log("ROI Payment Processed Successfully");
             toast.success("ROI Transaction Request Sent Succesfully")
+            queryClient.invalidateQueries({queryKey:["investment-dashboard"]})
         },
         onError: (error: AxiosError<{message: string}>) => {
             console.log("Error processing ROI payment:", error.response?.data.message);

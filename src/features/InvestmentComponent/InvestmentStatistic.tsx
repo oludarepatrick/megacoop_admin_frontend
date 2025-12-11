@@ -23,15 +23,15 @@ const InvestmenStatistic = () => {
 
 
     const chartData = [
-        { title: "ROI", value: value.total_roi, fill: "#10B981"},
-        { title: "Total Raised", value: value.amount_raised, fill: "#212735"},
+        { title: "ROI", value: value.total_roi, fill: "#10B981", percent: value.roi_percentage},
+        { title: "Total Raised", value: value.amount_raised, fill: "#212735", percent: value.amount_percentage},
     ]
 
-    const totalAmount = chartData.reduce((sum, item) => sum + item.value, 0);
-    const cummulativeData = chartData.map(item => ({
-        ...item,
-        percent: ((item.value / totalAmount) * 100).toFixed(0),
-    }));
+    // const totalAmount = chartData.reduce((sum, item) => sum + item.value, 0);
+    // const cummulativeData = chartData.map(item => ({
+    //     ...item,
+    //     percent: ((item.value / totalAmount) * 100).toFixed(0),
+    // }));
 
     const CustomLegend = ({config, className}:LegendProps) => {
         return (
@@ -57,7 +57,7 @@ const InvestmenStatistic = () => {
                 <div>
                     <PieChart width={250} height={250}>
                         <Pie
-                            data={cummulativeData}
+                            data={chartData}
                             dataKey="value"
                         >
                             {chartData.map((entry, index)=> (

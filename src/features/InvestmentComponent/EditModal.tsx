@@ -32,7 +32,7 @@ const EditModal = ({isOpen, onClose, investment, onSubmit, isPending }: EditModa
             max_amount: "",
             roi: "",
             amount_needed: "",
-            status: "pending", // <-- important default
+            status: "pending", // default
         }
     })
 
