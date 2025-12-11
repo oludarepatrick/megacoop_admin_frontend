@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon } from "lucide-react";
+import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
@@ -28,6 +28,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
     const [loanMgmtOpen, setLoanMgmtOpen] = useState(false);
     const [transactionOpen, setTransactionOpen] = useState(false);
     const [investmentOpen, setInvestmentOpen] = useState(false);
+    const [marketPlaceOpen, setMarketPlaceOpen] = useState(false);
 
     const handleLogout = () => mutate();
 
@@ -110,12 +111,6 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             <User2Icon className="w-5 h-5" />
                             Sub-Admin/Users
                         </NavLink>
-
-                        {/* market product listing */}
-                        <NavLink to="product-listing" className={activeClass} onClick={onClose} >
-                            <Wallet className="w-5 h-5" />
-                            Product Listing
-                        </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
 
@@ -144,7 +139,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     <CollapsibleTrigger asChild>
                         <div className="flex gap-3 cursor-pointer items-center text-white">
                             <ArrowRightLeft className="w-5 h-5" />
-                            <span className="flex-1">Transation</span>
+                            <span className="flex-1">Transaction</span>
                             <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
                                     "rotate-90": transactionOpen
                                 })}
@@ -174,7 +169,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             <CircleDollarSign className="w-5 h-5" />
                             <span className="flex-1">Invest Management</span>
                             <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
-                                    "rotate-90": transactionOpen
+                                    "rotate-90": investmentOpen
                                 })}
                             />
                         </div>
@@ -194,6 +189,29 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                     ROI Processing
                 </NavLink>
 
+                {/* marketplace collapsible */}
+                <Collapsible open={marketPlaceOpen} onOpenChange={setMarketPlaceOpen}>
+                    <CollapsibleTrigger asChild>
+                        <div className="flex gap-3 cursor-pointer items-center text-white">
+                            <ShoppingBag className="w-5 h-5" />
+                            <span className="flex-1">Market Place</span>
+                            <ChevronRight  className={clsx("w-4 h-4 transition-transform", {
+                                    "rotate-90": marketPlaceOpen
+                                })}
+                            />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-8 mt-3 flex flex-col gap-3">
+                        <NavLink to="product-listing" className={activeClass} onClick={onClose}>
+                            <BaggageClaim className="w-5 h-5" />
+                            Product Listing
+                        </NavLink>
+                        <NavLink to="orders" className={activeClass} onClick={onClose}>
+                            <ShoppingCart className="w-5 h-5" />
+                            Orders
+                        </NavLink>
+                    </CollapsibleContent>
+                </Collapsible>
 
                 <hr className="my-6 border-white/20" />
 

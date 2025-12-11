@@ -29,6 +29,7 @@ const ProductListTable = ({ products, onClick, isLoading, isError, onOpenForm }:
             year: "numeric",
         });
     };
+    console.log(products)
 
     if(isLoading) {
         return (

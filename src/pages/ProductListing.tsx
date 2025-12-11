@@ -2,25 +2,23 @@ import PaginationComponent from "@/components/PaginationComponent";
 import ReusableTabs from "@/components/ReusableTabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import EditModal from "@/features/InvestmentComponent/EditModal";
-// import InvestListDetailModal from "@/features/InvestmentComponent/InvestListDetailModal";
-// import InvestmentWizard from "@/features/InvestmentComponent/InvestmentWizard";
 import SuccessModal from "@/features/InvestmentComponent/SuccessModal";
+import AddProductForm from "@/features/ProductComponent/AddproductForm";
+import EditProductModal from "@/features/ProductComponent/EditProductModal";
 import ProductDetailModal from "@/features/ProductComponent/ProductDetailModal";
 import ProductListTable from "@/features/ProductComponent/ProductTable";
-// import { useUpdateInvestment } from "@/hooks/useInvestment";
-import { useProductList } from "@/hooks/useProduct";
+import { useProductList, useUpdateProduct } from "@/hooks/useProduct";
 import type { ProductList } from "@/types/product";
-// import type { EditFormData } from "@/validations/investment-schema";
+import type { EditProductFormData } from "@/validations/product-schema";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 
 
 const ProductListing = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    // const [investmentWizardOpen, setInvestmentWizardOpen ] = useState(false)
-    const [selectedInvestment, setSelectedInvestment] = useState<ProductList | null>(null)
-    // const [editInvestment, setEditInvestment] = useState<ProductList | null>(null)
+    const [productFormOpen, setProductFormOpen ] = useState(false)
+    const [selectedProduct, setSelectedProduct] = useState<ProductList | null>(null)
+    const [editProduct, setEditProduct] = useState<ProductList | null>(null)
     const [activeTab, setActiveTab] = useState<ProductList["status"] | "all" >("all");
     const [searchValue, setSearchValue] = useState("")
     const [successModal, setSuccessModal] = useState<{
@@ -30,17 +28,17 @@ const ProductListing = () => {
 
     const {data, isLoading, isError} = useProductList(currentPage)
 
-        console.log("data fetched", data)
+    console.log("data fetched", data)
 
-    // const {mutate: updateMutate, isPending: isUpdatePending} = useUpdateInvestment(() => {
-    //     setEditInvestment(null)
-    //     setSuccessModal({
-    //         isOpen: true,
-    //         title: "Investment has been updated successfully"
-    //     })
-    // })
+    const {mutate: updateMutate, isPending} = useUpdateProduct(() => {
+        setEditProduct(null)
+        setSuccessModal({
+            isOpen: true,
+            title: "Product has been updated successfully"
+        })
+    })
     
-    const allInvestments = data?.data || []
+    const allProducts = data?.data || []
     const totalPages = data?.last_page || 1
 
     const transactionTabs = [
@@ -54,24 +52,24 @@ const ProductListing = () => {
         setCurrentPage(1)
     }
 
-    // const handleSubmitForm = (data: EditFormData) => {
-    //     if(!editInvestment?.id) return
-    //     updateMutate({
-    //         id: editInvestment.id,
-    //         data:{ ...data }
-    //     })
-    // }
-    // const handleSuccessModal = () => {
-    //     setInvestmentWizardOpen(false)
-    //     setSuccessModal({
-    //         isOpen: true,
-    //         title: "New Investment has been added successfully"
-    //     })
-    // }
+    const handleSubmitForm = (data: EditProductFormData) => {
+        if(!editProduct?.product_id) return
+        updateMutate({
+            id: editProduct.product_id,
+            data:{ ...data }
+        })
+    }
+    const handleSuccessModal = () => {
+        setProductFormOpen(false)
+        setSuccessModal({
+            isOpen: true,
+            title: "New Product has been added successfully"
+        })
+    }
         
     // filter by tab
     const filterbyTab = activeTab === "all" 
-    ? allInvestments : allInvestments.filter((list) => list.status === activeTab)
+    ? allProducts : allProducts.filter((list) => list.status === activeTab)
 
     // filter by search
     const filteredList = searchValue ?
@@ -86,7 +84,7 @@ const ProductListing = () => {
         <div className="font-jakarta space-y-4">
             <div className="flex gap-6 items-center">
                 <Button className="bg-megaorange/80 text-white hover:bg-megaorange/70"
-                    // onClick={() => setInvestmentWizardOpen(true)}
+                    onClick={() => setProductFormOpen(true)}
                 >
                     <Plus/> Add new Product
                 </Button>
@@ -111,14 +109,14 @@ const ProductListing = () => {
                 activeTab={activeTab}
                 setActiveTab={handleTabChange}
                 tabs={transactionTabs}
-                data={allInvestments}
+                data={allProducts}
                 countKey="status"
             />
 
             <ProductListTable
                 products={filteredList}
-                onClick={(product)=> setSelectedInvestment(product)}
-                // onOpenForm={product => setEditInvestment(product)}
+                onClick={(product)=> setSelectedProduct(product)}
+                onOpenForm={product => setEditProduct(product)}
                 isLoading={isLoading}
                 isError={isError}
             />
@@ -129,32 +127,32 @@ const ProductListing = () => {
                 setCurrentPage={setCurrentPage}
             />
 
-            {selectedInvestment && (
+            {selectedProduct && (
                 <ProductDetailModal
-                    isOpen={!!selectedInvestment}
-                    onClose={() => setSelectedInvestment(null)}
-                    product={selectedInvestment} 
+                    isOpen={!!selectedProduct}
+                    onClose={() => setSelectedProduct(null)}
+                    product={selectedProduct} 
 
                 />
             )}
 
-            {/* {investmentWizardOpen && (
-                <InvestmentWizard 
-                    isOpen={investmentWizardOpen}
-                    onClose={()=> setInvestmentWizardOpen(false)}
+            {productFormOpen && (
+                <AddProductForm 
+                    isOpen={productFormOpen}
+                    onClose={()=> setProductFormOpen(false)}
                     onSuccess={handleSuccessModal}
                 />
-            )} */}
+            )}
 
-            {/* {editInvestment && (
-                <EditModal
-                    isOpen={!!editInvestment}
-                    onClose={()=> setEditInvestment(null)}
+            {editProduct && (
+                <EditProductModal
+                    isOpen={!!editProduct}
+                    onClose={()=> setEditProduct(null)}
                     onSubmit={handleSubmitForm}
-                    investment={editInvestment}
-                    isPending={isUpdatePending}
+                    product={editProduct}
+                    isPending={isPending}
                 /> 
-            )} */}
+            )}
 
              <SuccessModal 
                 isOpen={successModal.isOpen}
