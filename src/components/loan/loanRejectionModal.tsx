@@ -7,7 +7,7 @@ import { useState } from "react"
 interface LoanRejectionModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  onSubmit: (reason: string, explanation?: string) => Promise<void>
+  onSubmit?: (reason: string, explanation?: string) => Promise<void>
 }
 
 const rejectionReasons = [
@@ -29,7 +29,7 @@ export function LoanRejectionModal({ open, onOpenChange, onSubmit }: LoanRejecti
     if (!selectedReason) return
     setIsSubmitting(true)
     try {
-      await onSubmit(selectedReason, explanation)
+      await onSubmit?.(selectedReason, explanation)
       setSelectedReason("")
       setExplanation("")
     } finally {

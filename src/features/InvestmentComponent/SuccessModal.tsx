@@ -9,9 +9,10 @@ type ConfirmModalProps ={
     onClose: () => void
     isOpen: boolean
     title: string
+    imgIcon?: string
 }
 
-const SuccessModal = ({isOpen,  onClose, title}: ConfirmModalProps) => {
+const SuccessModal = ({isOpen,  onClose, title, imgIcon = successImg}: ConfirmModalProps) => {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="sm:max-w-md bg-linear-to-b from-[#E6FFE3] via-[#F3FFF1] to-[#FFFFFF] gap-6 pt-0 ">
@@ -20,7 +21,7 @@ const SuccessModal = ({isOpen,  onClose, title}: ConfirmModalProps) => {
                 </DialogHeader>
                 <div className="space-y-6">
                     <div className="">
-                        <img src={successImg} alt="error-image" className="mx-auto w-60 mb-2"/>
+                        <img src={imgIcon} alt="error-image" className="mx-auto w-60 mb-2"/>
 
                     </div>
                     <h2 className="text-center font-semibold text-lg">

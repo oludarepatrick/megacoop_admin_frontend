@@ -7,22 +7,9 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { useDashboardChart } from "@/hooks/useDashboard";
 import {Cell, LabelList, Pie, PieChart } from "recharts";
 
-const chartData = [
-  { title: "Total Loan", amount: 245000, fill: "#FFBB38", offset: 5 },
-  { title: "Total Earn", amount: 293000, fill: "#343C6A", offset: -5 },
-  { title: "Total Saved", amount: 325000, fill: "#052014", offset: 5 },
-  { title: "Total Disbursed", amount: 323000, fill: "#14AE5C", offset: -5 },
-];
-
-
-const totalAmount = chartData.reduce((sum, item) => sum + item.amount, 0);
-
-const processedData = chartData.map((item) => ({
-  ...item,
-  percent: ((item.amount / totalAmount) * 100).toFixed(0), 
-}));
 
 const chartConfig = {
   "Total Loan": { label: "Total Loan", color: "#FFBB38" },
@@ -32,6 +19,28 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const DashboardExpenseStatistic = () => {
+  const {data, isLoading} = useDashboardChart()
+  console.log(data?.expense_statistics)
+
+  if(isLoading || !data) return <p>Loading statisctis</p>
+
+  const value = data.expense_statistics
+
+  const chartData = [
+    { title: "Total Loan", amount: value.total_loan, fill: "#FFBB38", offset: 5 },
+    { title: "Total Earn", amount: value.total_earn, fill: "#343C6A", offset: -5 },
+    { title: "Total Saved", amount: value.total_saved, fill: "#052014", offset: 5 },
+    { title: "Total Disbursed", amount: value.total_disburse, fill: "#14AE5C", offset: -5 },
+  ];
+
+
+  const totalAmount = chartData.reduce((sum, item) => sum + item.amount, 0);
+  console.log(totalAmount);
+
+  const processedData = chartData.map((item) => ({
+    ...item,
+    percent: ((item.amount / totalAmount) * 100).toFixed(0), 
+  }));
   
   return (
     <Card className="px-4 py-4">

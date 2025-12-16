@@ -169,6 +169,8 @@ export function AddUserModal({isOpen, onClose, onSuccess}: AddUserModalProps) {
                                 <SelectContent>
                                   <SelectItem value="1">Super Admin</SelectItem>
                                   <SelectItem value="2">Support Admin</SelectItem>
+                                  <SelectItem value="3">Customer Support</SelectItem>
+                                  <SelectItem value="3">Account Officer</SelectItem>
                                   
                                 </SelectContent>
                               </Select>

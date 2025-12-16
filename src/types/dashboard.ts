@@ -17,10 +17,10 @@ export type DashboardCharts ={
 }
 
 export type ExpenseStatistics ={
-  total_earn: string
-  total_disburse: string
-  total_saved: string
-  total_loan: string
+  total_earn: number
+  total_disburse: number
+  total_saved: number
+  total_loan: number
   percentages: {
     earn: number
     disburse: number
@@ -28,3 +28,14 @@ export type ExpenseStatistics ={
     loan: number
   }
 }
+
+export type RecentLoan ={
+  first_name: string,
+  last_name: string
+  phone: string
+  email: string
+  amount: string
+  date: string
+  status: "pending"|"approved"|"deny"
+  purpose: "Business"
+}[]

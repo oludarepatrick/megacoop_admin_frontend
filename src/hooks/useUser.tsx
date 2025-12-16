@@ -37,3 +37,25 @@ export function useToggleUserStatus() {
         }
     })
 }
+
+export function useSystemPermissions() {
+    return useQuery({
+        queryKey: ["system-permissions"],
+        queryFn: () => userAPI.getSystemPermissions()
+    })
+}
+
+export function useAssignPermission(){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({id, data}: {id:number, data: {permission_ids:number[]}}) => userAPI.assignPermission(id, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey:["user-admin-list"]})
+            console.log("permissions assigned successfully")
+        },
+        onError: (error) => {
+            console.log("failed")
+            toast.error(error.message)
+        }
+    })
+}

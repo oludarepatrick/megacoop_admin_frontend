@@ -66,7 +66,7 @@ const ProductListTable = ({ products, onClick, isLoading, isError, onOpenForm }:
                     <TableHead>Available Stock</TableHead>
                     <TableHead>Date Created</TableHead>
                     <TableHead className="text-megagreen">Status</TableHead>
-                    <TableHead>Action</TableHead>
+                    <TableHead className="">Action</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className="">

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { X, ShieldCheck, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart } from "lucide-react";
+import { X, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
-import helpIcon from "../../assets/help-icon.svg"
+// import helpIcon from "../../assets/help-icon.svg"
 import { Switch } from "../ui/switch";
 import { useThemeStore } from "@/store/themeStore";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -214,7 +214,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                 </Collapsible>
 
                 <hr className="my-6 border-white/20" />
-
+{/* 
                 <div className="flex items-center gap-3 px-3 text-white hover:bg-white/10 rounded-lg cursor-pointer">
                     <ShieldCheck className="w-5 h-5" />
                     Security
@@ -223,7 +223,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                 <div className="flex items-center gap-3 px-3 text-white hover:bg-white/10 rounded-lg cursor-pointer">
                     <img src={helpIcon} alt="" aria-hidden="true" className="w-5 h-5" />
                     Help
-                </div>
+                </div> */}
 
                 <div className="flex items-center justify-between px-3 ">
                     <div className="flex items-center gap-3">

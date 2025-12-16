@@ -1,5 +1,5 @@
 import axios from "@/lib/axiosInstance";
-import type { UserFormValues, UserResponse } from "@/types/User";
+import type { SystemPermissions, UserFormValues, UserResponse } from "@/types/User";
 
 export const userAPI = {
   getSubAdmin: async () : Promise<UserResponse> => {
@@ -16,6 +16,14 @@ export const userAPI = {
     const response = await axios.patch(`/admin/management/sub-admins/${id}/toggle-status`);
     return response.data;
 
+  },
+  getSystemPermissions: async(): Promise<SystemPermissions[]> => {
+    const response = await axios.get("/admin/management/permissions")
+    return response.data.data
+  },
+  assignPermission: async (id:number, data: {permission_ids:number[]}) => {
+    const response = await axios.post(`/admin/management/sub-admins/${id}/permissions`, data)
+    return response.data
   }
 }
 

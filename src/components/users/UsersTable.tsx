@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 // import Link from "next/link"
-import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import type { User, UserResponse } from "@/types/User";
 import { Card } from "../ui/card";
@@ -33,6 +32,8 @@ interface UsersTableProps {
   data?: UserResponse;
   isLoading: boolean;
   isError: boolean;
+  error?: string
+  onClick: (user: User) => void
 }
 
 export function UsersTable({
@@ -46,8 +47,10 @@ export function UsersTable({
   userList,
   isLoading,
   isError,
+  error,
+  onClick
+
 }: UsersTableProps) {
-  const navigate = useNavigate();
   const [pendingId, setPendingId] = useState<number | null>(null)
 
   // ✅ FILTER DATA BASED ON ACTIVE TAB
@@ -88,7 +91,7 @@ export function UsersTable({
       <Card className="p-0 px-4 pb-2 border-0 shadow-none">
         <div className="flex flex-col justify-center items-center py-12">
           <p className="font-medium text-red-500 mb-2">
-            Error fetching Withdrawal History
+            {error == "Request failed with status code 403" ? "You don't have permission to view sub-admins" : "Error fetching user admin list"}
           </p>
           <p className="text-sm text-muted-foreground">
             Please try again later
@@ -193,7 +196,8 @@ export function UsersTable({
                   </TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => navigate(`/admin/users/${user.id}`)}
+                      // onClick={() => navigate(`/admin/users/${user.id}`)}
+                      onClick={() => onClick(user)}
                       variant="outline"
                       className="border border-megagreen text-megagreen py-[6px] px-4 h-auto rounded-full text-xs font-medium hover:bg-megagreen hover:text-white transition-all"
                     >
