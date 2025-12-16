@@ -60,6 +60,7 @@ const EditProductModal = ({isOpen, onClose, product, onSubmit, isPending }: Edit
             // maxImages: 3,
             setValue,
             fieldName: "images",
+            initialImages: product.images || []
         });
 
     const handleFormSubmit= (data:EditProductFormData) => {

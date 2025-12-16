@@ -15,33 +15,33 @@ import { LoaderIcon } from "@/components/PageLoader";
 
 
 
-const transactions = [
-  {
-    id: "TXN123456",
-    FirstName: "Frank",
-    LastName: "Junior",
-    Email: "frankJ@gmail.com",
-    phone: "090 1234 5678",
-    amount: "N800.09",
-    date: "28 Oct 12:20PM",
-    status: "Approved"
-  },
-  {
-    id: "TXN654321",
-    FirstName: "Kylian",
-    LastName: "Mbappe",
-    Email: "kylianm@gmail.com",
-    phone: "080 1234 5678",
-    amount: "N750.00",
-    date: "15 Mar 09:15AM",
-    status: " Denied"
-  },
+// const transactions = [
+//   {
+//     id: "TXN123456",
+//     FirstName: "Frank",
+//     LastName: "Junior",
+//     Email: "frankJ@gmail.com",
+//     phone: "090 1234 5678",
+//     amount: "N800.09",
+//     date: "28 Oct 12:20PM",
+//     status: "Approved"
+//   },
+//   {
+//     id: "TXN654321",
+//     FirstName: "Kylian",
+//     LastName: "Mbappe",
+//     Email: "kylianm@gmail.com",
+//     phone: "080 1234 5678",
+//     amount: "N750.00",
+//     date: "15 Mar 09:15AM",
+//     status: " Denied"
+//   },
   
-]
+// ]
 
 const DashboardTransation= () => {
-    const {data = [], isLoading, isError, error} = useLoanDeal(10)
-    console.log(data, error)
+    const {data: transactions = [], isLoading, isError, error} = useLoanDeal(10)
+    console.log(transactions, error)
     
     return (
         // <section className="">
@@ -50,7 +50,7 @@ const DashboardTransation= () => {
                 <CardTitle className="text-xl font-semibold">Recent Loan Deals</CardTitle>
                 <div className="flex gap-4 items-center">
                     
-                    <Link to="/transactions" className="text-footertext text-sm hover:text-megagreen ">See All</Link>
+                    <Link to="/loan" className="text-footertext text-sm hover:text-megagreen ">See All</Link>
                 </div>
             </CardHeader>
             <div className="overflow-x-auto green-scrollbar border rounded-lg shadow-sm p-3 pb-0">
@@ -66,7 +66,7 @@ const DashboardTransation= () => {
                         </p>
                     </div>
                 )}
-                {!isLoading && !isError && data.length === 0 && (
+                {!isLoading && !isError && transactions.length === 0 && (
                     <div className="flex flex-col justify-center items-center py-4">
                         <img src={emptyBox} alt="" />
                         <p className="font-medium text-muted-foreground">
@@ -75,7 +75,7 @@ const DashboardTransation= () => {
                     </div>
                 )}
 
-                {!isLoading && !isError && data.length > 0 && (
+                {!isLoading && !isError && transactions.length > 0 && (
                     <Table>
                             <TableHeader className="[&_tr]:border-b-0 bg-muted-foreground/20">
                                 <TableRow className="bg-transparent [&_th]:text-xs ">
@@ -90,15 +90,15 @@ const DashboardTransation= () => {
                                 </TableRow>
                             </TableHeader>
                         <TableBody className="">
-                            {transactions.map((transaction) => (
-                                <TableRow key={transaction.id} className="hover:bg-transparent [&_td]:text-xs [&_td]:py-4">
-                                    <TableCell className="">{transaction.FirstName}</TableCell>
-                                    <TableCell>{transaction.LastName}</TableCell>
-                                    <TableCell>{transaction.Email}</TableCell>
+                            {transactions.slice(0, 5).map((transaction, i) => (
+                                <TableRow key={i} className="hover:bg-transparent [&_td]:text-xs [&_td]:py-4">
+                                    <TableCell className="">{transaction.first_name}</TableCell>
+                                    <TableCell>{transaction.last_name}</TableCell>
+                                    <TableCell>{transaction.email}</TableCell>
                                     <TableCell>{transaction.phone}</TableCell>
                                     <TableCell className="text-megagreen"> {transaction.amount}</TableCell>
                                     <TableCell> {transaction.date}</TableCell>
-                                    <TableCell className={transaction.status === "Approved" ? "text-megagreen" : "text-red-500"}>
+                                    <TableCell className={transaction.status === "approved" ? "text-megagreen" : "text-red-500"}>
                                         {transaction.status}
                                     </TableCell>
                                     <TableCell className=" w-[120px] cursor-pointer">

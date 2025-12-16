@@ -8,15 +8,16 @@ import { useState } from "react";
 // import type { ApproveRejectInvestment } from "@/types/investment";
 
 
-type DeclineWithdrawalModalProps = {
+type DeclineWithdrawalModalProps<T> = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data:{denied_reason: string}) => void;
+  onSubmit: (data: T) => void;
   isPending?: boolean;
   text: string
+  fieldName: keyof T
 };
 
-const DeclineWithdrawalModal = ({isOpen, onClose, onSubmit, isPending, text}: DeclineWithdrawalModalProps) => {
+const DeclineWithdrawalModal = <T extends Record<string, string>> ({isOpen, onClose, onSubmit, isPending, text, fieldName}: DeclineWithdrawalModalProps<T>) => {
     const [reason, setReason] = useState("")
     const [error, setError] = useState("")
 
@@ -26,9 +27,10 @@ const DeclineWithdrawalModal = ({isOpen, onClose, onSubmit, isPending, text}: De
             setError("This field is required")
         }
         const formData =  {
-            denied_reason: reason,
-        }
-        onSubmit?.(formData);
+            [fieldName]: reason,
+        } as T
+
+        onSubmit(formData);
 
         setReason("");
         setError("");

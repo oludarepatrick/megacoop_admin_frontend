@@ -1,12 +1,12 @@
 import axios from "@/lib/axiosInstance";
-import type { DashboardCharts, DashboardStat } from "@/types/dashboard";
+import type { DashboardCharts, DashboardStat, RecentLoan } from "@/types/dashboard";
 
 export const dashboardAPI = {
     getUserWalllet: async (): Promise<DashboardStat> => {
         const response = await axios.get("/admin/get-dashboard-stats")
         return response.data.data
     },
-    getDashboardLoan: async (limit = 10): Promise<void> => {
+    getDashboardLoan: async (limit = 10): Promise<RecentLoan> => {
         const response = await axios.get("/admin/get-recent-loan-deals", {
             params: {limit},
         })

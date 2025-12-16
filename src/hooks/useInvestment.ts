@@ -38,7 +38,6 @@ export function useApproveDeclineInvestment(){
     return useMutation({
         mutationFn: ({ id, data }: { id: number; data: ApproveRejectInvestment }) => investmentAPI.approveRejectInvestment(id, data),
         onSuccess:() => {
-            console.log("successful")
             queryClient.invalidateQueries({ queryKey: ["applications"] })
         },
         onError: (error) => {

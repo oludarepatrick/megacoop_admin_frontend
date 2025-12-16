@@ -33,6 +33,7 @@ type KYCDeclineModalProps = {
 
 const allReasons = [
   "Incorrect BVN Detail",
+  "Incorrect NIN Detail",
   "Invalid Proof of Address",
   "Invalid ID Card",
   "Blurry Document Upload",

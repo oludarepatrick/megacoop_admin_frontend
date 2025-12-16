@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader } from "@/compon
 import { Button } from "@/components/ui/button"
 import warningIcon from "@/assets/warning-icon.png"
 import { Loader2 } from "lucide-react"
+import type { ReactNode } from "react"
 
 
 type ConfirmModalProps ={
@@ -9,7 +10,7 @@ type ConfirmModalProps ={
     onProceed?: () => void
     isPending: boolean
     isOpen: boolean
-    text: string
+    text: ReactNode
 }
 
 const ConfirmModal = ({isOpen, isPending, onClose, onProceed, text}: ConfirmModalProps) => {
@@ -19,7 +20,7 @@ const ConfirmModal = ({isOpen, isPending, onClose, onProceed, text}: ConfirmModa
                 <DialogHeader className="items-center text-center" >
                     <img src={warningIcon} alt="error-image" className="mx-auto h-14 w-14 mb-2"/>
                     <DialogDescription className="text-center font-semibold text-green-900">
-                        Are you sure you want to <br/>Approve this {text}
+                        {text}
                     </DialogDescription>
                 </DialogHeader>
                     <div className="flex justify-center gap-8 ">

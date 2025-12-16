@@ -10,13 +10,14 @@ const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
+const ProfilePage = lazy(() => import("./pages/Profile"));
 const UsersPage = lazy(() => import("./pages/Users"));
 const Investments = lazy(() => import("./pages/Investments"));
 const InvestTransaction = lazy(() => import("./pages/InvestTransaction"));
 const Transactions = lazy(() => import("./pages/Transactions"));
 const Withdrawal = lazy(() => import("./pages/Withdrawal"));
 const InvestmentList = lazy(() => import("./pages/InvestmentList"));
-const LoanPage = lazy(() => import("./pages/Loan"));
+const LoanPage = lazy(() => import("./pages/LoanPage"));
 const ROIPage = lazy(() => import("./pages/ROIPage"));
 const ROIDetailPage = lazy(() => import("./pages/ROIDetailPage"));
 const ProductListing = lazy(() => import("./pages/ProductListing"));
@@ -79,6 +80,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <KYCPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "profile", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ProfilePage />
           </Suspense>
         )
       },

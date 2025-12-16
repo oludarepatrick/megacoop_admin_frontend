@@ -41,3 +41,29 @@ export function useUpdateProduct(onSuccess:()=>void){
         }
     })
 }
+export function useDeleteProduct(){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: number) => productAPI.deleteProduct(id),
+        onSuccess: () => {
+            console.log("product deleted successfully");
+            queryClient.invalidateQueries({queryKey: ["products"]});
+        },
+        onError: (error)=> {
+            toast.error("failed to delete product. Try again");
+            console.log("failed", error)
+        }
+    })
+}
+export function useProductNotification(){
+    return useMutation({
+        mutationFn: (id: number) => productAPI.notifyUser(id),
+        onSuccess: () => {
+            toast.success("Notifications sent successfully")
+        },
+        onError: (error)=> {
+            toast.error("failed to send notification product. Try again");
+            console.log("failed", error)
+        }
+    })
+}

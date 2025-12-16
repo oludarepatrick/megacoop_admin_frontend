@@ -132,7 +132,7 @@ const InvestmentDetailModal = ({isOpen, onClose, application}: InvestmentDetailM
                 onClose={()=> setIsConfirmModalOpen(false)}
                 onProceed={handleApproveInvestment}
                 isPending={isPending}
-                text="Investment"
+                text={<>Are you sure you want to <br/> Approve this Investment</>}
             />
 
             <DeclineModal

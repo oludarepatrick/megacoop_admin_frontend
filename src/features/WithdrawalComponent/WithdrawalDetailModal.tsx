@@ -58,7 +58,7 @@ const WithdrawalDetailModal = ({isOpen, onClose, transactions}: WithdrawalDetail
         }, {
             onSuccess: () => {
                 toast.success("Withdrawal denied successfully");
-                setIsConfirmModalOpen(false);
+                setIsDeclineModalOpen(false);
                 onClose();
             },
             onError: () => {
@@ -160,6 +160,7 @@ const WithdrawalDetailModal = ({isOpen, onClose, transactions}: WithdrawalDetail
                 onSubmit={handleDenyWithdrawal}
                 isPending={isDenying}
                 text="Withdrawal"
+                fieldName="denied_reason"
             />
 
         </Dialog>

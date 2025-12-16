@@ -12,7 +12,7 @@ export interface User {
   status: number
   status_text: "Active" | "Inactive"
   avatar?: string
-  permisions: string[]
+  permissions: {id: number, name: string, slug:string}[]
 }
 
 export interface UserResponse {
@@ -38,6 +38,15 @@ export interface CreateUserInput {
   email: string
   phone: string
   role: string
+}
+
+export type SystemPermissions= {
+  id: number
+  name: string
+  slug: string
+  description: string
+  created_at: string | null
+
 }
 
 

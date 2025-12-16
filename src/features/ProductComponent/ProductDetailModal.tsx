@@ -1,5 +1,10 @@
+import { Button } from "@/components/ui/button";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from "@/components/ui/dialog"
 import type { ProductList } from "@/types/product";
+import ConfirmModal from "../InvestmentComponent/ConfirmModal";
+import { useState } from "react";
+import { Bell } from "lucide-react";
+import { useDeleteProduct, useProductNotification } from "@/hooks/useProduct";
 
 
 type ProductDetailModalProps = {
@@ -9,6 +14,27 @@ type ProductDetailModalProps = {
 }
 
 const ProductDetailModal = ({isOpen, onClose, product}: ProductDetailModalProps) => {
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+    const {mutate, isPending} = useDeleteProduct();
+    const {mutate:notifyUser, isPending:isSending} = useProductNotification();
+
+    const handleDeleteProduct =() => {
+        mutate(product.product_id,
+        {
+            onSuccess:() => {
+                setIsConfirmModalOpen(false)
+                onClose()
+            },
+        })
+    }
+    const handleSendNotification =() => {
+        notifyUser(product.product_id,{
+            onSuccess: () =>{
+                onClose()
+            }
+        })
+    }
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
@@ -70,8 +96,26 @@ const ProductDetailModal = ({isOpen, onClose, product}: ProductDetailModalProps)
                 <DialogFooter className="sm:flex-col flex-col text-center text-sm px-4">
                     <h4 className="text-megagreen font-semibold ">Description</h4>
                     <p>{product.full_description}</p>
+                    <div className="flex gap-4 justify-center flex-wrap pt-4">
+                        <Button className="bg-red-500 hover:bg-red/80" onClick={()=>setIsConfirmModalOpen(true)} >Delete Product</Button>
+                        <Button className="bg-megaorange hover:bg-megaorange/80"
+                            onClick={handleSendNotification}
+                            disabled={isSending}
+                        > 
+                            <Bell/> 
+                            Notify User
+                        </Button>
+                    </div>
                 </DialogFooter>
             </DialogContent>
+
+            <ConfirmModal
+                isOpen={isConfirmModalOpen}
+                onClose={()=> setIsConfirmModalOpen(false)}
+                onProceed={handleDeleteProduct}
+                isPending={isPending}
+                text={<>Are you sure you want to <br/> Delete this Product</>}
+            />
 
         </Dialog>
     )
