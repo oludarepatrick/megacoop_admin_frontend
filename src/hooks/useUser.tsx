@@ -59,3 +59,25 @@ export function useAssignPermission(){
         }
     })
 }
+
+export function useUsersSummary(){
+    return useQuery({
+        queryKey: ["users-summary"],
+        queryFn: () => userAPI.getUsersSummary()
+    })
+}
+
+export function useAllUsers(page: number){
+    return useQuery({
+        queryKey: ["all-users", page],
+        queryFn: () => userAPI.getAllUsers(page)
+    })
+}
+
+export function useSingleUserHistory(id: string) {
+    return useQuery({
+        queryKey: ["user-history", id],
+        queryFn: () => userAPI.getSingleUserHistory(id),
+        enabled: !!id,
+    })
+}

@@ -13,7 +13,7 @@ export type Loan = {
     total_payback: string
     next_repayment_date: string
     no_of_payments: number
-    status: "pending"|"approved"|"deny"
+    status: "pending"|"approved"|"denied"
     guarantor_approval_status: string
     purpose: string
     admin_remarks: string | null

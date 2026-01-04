@@ -2,7 +2,6 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
-// import ROIDetailView from "./features/ROIComponent/ROIDetailView";
 // import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
@@ -21,6 +20,11 @@ const LoanPage = lazy(() => import("./pages/LoanPage"));
 const ROIPage = lazy(() => import("./pages/ROIPage"));
 const ROIDetailPage = lazy(() => import("./pages/ROIDetailPage"));
 const ProductListing = lazy(() => import("./pages/ProductListing"));
+const OrderPage = lazy(() => import("./pages/Order"));
+const BuyOnCredit = lazy(() => import("./pages/BuyOnCredit"));
+const UserViewPage = lazy(() => import("./pages/UserViewPage"));
+const UserProfileDetailPage = lazy(() => import("./pages/UserProfileDetailPage")) ;
+const ReportPage = lazy(() => import("./pages/Report")) ;
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 export const routes = createBrowserRouter([
@@ -108,6 +112,22 @@ export const routes = createBrowserRouter([
         )
       },
       {
+        path: "orders", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <OrderPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "buy-on-credit", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <BuyOnCredit />
+          </Suspense>
+        )
+      },
+      {
         path: "transactions", 
         element: (
           <Suspense fallback={<PageLoader />}>
@@ -168,6 +188,30 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <ROIDetailPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "all-users", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <UserViewPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "all-users/:userId", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <UserProfileDetailPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "report", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ReportPage />
           </Suspense>
         )
       },

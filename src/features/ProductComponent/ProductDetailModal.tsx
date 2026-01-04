@@ -85,7 +85,19 @@ const ProductDetailModal = ({isOpen, onClose, product}: ProductDetailModalProps)
                         </div>
                         <div>
                             <h4>Color:</h4>
-                            <span className="font-medium text-megagreen">{product?.color || "Nil"}</span>
+                            <div className="flex items-center gap-2">
+                                {product?.color ? (
+                                    <>
+                                        <span 
+                                            className="w-6 h-6 rounded border border-gray-300 shadow-sm"
+                                            style={{ backgroundColor: product.color }}
+                                        />
+                                        <span className="font-medium text-megagreen">{product.color}</span>
+                                    </>
+                                ) : (
+                                    <span className="font-medium text-megagreen">Nil</span>
+                                )}
+                            </div>
                         </div>
                         <div>
                             <h4>Product Status:</h4>

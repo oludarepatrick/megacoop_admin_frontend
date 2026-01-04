@@ -54,7 +54,7 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
             <Card className="p-0 px-4 pb-2 border-0 shadow-none">
                 <div className="flex flex-col justify-center items-center py-12">
                     <p className="font-medium text-red-500 mb-2">
-                        Error fetching Withdrawal History
+                        Error fetching ROI History
                     </p>
                     <p className="text-sm text-muted-foreground">
                         Please try again later
@@ -70,8 +70,8 @@ const ROITable = ({transactions, onClick, isLoading, isError}: ROITableProps) =>
             <Card className="p-0 px-4 pb-2 border-0 shadow-none">
                 <div className="flex justify-center items-center py-12 text-muted-foreground">
                     <div className="text-center">
-                        <p className="font-medium mb-1">No withdrawals found</p>
-                        <p className="text-sm">There are no transactions in this category yet.</p>
+                        <p className="font-medium mb-1">No ROI List found</p>
+                        <p className="text-sm">There are no roi in this category yet.</p>
                     </div>
                 </div>
             </Card>
