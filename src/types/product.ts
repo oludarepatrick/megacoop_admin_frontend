@@ -32,9 +32,42 @@ export type ProductList = {
     }
 }
 
+export type CreditList = {
+    id: number
+    user_id: number
+    product_id: number
+    product_name: string
+    product_price: string
+    repayment_months: number
+    interest_amount: string
+    monthly_due: string
+    balance: string
+    price: string
+    status: "ongoing" | "completed"
+    created_at: string
+    user: {
+        first_name: string
+        middle_name: string
+        last_name: string
+        email: string
+        phone: string
+    }
+    meta: {
+      total_payable: string
+    }
+}
+
 export type ProductListResponse = {
   current_page: number
   data: ProductList[]
+  last_page: number
+  per_page: number
+  total: number,
+}
+
+export type CreditListResponse = {
+  current_page: number
+  data: CreditList[]
   last_page: number
   per_page: number
   total: number,

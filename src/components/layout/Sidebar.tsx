@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { X, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart } from "lucide-react";
+import { X, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart, ShoppingBasket, ChartPie } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
@@ -84,6 +84,11 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                         <NavLink to="kyc" className={activeClass} onClick={onClose} >
                             <UserRoundCheck className="w-5 h-5" />
                             KYC Verification
+                        </NavLink>
+
+                        <NavLink to="all-users" className={activeClass} onClick={onClose} >
+                            <Users className="w-5 h-5" />
+                            Users Profile
                         </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
@@ -210,8 +215,16 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             <ShoppingCart className="w-5 h-5" />
                             Orders
                         </NavLink>
+                        <NavLink to="buy-on-credit" className={activeClass} onClick={onClose}>
+                            <ShoppingBasket className="w-5 h-5" />
+                            Buy on Credit
+                        </NavLink>
                     </CollapsibleContent>
                 </Collapsible>
+                <NavLink to="report" className={activeClass} onClick={onClose}>
+                    <ChartPie className="w-5 h-5" />
+                    Report
+                </NavLink>
 
                 <hr className="my-6 border-white/20" />
 {/* 
