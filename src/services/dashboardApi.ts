@@ -13,7 +13,7 @@ export const dashboardAPI = {
         return response.data.data
     },
     getDashboardStats: async (): Promise<DashboardCharts> => {
-        const response = await axios.get("/admin/get-dashboard-dummy");
+        const response = await axios.get("/admin/get-dashboard");
         return response.data.data
     }
 

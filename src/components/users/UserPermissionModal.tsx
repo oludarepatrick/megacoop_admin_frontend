@@ -15,7 +15,7 @@ type UserPermissionModalProps = {
 
 const UserPermissionModal = ({isOpen, onClose, user}: UserPermissionModalProps) => {
     const [selectedPermission, setSelectedPermission] = useState<number[]>([])
-    const [removedPermissions, setRemovedPermissions] = useState<number[]>([]) // Track removed
+    const [removedPermissions, setRemovedPermissions] = useState<number[]>([]) 
 
     const {data: systemPermissions, isLoading} = useSystemPermissions()
     const {mutate: assignPermissions, isPending} = useAssignPermission()
