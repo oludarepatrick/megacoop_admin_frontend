@@ -9,6 +9,7 @@ const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPassword"));
 const AccessCodePage = lazy(() => import("./pages/auth/AccessCode"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 const KYCPage = lazy(() => import("./pages/KYC"));
+const PreRegister = lazy(() => import("./pages/PreRegisterUser"));
 const ProfilePage = lazy(() => import("./pages/Profile"));
 const UsersPage = lazy(() => import("./pages/Users"));
 const Investments = lazy(() => import("./pages/Investments"));
@@ -76,6 +77,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <AccessCodePage />
+          </Suspense>
+        )
+      },
+      {
+        path: "pre-register", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <PreRegister />
           </Suspense>
         )
       },

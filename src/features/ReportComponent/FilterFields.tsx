@@ -13,7 +13,7 @@ type FilterFieldProps = {
 const FilterField = ({onFilter, isPending} : FilterFieldProps) => {
     const [filter, setFilter] = useState<ReportFilters>({
         type: "loans",
-        year: new Date().getFullYear().toString(),
+        year: "",
         from: "",
         to: ""
     })
@@ -30,7 +30,7 @@ const FilterField = ({onFilter, isPending} : FilterFieldProps) => {
                 <Label className="text-xs">Transaction Type</Label>
                 <Select
                     disabled={isPending}
-                    value={filter.type}
+                    // value={filter.type}
                     onValueChange={(value: ReportType) => {
                         setFilter(prev => ({...prev, type: value}));
                     }}
@@ -60,7 +60,7 @@ const FilterField = ({onFilter, isPending} : FilterFieldProps) => {
                     }}
                 >
                     <SelectTrigger className="w-full px-3 py-2 border border-megagreen rounded-md focus:!outline-none focus:!ring-1 focus:!ring-megagreen focus:!shadow-lg">
-                        <SelectValue placeholder="2025" />
+                        <SelectValue placeholder="Select year" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="2024">2024</SelectItem>

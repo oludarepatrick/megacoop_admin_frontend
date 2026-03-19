@@ -28,8 +28,6 @@ const ProductListing = () => {
 
     const {data, isLoading, isError} = useProductList(currentPage)
 
-    console.log("data fetched", data)
-
     const {mutate: updateMutate, isPending} = useUpdateProduct(() => {
         setEditProduct(null)
         setSuccessModal({
