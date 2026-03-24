@@ -14,31 +14,6 @@ import { Link } from "react-router-dom";
 import { LoaderIcon } from "@/components/PageLoader";
 
 
-
-// const transactions = [
-//   {
-//     id: "TXN123456",
-//     FirstName: "Frank",
-//     LastName: "Junior",
-//     Email: "frankJ@gmail.com",
-//     phone: "090 1234 5678",
-//     amount: "N800.09",
-//     date: "28 Oct 12:20PM",
-//     status: "Approved"
-//   },
-//   {
-//     id: "TXN654321",
-//     FirstName: "Kylian",
-//     LastName: "Mbappe",
-//     Email: "kylianm@gmail.com",
-//     phone: "080 1234 5678",
-//     amount: "N750.00",
-//     date: "15 Mar 09:15AM",
-//     status: " Denied"
-//   },
-  
-// ]
-
 const DashboardTransation= () => {
     const {data: transactions = [], isLoading, isError, error} = useLoanDeal(10)
     console.log(transactions, error)
@@ -86,7 +61,7 @@ const DashboardTransation= () => {
                                     <TableHead>Amount</TableHead>
                                     <TableHead>Date</TableHead>
                                     <TableHead className="text-megagreen">Status</TableHead>
-                                    <TableHead>Details</TableHead>
+                                    {/* <TableHead>Details</TableHead> */}
                                 </TableRow>
                             </TableHeader>
                         <TableBody className="">
@@ -101,11 +76,11 @@ const DashboardTransation= () => {
                                     <TableCell className={transaction.status === "approved" ? "text-megagreen" : "text-red-500"}>
                                         {transaction.status}
                                     </TableCell>
-                                    <TableCell className=" w-[120px] cursor-pointer">
+                                    {/* <TableCell className=" w-[120px] cursor-pointer">
                                         <span className="border-megagreen border text-megagreen py-1 px-3 rounded-2xl " onClick={()=> {}}>
                                             view
                                         </span>
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
                             ))}
                         </TableBody>

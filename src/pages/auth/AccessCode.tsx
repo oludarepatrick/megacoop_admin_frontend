@@ -18,14 +18,17 @@ import { useNavigate } from "react-router-dom"
 
 
 const AccessCode = () => {
-    const {mutate, isPending, error} = useAcessCode();
     const {isOpen, formData, openModal, closeModal} = useAccessCodeModal();
     const {isSuccessOpen, openSuccessModal, closeSuccessModal} = useSuccessModal();
     const {isErrorOpen, errorMessage, openErrorModal, closeErrorModal} = useErrorModal();
     const navigate = useNavigate();
     
-    // Separate state to preserve form data for success modal
+    const {mutate, isPending, error} = useAcessCode();
     const [successFormData, setSuccessFormData] = useState<accessCodeFormData | null>(null);
+    const [successMessage, setSuccessMessage] = useState<{
+        message: string
+        code: string
+    } | null>(null)
 
     const {
         register,
@@ -43,9 +46,10 @@ const AccessCode = () => {
     const handleConfirmSubmit = () => {
         if(formData){
             mutate(formData, {
-                onSuccess: () => {
+                onSuccess: (data) => {
                     // Preserve form data for success modal before closing confirmation modal
                     setSuccessFormData(formData);
+                    setSuccessMessage({message: data.message, code: data.code})
                     closeModal();
                     openSuccessModal();
                 },
@@ -198,16 +202,7 @@ const AccessCode = () => {
                     </p>
                 </footer>
             </div>
-            {/* <div 
-                className="absolute bottom-0 right-0 w-80 h-80 z-[-1]"
-                style={{
-                    backgroundImage: `url("${elips}")`,
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'bottom right',
-                }}
-            /> */}
-
+            
             {formData && (
                 <AccessCodeConfirmationModal
                     isOpen={isOpen}
@@ -218,12 +213,13 @@ const AccessCode = () => {
                 />
             )}
 
-            {isSuccessOpen && successFormData && (
+            {isSuccessOpen && successFormData && successMessage && (
                 <SuccessModal
                     isOpen={isSuccessOpen}
                     onClose={closeSuccessModal}
                     onConfirm={handleSuccessClose}
                     formData={successFormData}
+                    successMessage={successMessage}
                 />
             )}
 

@@ -76,7 +76,7 @@ const BuyOnCreditTable = ({ products, isLoading, isError }: BuyOnCreditTableProp
                     >
                         <TableCell className="truncate max-w-40">{[product.user.first_name, product.user.last_name].join(" ")}</TableCell>
                         <TableCell className="truncate max-w-40">{product.product_name}</TableCell>
-                        <TableCell className="truncate max-w-40">{formatCurrency(Number(product.meta.total_payable))}</TableCell>
+                        <TableCell className="truncate max-w-40">{formatCurrency(Number(product.balance))}</TableCell>
                         <TableCell>{product.repayment_months}months</TableCell>
                         <TableCell className="truncate max-w-40">{formatCurrency(Number(product.monthly_due))}</TableCell>
                         <TableCell> {formatDate(product.created_at)}</TableCell>

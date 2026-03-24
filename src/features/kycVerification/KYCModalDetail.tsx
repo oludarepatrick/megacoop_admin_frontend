@@ -7,6 +7,7 @@ import { useState } from "react"
 import KYCDeclineModal from "./KYCDeclineModal"
 import { useApproveKYC, useDeclineKYC } from "@/hooks/useKYCList"
 import type { KycDeclineFormData } from "@/validations/kyc-schema"
+import { useNavigate } from "react-router-dom"
 
 
 type KYCModalDetailProps ={
@@ -20,6 +21,10 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
     const [isConfirmModalOpen, setIsConfirmModalOpen] =  useState(false)
     const [isDeclineModalOpen, setIsDeclineModalOpen] =  useState(false)
     const [selectedImage, setSelectedImage] =  useState<string |null>(null)
+
+    const navigate = useNavigate();
+
+
     const {mutate, isPending} = useApproveKYC(() =>{
          setIsConfirmModalOpen(false);
          onClose();
@@ -44,6 +49,16 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
         rejectKYC(payload)
        
     }
+
+    const handleStartMigration = () => {
+        navigate("/user-migration", {
+            state: {
+                userId: kycList.user_uuid,
+                fullName: [kycList.last_name, kycList.first_name, kycList.middle_name].join(" "),
+                email: kycList.email
+            }
+        })
+    }
    
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
@@ -51,7 +66,7 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
                 <DialogHeader className="bg-megagreen py-6 text-white">
                     <DialogTitle className="text-2xl font-semibold text-center">User KYC Details</DialogTitle>
                 </DialogHeader>
-                <div className="border-b shadow-sm pt-6 ">
+                <div className="border-b shadow-sm pt-6 text-sm ">
                     <div className="text-center px-4 flex justify-center gap-8 mb-6 sm:flex-row flex-col">
                         <div className="flex flex-col items-center gap-4">
                             <div className="sm:w-40 sm:h-40 w-30 h-30 rounded-full cursor-pointer flex flex-col items-center justify-center gap-2">
@@ -66,13 +81,25 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
                         </div>
                         <div className="flex flex-col items-center gap-4">
                             <div className="sm:w-40 sm:h-40 w-30 h-30 rounded-full cursor-pointer flex flex-col items-center justify-center gap-2">
-                                <img src={`data:image/jpeg;base64,${kycList?.nin_details?.photo}`}
+                                {/* <img src={`data:image/jpeg;base64,${kycList?.nin_details.photo}`} */}
+                                <img src={kycList?.nin_details?.photo}
                                     alt="user-kyc-uploaded-image" 
                                     className="w-full h-full object-cover rounded-full"
-                                    onClick={()=> setSelectedImage(`data:image/jpeg;base64,${kycList?.nin_details?.photo}`)}
+                                    onClick={()=> setSelectedImage(kycList?.nin_details?.photo)}
                                 />
                             </div>
                             <span className="text-megagreen text-xs font-medium">NIN Image Uploaded, Tap the Image to view</span>
+                            
+                        </div>
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="sm:w-40 sm:h-40 w-30 h-30 rounded-full cursor-pointer flex flex-col items-center justify-center gap-2">
+                                <img src={kycList?.bvn_details?.photo}
+                                    alt="user-kyc-uploaded-image" 
+                                    className="w-full h-full object-cover rounded-full"
+                                    onClick={()=> setSelectedImage(kycList?.bvn_details?.photo)}
+                                />
+                            </div>
+                            <span className="text-megagreen text-xs font-medium">BVN Image Uploaded, Tap the Image to view</span>
                             
                         </div>
                     </div>
@@ -102,14 +129,37 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
                             <p className="w-1/2">Address:</p>
                             <p className="font-semibold text-megagreen">{kycList.contact_address}</p>
                         </div>
-                        <div className="flex items-center">
-                            <p className="w-1/2">BVN:</p>
-                            <p className="font-semibold text-megaorange uppercase">{kycList.bvn_details.firstname && kycList.bvn_details.firstname ? "true" : "false"}</p>
-                        </div>
+            
+                        {kycList.bvn_details && (
+                            <>
+                                <div className="flex items-center">
+                                    <p className="w-1/2">BVN First Name:</p>
+                                    <p className="font-semibold text-megagreen">{kycList.bvn_details.firstName}</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <p className="w-1/2">BVN Last Name:</p>
+                                    <p className="font-semibold text-megagreen">{kycList.bvn_details.lastName}</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <p className="w-1/2">DOB:</p>
+                                    <p className="font-semibold text-megagreen">{kycList.bvn_details.dateOfBirth}</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <p className="w-1/2">BVN Validation:</p>
+                                    <p className={`font-semibold uppercase ${
+                                        kycList.bvn_details.allValidationPassed 
+                                            ? "text-megagreen" 
+                                            : "text-red-500"
+                                    }`}>
+                                        {kycList.bvn_details.allValidationPassed ? "Passed" : "Failed"}
+                                    </p>
+                                </div>
+                            </>
+                        )}
                         {status === "approved" && (
                             <div className="flex items-center">
                                 <p className="w-1/2">KYC Status:</p>
-                                <p className="font-semibold text-megagreen">{kycList.admin_approval_status}</p>
+                                <p className="font-semibold text-megagreen uppercase">{kycList.admin_approval_status}</p>
                             </div>
                         )}
 
@@ -144,6 +194,12 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
                             <Button className="bg-[#F4C980] text-green-800 hover:bg-[#F4C980BE]" onClick={()=> setIsDeclineModalOpen(true)}>
                                 Deactivate User KYC
                             </Button>
+                            {kycList.user_type === "old" && (
+                                <Button className="bg-megagreen text-white hover:bg-megagreen/80" onClick={handleStartMigration}>
+                                    Start Migration
+                                </Button>
+
+                            )}
                         </div>
                     )}
                     
@@ -178,8 +234,3 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
     )
 }
 export default KYCModalDetail;
-
-
-
- {/* <Button className="bg-[#F4C980] text-green-800 hover:bg-[#F4C980BE]">Deactivate User KYC</Button>
-                            <Button className="bg-[#F3E4CA] text-green-800 hover:bg-[#f3e4cabe]">Select Issue and email user <ChevronDown/> </Button> */}

@@ -3,6 +3,7 @@ import bcgImg from "@/assets/money-stack-img.png"
 import { formatDate } from "@/lib/common";
 import type { NewUserList } from "@/types/preRegisterUser";
 // import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 
 interface PreRegisterUserModalProps {
@@ -52,17 +53,14 @@ const PreRegisterUserModal = ({isOpen, onClose, users}: PreRegisterUserModalProp
                         </div>
 
                     </div>
-                    {/* <div className="">
-                        <div className="flex gap-4 mt-4 flex-wrap">
-                            <Button className="bg-megagreen hover:bg-megagreen/90" onClick={() => (true)}>
-                                Send Email
-                            </Button>
-                            <Button className="bg-[#F4C980] text-green-800 hover:bg-[#F4C980BE]" onClick={()=> (true)}>
-                                Complete Registration
-                            </Button>
-
-                        </div> 
-                    </div>                    */}
+                    <div className="">
+                        <Link to="/access-code" className=" p-2 rounded-lg text-white bg-megagreen hover:bg-megagreen/90" >
+                            Generate Access Code
+                        </Link>
+                        {/* <div className="flex gap-4 mt-4 flex-wrap">
+                           
+                        </div>  */}
+                    </div>                   
                     
             </DialogContent>
 

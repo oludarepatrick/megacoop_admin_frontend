@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useApproveLoan, useDenyLoan } from "@/hooks/useLoan";
 import { toast } from "sonner";
 import DeclineWithdrawalModal from "@/features/WithdrawalComponent/DeclineWithdrawalModal";
+import { formatCurrency } from "@/lib/utils";
 
 
 interface LoanDetailModalProps {
@@ -80,7 +81,7 @@ const LoanDetailModal = ({isOpen, onClose, loan, onSuccess}: LoanDetailModalProp
                         <h3 className="text-[#707070] font-semibold bg-[#EFE0C6] text-xs p-1 inline-block">Loan Information</h3>
                         <div>
                           <p className="text-muted-foreground">Loan Amount</p>
-                          <p className="font-medium">₦{loan.amount.toLocaleString()}</p>
+                          <p className="font-medium">{formatCurrency(Number(loan.amount))}</p>
                         </div>
                             <div>
                                 <p className="text-muted-foreground">Interest Rate</p>

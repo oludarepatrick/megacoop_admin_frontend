@@ -34,14 +34,6 @@ const LoanPage = () => {
 
     const filterbyTab = activeTab === "all" 
     ? allLoans : allLoans.filter((list) => list.status === activeTab)
-
-    // // filter by search
-    // const filteredList = searchValue ?
-    // filterbyTab.filter(loan => 
-    //     inv.company_name?.toLowerCase().includes(searchValue.toLowerCase()) ||
-    //     inv.title?.toLowerCase().includes(searchValue.toLowerCase()) ||
-    //     inv.company_type?.toLowerCase().includes(searchValue.toLowerCase())
-    // ) : filterbyTab
     
     const transactionTabs = [
         { value: "all" as const, label: "All" },

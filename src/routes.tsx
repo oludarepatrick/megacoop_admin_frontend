@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import PageLoader from "./components/PageLoader";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import UserMigration from "./pages/UserMigration";
 // import AuthProtectedRoute from "./components/layout/AuthProtectedRoute";
 
 const LoginPage = lazy(() => import("./pages/auth/Login"));
@@ -93,6 +94,14 @@ export const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <KYCPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "user-migration", 
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <UserMigration />
           </Suspense>
         )
       },

@@ -1,6 +1,7 @@
 export type KYCList = {
     kyc_uuid: string
     user_uuid: string
+    user_type: string
     first_name: string
     middle_name: string
     last_name: string
@@ -11,7 +12,12 @@ export type KYCList = {
     nin_details: NINDetails
     bvn: string
     bvn_status: string
-    bvn_details: { firstname: boolean,  lastname: boolean}
+    bvn_details: { firstName: string,  
+        lastName: string, 
+        dateOfBirth: string, 
+        allValidationPassed: boolean, 
+        photo: string
+    }
     valid_id_card: string
     valid_id_card_path: string
     contact_address: string
@@ -20,15 +26,15 @@ export type KYCList = {
     admin_approval_status: string
 }
 type NINDetails = {
-        nin: number
-        firstname: string
-        lastname: string
-        middlename: string
+        idNumber: number
+        firstName: string
+        lastName: string
+        middleName: string
         phone: string
         gender: string
         photo: string
-        birthdate: string
-        residence: {address1: string }
+        // birthdate: string
+        address: {addressLine: string }
 }
 
 export type KYCListResponse = {

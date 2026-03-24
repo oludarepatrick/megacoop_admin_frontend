@@ -37,8 +37,8 @@ const DashboardOverview = () => {
     },
     { 
         id: "4", 
-        title: "Total Savings", 
-        amount: Number(data?.total_savings), 
+        title: "Total Savings",
+        amount: data?.total_savings ? Number(data.total_savings) : undefined,
         icon: TrendingUp,
         growth: "+1.29%",
         iconbg:"bg-[#B6E2CA]/20",
@@ -53,7 +53,7 @@ const DashboardOverview = () => {
         ">
             {dataOverview.map((stat) => (
                 <Card key={stat.id} className="w-[254px] xl:w-full p-0 px-3 pt-4 snap-start shrink-0">
-                    <StatCard {...stat} />
+                    <StatCard {...stat}  />
                 </Card>
             ))}
 
