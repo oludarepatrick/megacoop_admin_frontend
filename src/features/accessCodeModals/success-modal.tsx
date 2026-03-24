@@ -14,6 +14,7 @@ type SuccessModalProps = {
   onClose: () => void
   onConfirm: () => void
   formData: accessCodeFormData
+  successMessage: { message: string, code: string}
 }
 
 export function SuccessModal({
@@ -21,6 +22,7 @@ export function SuccessModal({
   onClose,
   onConfirm,
   formData,
+  successMessage,
 }: SuccessModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -31,14 +33,21 @@ export function SuccessModal({
         <DialogHeader className="text-center">
             <DialogTitle className="text-2xl text-center font-medium">Congratulations</DialogTitle>
             <DialogDescription className="text-center text-megagreen">
-                Access Code Generated Successfully
+                {successMessage.message}
             </DialogDescription>
 
+          {successMessage.code ? (
+            <span className="text-center text-sm text-green-800">
+                Code: {successMessage.code}
+            </span>
+          ): (
           <span className="text-center text-xs text-green-800">
               And has been sent to : <span className="font-semibold text-megagreen">
                 {formData.email.replace(/(.{3})(.*)(?=@)/, "$1****")}
               </span>
           </span>
+
+          )}
         </DialogHeader>
         
           <Button

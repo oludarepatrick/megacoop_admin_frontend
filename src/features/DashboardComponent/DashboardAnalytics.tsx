@@ -12,20 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useDashboardChart } from "@/hooks/useDashboard";
 import { LoaderIcon } from "@/components/PageLoader";
 
-// const userAnalytics= [
-//     { month: "Jan", income: 40000, outcome: 30000 },
-//     { month: "Feb", income: 32000, outcome: 35000 },
-//     { month: "Mar", income: 35000, outcome: 28000 },
-//     { month: "Apr", income: 30000, outcome: 48000 },
-//     { month: "May", income: 45000, outcome: 37000 },
-//     { month: "Jun", income: 31000, outcome: 22000 },
-//     { month: "Jul", income: 50000, outcome: 34000 },
-//     { month: "Aug", income: 30000, outcome: 32000 },
-//     { month: "Sept", income: 31000, outcome: 22000 },
-//     { month: "Oct", income: 50000, outcome: 34000 },
-//     { month: "Nov", income: 30000, outcome: 32000 },
-//     { month: "Dec", income: 30000, outcome: 32000 },
-// ]
 
 const transformAnalytics =(data:{
     months: string[]
@@ -86,13 +72,10 @@ const DashboardAnalytics = () => {
                     <CustomLegend config={chartConfig} className="hidden md:flex"/>
                     <Select>
                         <SelectTrigger>
-                            <SelectValue placeholder="2025" />
+                            <SelectValue placeholder="2026" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="2025">2025</SelectItem>
-                            <SelectItem value="2024">2024</SelectItem>
-                            <SelectItem value="2023">2023</SelectItem>
-                            <SelectItem value="2021">2021</SelectItem>
+                            <SelectItem value="2026">2026</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

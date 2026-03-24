@@ -6,7 +6,7 @@ export const useAcessCode = () => {
     return useMutation({
         mutationFn: accessCodeApi,
         onSuccess: (data) => {
-            console.log("Access code generated:", data.code);
+            console.log("Access code generated:", data.code, data.message);
         },
         onError: (error: AppError) => {
             console.log("Access code generation failed:", error);

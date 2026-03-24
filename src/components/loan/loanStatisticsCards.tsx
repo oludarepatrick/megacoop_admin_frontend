@@ -1,24 +1,36 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Users, Banknote, TrendingUp, EllipsisVertical, BanknoteArrowUp, TriangleAlert } from "lucide-react"
-import { motion } from "framer-motion"
-import { LoaderIcon } from "../PageLoader"
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Users,
+  Banknote,
+  TrendingUp,
+  EllipsisVertical,
+  BanknoteArrowUp,
+  TriangleAlert,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { LoaderIcon } from "../PageLoader";
 
 interface LoanStatisticsCardsProps {
   statistics: {
-    totalApplicants: number
-    totalLoans: number
-    totalDisbursed: number
-    totalDefaulted: number
-    interestEarned: number
-  },
-  isLoading?: boolean
+    totalApplicants: number;
+    totalLoans: number;
+    totalDisbursed: number;
+    totalDefaulted: number;
+    interestEarned: number;
+  };
+  isLoading?: boolean;
 }
 
-export function LoanStatisticsCards({ statistics, isLoading }: LoanStatisticsCardsProps) {
+export function LoanStatisticsCards({
+  statistics,
+  isLoading,
+}: LoanStatisticsCardsProps) {
   const formatCurrency = (value: number) => {
-    return value?.toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-    // return `₦${(value / 1000000).toFixed(1)}M`
-  }
+    return value?.toLocaleString("en-NG", {
+      style: "currency",
+      currency: "NGN",
+    });
+  };
 
   const cards = [
     {
@@ -57,26 +69,23 @@ export function LoanStatisticsCards({ statistics, isLoading }: LoanStatisticsCar
       iconColor: "text-teal-600",
       badge: "+129%",
     },
-  ]
+  ];
 
   return (
-    
     // <div className="flex overflow-x-auto overflow-y-hidden border gap-4 scrollbar-hide w-full h-full ">
-      <div className="w-full h-full gap-4 flex overflow-y-hidden overflow-x-auto xl:overflow-visible xl:grid xl:grid-cols-5 scrollbar-hide">
-
+    <div className="w-full h-full gap-4 flex overflow-y-hidden overflow-x-auto xl:overflow-visible xl:grid xl:grid-cols-5 scrollbar-hide">
       {cards.map((card, index) => (
-            <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1, duration: 0.4 }}
-                        className="flex items-stretch justify-between flex-shrink-3"
-                        // className="flex-shrink-0 lg:flex-shrink"
-                    >
-              <Card
-                  //   className="flex-shrink-0  min-w-[280px] md:min-w-0 border border-gray-200"
-                  className=" md:min-w-[120px] max-w-[240px] rounded-2xl shadow-sm w-[240px] "
-              >
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1, duration: 0.4 }}
+          className="flex items-stretch justify-between flex-shrink-3"
+        >
+          <Card
+            //   className="flex-shrink-0  min-w-[280px] md:min-w-0 border border-gray-200"
+            className=" md:min-w-[120px] max-w-[240px] rounded-2xl shadow-sm w-[240px] "
+          >
             <CardContent className="px-2 space-y-3">
               <div className="flex items-center justify-between">
                 <div className={`${card.bgColor} rounded-full p-3 w-fit`}>
@@ -86,8 +95,14 @@ export function LoanStatisticsCards({ statistics, isLoading }: LoanStatisticsCar
               </div>
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs md:text-sm text-gray-600 font-medium">{card.title}</p>
-                  {card.badge && <span className="text-xs font-semibold text-green-600">{card.badge}</span>}
+                  <p className="text-xs md:text-sm text-gray-600 font-medium">
+                    {card.title}
+                  </p>
+                  {card.badge && (
+                    <span className="text-xs font-semibold text-green-600">
+                      {card.badge}
+                    </span>
+                  )}
                 </div>
                 {/* <p className="text-lg md:text-xl font-bold text-gray-900">{card.value}</p> */}
                 {isLoading ? (
@@ -97,10 +112,10 @@ export function LoanStatisticsCards({ statistics, isLoading }: LoanStatisticsCar
                 )}
               </div>
             </CardContent>
-                  </Card>
-            </motion.div>
-        ))}
+          </Card>
+        </motion.div>
+      ))}
       {/* </div> */}
     </div>
-  )
+  );
 }

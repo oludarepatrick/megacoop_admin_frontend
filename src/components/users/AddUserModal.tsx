@@ -13,16 +13,12 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { createUser } from "@/services/UserService"
 import { userSchema, type UserFormValues } from "@/types/User"
 import { useCreateUserAdmin } from "@/hooks/useUser";
-// import { PlusCircle } from "lucide-react";
 
 
 type AddUserModalProps ={
@@ -77,7 +73,7 @@ export function AddUserModal({isOpen, onClose, onSuccess}: AddUserModalProps) {
       >
         <DialogHeader className="flex flex-col items-center pt-6">
           <DialogTitle>Add New User Form Wizard</DialogTitle>
-          <DialogDescription className="text-center font-semibold text-megagreen w-[200px]">Input the correct user information below</DialogDescription>
+          <DialogDescription className="text-center font-medium pb-4 text-megagreen">Input the correct user information below</DialogDescription>
         </DialogHeader>
               <Form {...usersForm}>
                   <form onSubmit={usersForm.handleSubmit(onSubmit)} className="space-y-7 w-full rounded-lg">
@@ -188,9 +184,7 @@ export function AddUserModal({isOpen, onClose, onSuccess}: AddUserModalProps) {
                       {isPending ? "Adding..." : "Save User"}
                     </Button>
                   </form>
-                  <DialogFooter>
-                    hhhh
-                  </DialogFooter>
+                  
               </Form>
               
       </DialogContent>

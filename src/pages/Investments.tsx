@@ -4,8 +4,6 @@ import InvestmenStatistic from "@/features/InvestmentComponent/InvestmentStatist
 import RecentSubscribers from "@/features/InvestmentComponent/RecentSubscribers"
 import TrendingInvestment from "@/features/InvestmentComponent/TrendingInvestment"
 import { Plus } from "lucide-react"
-// import  { useSearchParams } from "react-router-dom"
-// import InvestTransaction from "./InvestTransaction"
 import { useState } from "react"
 import InvestmentWizard from "@/features/InvestmentComponent/InvestmentWizard"
 import SuccessModal from "@/features/InvestmentComponent/SuccessModal"
@@ -13,9 +11,7 @@ import SuccessModal from "@/features/InvestmentComponent/SuccessModal"
 const Investments = () => {
     const [investmentWizardOpen, setInvestmentWizardOpen ] = useState(false)
     const [successModal, setSuccessModal] = useState(false)
-    // const [searchParams] = useSearchParams() 
-    // const currentView = searchParams.get("view") || "investment"
-
+  
     return (
         <div className="font-jakarta space-y-6">
             <div className="flex gap-6 items-center">
