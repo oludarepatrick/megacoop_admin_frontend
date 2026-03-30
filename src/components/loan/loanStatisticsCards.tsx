@@ -42,7 +42,7 @@ export function LoanStatisticsCards({
     },
     {
       title: "Total Loan",
-      value: formatCurrency(statistics?.totalLoans),
+      value: statistics?.totalLoans.toLocaleString(),
       icon: Banknote,
       bgColor: "bg-purple-100",
       iconColor: "text-purple-600",

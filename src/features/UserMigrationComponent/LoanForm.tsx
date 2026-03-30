@@ -17,7 +17,7 @@ export function LoanForm({ userId, onSuccess }: Props) {
     const form = useForm<LoanFormValues>({
         resolver: zodResolver(loanSchema),
         defaultValues: {
-            amount: "", purpose: "", term_type: "monthly",
+            amount: "", purpose: "", term_type: "month",
             interest_rate: "", monthly_repayment: "",
             total_payback: "", next_repayment_date: "",
 
@@ -101,9 +101,10 @@ export function LoanForm({ userId, onSuccess }: Props) {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem value="monthly">Monthly</SelectItem>
-                                            <SelectItem value="weekly">Weekly</SelectItem>
-                                            <SelectItem value="quarterly">Quarterly</SelectItem>
+                                            <SelectItem value="month">Month</SelectItem>
+                                            <SelectItem value="week">Week</SelectItem>
+                                            <SelectItem value="quarter">Quarter</SelectItem>
+                                            <SelectItem value="year">Year</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />

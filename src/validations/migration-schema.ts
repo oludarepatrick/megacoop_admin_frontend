@@ -30,22 +30,49 @@ export const targetSavingsSchema = z.object({
     frequency: z.enum(["daily", "weekly", "monthly"], { message: "Select frequency" }),
 })
  
+// export const loanSchema = z.object({
+//     amount: z.string()
+//         .min(1, "Amount is required")
+//         .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
+//     purpose: z.string().min(1, "Purpose is required"),
+//     term_type: z.enum(["month", "week", "quarter, year"], { message: "Select a term type" }),
+//     interest_rate: z.string()
+//         .min(1, "Amount is required")
+//         .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
+//     monthly_repayment: z.string()
+//         .min(1, "Amount is required")
+//         .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
+//     total_payback: z.string()
+//         .min(1, "Amount is required")
+//         .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
+//     next_repayment_date: z.string().min(1, "Select next repayment date"),
+// })
+
 export const loanSchema = z.object({
     amount: z.string()
         .min(1, "Amount is required")
         .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
-    purpose: z.string().min(1, "Purpose is required"),
-    term_type: z.enum(["monthly", "weekly", "quarterly"], { message: "Select a term type" }),
+    purpose: z.string().optional(),
+    term_type: z.enum(["month", "week", "quarter, year"], { message: "Select a term type" }).optional(),
     interest_rate: z.string()
-        .min(1, "Amount is required")
-        .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
+    .optional()
+    .refine(
+        val => !val || /^\d+(\.\d{1,2})?$/.test(val),
+        "Enter a valid amount"
+    ),
     monthly_repayment: z.string()
-        .min(1, "Amount is required")
-        .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
+    .optional()
+    .refine(
+        val => !val || /^\d+(\.\d{1,2})?$/.test(val),
+        "Enter a valid amount"
+    ),
     total_payback: z.string()
-        .min(1, "Amount is required")
-        .regex(/^\d+(\.\d{1,2})?$/, "Enter a valid amount"),
-    next_repayment_date: z.string().min(1, "Select next repayment date"),
+    .optional()
+    .refine(
+        val => !val || /^\d+(\.\d{1,2})?$/.test(val),
+        "Enter a valid amount"
+    ),
+    next_repayment_date: z.string().optional(),
 })
  
 export const buyOnCreditSchema =  z.object({
