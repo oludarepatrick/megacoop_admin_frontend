@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { X, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart, ShoppingBasket, ChartPie, UserRoundCog } from "lucide-react";
+import { X, LogOut, Moon, Key, UserRoundCheck, ChevronDown, ChevronRight, ArrowRightLeft, CircleDollarSign, Users, UserCog, Wallet, ArrowUpRight, ChartNoAxesCombined, ChartLine, User2Icon, ShoppingBag, BaggageClaim, ShoppingCart, ShoppingBasket, ChartPie } from "lucide-react";
 import { Button } from "../ui/button";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid } from "lucide-react";
@@ -91,10 +91,10 @@ const Sidebar = ({ onClose }: SidebarProps) => {
                             KYC Verification
                         </NavLink>
 
-                        <NavLink to="user-migration" className={activeClass} onClick={onClose} >
+                        {/* <NavLink to="user-migration" className={activeClass} onClick={onClose} >
                             <UserRoundCog className="w-5 h-5" />
                             User Migration
-                        </NavLink>
+                        </NavLink> */}
 
                         <NavLink to="all-users" className={activeClass} onClick={onClose} >
                             <Users className="w-5 h-5" />

@@ -27,7 +27,6 @@ const BuyOnCreditTable = ({ products, isLoading, isError }: BuyOnCreditTableProp
             year: "numeric",
         });
     };
-    console.log(products)
 
     if(isLoading) {
         return (

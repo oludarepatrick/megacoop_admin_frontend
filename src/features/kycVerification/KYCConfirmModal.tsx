@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import kycIcon from "@/assets/kyc-icon.svg"
 import { Loader2 } from "lucide-react"
+import { useState } from "react"
 
 type KYCConfirmModalProps ={
     onClose: () => void
@@ -50,14 +51,44 @@ type KYCImageModalProps ={
     image?: string
 }
 export const KYCImageModal = ({isOpen, onClose, image}: KYCImageModalProps) => {
+    const [zoomLevel, setZoomLevel] = useState(1)
+
+    const handleMouseWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY > 0) {
+      // Zoom out
+      setZoomLevel((prevZoom) => (prevZoom > 0.5 ? prevZoom - 0.1 : 0.5));
+    } else {
+      // Zoom in
+      setZoomLevel((prevZoom) => (prevZoom < 3 ? prevZoom + 0.1 : 3));
+    }
+  };
+
+  const handleRightClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setZoomLevel((prevZoom) => (prevZoom < 3 ? prevZoom + 0.1 : 3));
+  };
+
+  const handleLeftClick = () => {
+    setZoomLevel((prevZoom) => (prevZoom > 0.5 ? prevZoom - 0.1 : 0.5));
+  };
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent>
+            <DialogContent 
+                onWheel={handleMouseWheel}
+                onContextMenu={handleRightClick}
+                onClick={handleLeftClick}
+                
+            >
                 <DialogHeader className="items-center text-center" >
                     <DialogTitle className="mb-4 font-normal text-megagreen text-2xl">Means of Identification</DialogTitle>
                 </DialogHeader>
                 <div className="flex justify-center gap-8 mt-6 max-h-100 w-full">
-                   <img src={image} alt="" className="0bject-contain" />
+                   <img src={image} alt="" className="0bject-contain" 
+                    style={{ 
+                        transform: `scale(${zoomLevel})`,
+                        cursor: zoomLevel > 1 ? 'zoom-out' : 'zoom-in' 
+                     }}
+                   />
                 </div>
                     
             </DialogContent>
