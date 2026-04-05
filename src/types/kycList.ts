@@ -33,6 +33,7 @@ type NINDetails = {
         phone: string
         gender: string
         photo: string
+        dateOfBirth: string
         // birthdate: string
         address: {addressLine: string }
 }
