@@ -66,114 +66,128 @@ const KYCModalDetail = ({isOpen, onClose, kycList, status}: KYCModalDetailProps)
                 <DialogHeader className="bg-megagreen py-6 text-white">
                     <DialogTitle className="text-2xl font-semibold text-center">User KYC Details</DialogTitle>
                 </DialogHeader>
-                <div className="border-b shadow-sm pt-6 text-sm ">
-                    <div className="text-center px-4 flex justify-center gap-8 mb-6 sm:flex-row flex-col">
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="sm:w-40 sm:h-40 w-30 h-30 rounded-full cursor-pointer flex flex-col items-center justify-center gap-2">
-                                <img src={kycList.live_face_verification} 
-                                    alt="user-kyc-uploaded-image" 
-                                    className="w-full h-full object-cover rounded-full"
-                                    onClick={()=> setSelectedImage(kycList.live_face_verification)}
-                                />
+                <div className="border-b shadow-sm pt-6 text-sm">
+                    {/* ── Photos Row ───────────────────────────────────────── */}
+                    <div className="flex justify-center gap-6 mb-8 px-4 flex-wrap">
+                        {[
+                            { src: kycList.live_face_verification, label: "Selfie" },
+                            { src: kycList?.nin_details?.photo,    label: "NIN Photo" },
+                            { src: kycList?.bvn_details?.photo,    label: "BVN Photo" },
+                        ].map(({ src, label }) => (
+                            <div key={label} className="flex flex-col items-center gap-2">
+                                <div
+                                    className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-megagreen/20 cursor-pointer"
+                                    onClick={() => setSelectedImage(src)}
+                                >
+                                    <img src={src} alt={label} className="w-full h-full object-cover" />
+                                </div>
+                                <span className="text-megagreen text-xs font-medium text-center">{label}</span>
                             </div>
-                            <span className="text-megagreen text-xs font-medium">Selfie Uploaded, Tap the Image to view</span>
-                            
-                        </div>
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="sm:w-40 sm:h-40 w-30 h-30 rounded-full cursor-pointer flex flex-col items-center justify-center gap-2">
-                                {/* <img src={`data:image/jpeg;base64,${kycList?.nin_details.photo}`} */}
-                                <img src={kycList?.nin_details?.photo}
-                                    alt="user-kyc-uploaded-image" 
-                                    className="w-full h-full object-cover rounded-full"
-                                    onClick={()=> setSelectedImage(kycList?.nin_details?.photo)}
-                                />
-                            </div>
-                            <span className="text-megagreen text-xs font-medium">NIN Image Uploaded, Tap the Image to view</span>
-                            
-                        </div>
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="sm:w-40 sm:h-40 w-30 h-30 rounded-full cursor-pointer flex flex-col items-center justify-center gap-2">
-                                <img src={kycList?.bvn_details?.photo}
-                                    alt="user-kyc-uploaded-image" 
-                                    className="w-full h-full object-cover rounded-full"
-                                    onClick={()=> setSelectedImage(kycList?.bvn_details?.photo)}
-                                />
-                            </div>
-                            <span className="text-megagreen text-xs font-medium">BVN Image Uploaded, Tap the Image to view</span>
-                            
-                        </div>
+                        ))}
                     </div>
-                    <div className="sm:px-16 p-4 space-y-1 sm:max-w-lg">
-                        <h2 className="uppercase font-medium text-megagreen">Personal Details</h2>
-                        <div className="flex items-center">
-                            <p className="w-1/2">First Name:</p>
-                            <p className="font-semibold text-megagreen">{kycList.first_name}</p>
+
+                    {/* ── Details Grid ─────────────────────────────────────── */}
+                    <div className="px-4 sm:px-8 pb-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                        {/* Personal Details */}
+                        <div className="space-y-2">
+                            <h2 className="uppercase font-semibold text-megagreen text-xs tracking-wider border-b border-megagreen/20 pb-1 mb-3">
+                                Personal Details
+                            </h2>
+                            {[
+                                { label: "First Name",  value: kycList.first_name },
+                                { label: "Last Name",   value: kycList.last_name },
+                                { label: "Middle Name", value: kycList.middle_name },
+                                { label: "Email",       value: kycList.email },
+                                { label: "Phone",       value: kycList.phone },
+                                { label: "Address",     value: kycList.contact_address },
+                                ...(status === "approved" ? [{ label: "KYC Status", value: kycList.admin_approval_status }] : []),
+                            ].map(({ label, value }) => (
+                                <div key={label} className="flex gap-2">
+                                    <p className="text-muted-foreground w-2/5 shrink-0">{label}:</p>
+                                    <p className="font-semibold text-megagreen break-all">{value ?? "—"}</p>
+                                </div>
+                            ))}
                         </div>
-                        <div className="flex items-center">
-                            <p className="w-1/2">Last Name:</p>
-                            <p className="font-semibold text-megagreen">{kycList.last_name}</p>
-                        </div>
-                        <div className="flex items-center">
-                            <p className="w-1/2">Middle Name:</p>
-                            <p className="font-semibold text-megagreen">{kycList.middle_name}</p>
-                        </div>
-                        <div className="flex items-center">
-                            <p className="w-1/2">Email:</p>
-                            <p className="font-semibold text-megagreen">{kycList.email}</p>
-                        </div>
-                        <div className="flex items-center">
-                            <p className="w-1/2">Phone:</p>
-                            <p className="font-semibold text-megagreen">{kycList.phone}</p>
-                        </div>
-                        <div className="flex items-center">
-                            <p className="w-1/2">Address:</p>
-                            <p className="font-semibold text-megagreen">{kycList.contact_address}</p>
-                        </div>
-            
+
+                        {/* BVN Details */}
                         {kycList.bvn_details && (
-                            <>
-                                <div className="flex items-center">
-                                    <p className="w-1/2">BVN First Name:</p>
-                                    <p className="font-semibold text-megagreen">{kycList.bvn_details.firstName}</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <p className="w-1/2">BVN Last Name:</p>
-                                    <p className="font-semibold text-megagreen">{kycList.bvn_details.lastName}</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <p className="w-1/2">DOB:</p>
-                                    <p className="font-semibold text-megagreen">{kycList.bvn_details.dateOfBirth}</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <p className="w-1/2">BVN Validation:</p>
-                                    <p className={`font-semibold uppercase ${
-                                        kycList.bvn_details.allValidationPassed 
-                                            ? "text-megagreen" 
-                                            : "text-red-500"
+                            <div className="space-y-2">
+                                <h2 className="uppercase font-semibold text-megagreen text-xs tracking-wider border-b border-megagreen/20 pb-1 mb-3">
+                                    BVN Details
+                                </h2>
+                                {[
+                                    { label: "First Name", value: kycList.bvn_details.firstName },
+                                    { label: "Last Name",  value: kycList.bvn_details.lastName },
+                                    { label: "DOB",        value: kycList.bvn_details.dateOfBirth },
+                                ].map(({ label, value }) => (
+                                    <div key={label} className="flex gap-2">
+                                        <p className="text-muted-foreground w-2/5 shrink-0">{label}:</p>
+                                        <p className="font-semibold text-megagreen break-all">{value ?? "—"}</p>
+                                    </div>
+                                ))}
+                                <div className="flex gap-2">
+                                    <p className="text-muted-foreground w-2/5 shrink-0">Validation:</p>
+                                    <span className={`font-semibold text-xs px-2 py-0.5 rounded-full ${
+                                        kycList.bvn_details.allValidationPassed
+                                            ? "bg-green-100 text-megagreen"
+                                            : "bg-red-100 text-red-500"
                                     }`}>
                                         {kycList.bvn_details.allValidationPassed ? "Passed" : "Failed"}
-                                    </p>
+                                    </span>
                                 </div>
-                            </>
-                        )}
-                        {status === "approved" && (
-                            <div className="flex items-center">
-                                <p className="w-1/2">KYC Status:</p>
-                                <p className="font-semibold text-megagreen uppercase">{kycList.admin_approval_status}</p>
                             </div>
                         )}
 
-                        <h2 className="uppercase font-medium text-megagreen pt-3">Uploads</h2>
-                        <div className="flex items-center">
-                            <p className="w-1/2">ID Card Type:</p>
-                            <p className="font-semibold text-megagreen">{kycList.valid_id_card} {" "}
-                                <Button className="bg-megagreen rounded-xs " size="sm" onClick={()=> setSelectedImage(kycList.valid_id_card_path)}>View</Button>
-                            </p>
-                        </div>
-                        
-                        <div className="flex items-center">
-                            <p className="w-1/2">Proof of Address:</p>
-                            <Button className="bg-megagreen rounded-xs hover:bg-megagreen/90" size="sm" onClick={() => setSelectedImage(kycList.proof_of_address)}>View</Button>
+                        {/* NIN Details */}
+                        {kycList.nin_details && (
+                            <div className="space-y-2">
+                                <h2 className="uppercase font-semibold text-megagreen text-xs tracking-wider border-b border-megagreen/20 pb-1 mb-3">
+                                    NIN Details
+                                </h2>
+                                {[
+                                    { label: "First Name",  value: kycList.nin_details.firstName },
+                                    { label: "Last Name",   value: kycList.nin_details.lastName },
+                                    { label: "DOB",         value: kycList.nin_details.dateOfBirth },
+                                    { label: "Gender",      value: kycList.nin_details.gender },
+                                    { label: "Phone",       value: kycList.nin_details.phone },
+                                ].map(({ label, value }) => (
+                                    <div key={label} className="flex gap-2">
+                                        <p className="text-muted-foreground w-2/5 shrink-0">{label}:</p>
+                                        <p className="font-semibold text-megagreen break-all">{value ?? "—"}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Uploads */}
+                        <div className="space-y-2">
+                            <h2 className="uppercase font-semibold text-megagreen text-xs tracking-wider border-b border-megagreen/20 pb-1 mb-3">
+                                Uploads
+                            </h2>
+                            <div className="flex gap-2 items-center">
+                                <p className="text-muted-foreground w-2/5 shrink-0">ID Card:</p>
+                                <div className="flex items-center gap-2">
+                                    <p className="font-semibold text-megagreen">{kycList.valid_id_card}</p>
+                                    <Button
+                                        size="sm"
+                                        className="bg-megagreen hover:bg-megagreen/90 h-6 text-xs px-2"
+                                        onClick={() => setSelectedImage(kycList.valid_id_card_path)}
+                                    >
+                                        View
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <p className="text-muted-foreground w-2/5 shrink-0">Proof of Address:</p>
+                                <Button
+                                    size="sm"
+                                    className="bg-megagreen hover:bg-megagreen/90 h-6 text-xs px-2"
+                                    onClick={() => setSelectedImage(kycList.proof_of_address)}
+                                >
+                                    View
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

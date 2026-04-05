@@ -19,7 +19,7 @@ import {
 
 type KycDeclineFormData = {
   status: string;
-  what_failed: string;
+  what_failed: string[];
   admin_comment: string;
 };
 
@@ -32,13 +32,22 @@ type KYCDeclineModalProps = {
 };
 
 const allReasons = [
-  "Incorrect BVN Detail",
-  "Incorrect NIN Detail",
-  "Invalid Proof of Address",
-  "Invalid ID Card",
-  "Blurry Document Upload",
-  "Mismatch Between Name and ID",
+  {value:"nin", label:"Incorrect NIN Detail"},
+  {value: "bvn", label:"Incorrect BVN Detail" },
+  {value: "proof_of_address", label:"Invalid Proof of Address" },
+  {value: "valid_id_card", label:"Invalid ID Card" },
+  {value: "live_face_verification", label:"Live face verification mismatch"},
 ];
+
+
+// const allReasons = [
+//   "Incorrect BVN Detail",
+//   "Incorrect NIN Detail",
+//   "Invalid Proof of Address",
+//   "Invalid ID Card",
+//   "Blurry Document Upload",
+//   "Mismatch Between Name and ID",
+// ];
 
 const KYCDeclineModal = ({
   title,
@@ -74,7 +83,7 @@ const KYCDeclineModal = ({
 
     const formData: KycDeclineFormData = {
       status: "declined",
-      what_failed: selectedReasons.join(","),
+      what_failed: selectedReasons,
       admin_comment: adminComment,
     };
 
@@ -139,12 +148,12 @@ const KYCDeclineModal = ({
                 <DropdownMenuSeparator />
                 {allReasons.map((reason) => (
                   <DropdownMenuCheckboxItem
-                    key={reason}
-                    checked={selectedReasons.includes(reason)}
-                    onCheckedChange={() => toggleReason(reason)}
+                    key={reason.value}
+                    checked={selectedReasons.includes(reason.value)}
+                    onCheckedChange={() => toggleReason(reason.value)}
                     onSelect={(e) => e.preventDefault()}
                   >
-                    {reason}
+                    {reason.label}
                   </DropdownMenuCheckboxItem>
                 ))}
               </DropdownMenuContent>
