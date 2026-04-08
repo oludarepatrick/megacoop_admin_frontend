@@ -30,7 +30,7 @@ const StatCard= ({title, amount, icon, iconColor, iconbg}:StatProps) => {
                 <h3 className="text-muted-foreground font-semibold text-[13px]">{title}</h3>
                 <div className="flex justify-between items-center gap-2">
                     {/* <p className="text-[22px] font-bold">₦{amount.toLocaleString()}<span className="text-base">.00</span></p> */}
-                    {amount === undefined? <span className=" block animate-spin rounded-full h-4 w-4 border-b-2 border-megagreen my-2"></span> : (
+                    {amount === undefined ? <span className=" block animate-spin rounded-full h-4 w-4 border-b-2 border-megagreen my-2"></span> : (
                         <p className="text-[20px] font-bold">
                            {title === "Active Investment" || title === "Pending Investment" ? amount : (
                              <>

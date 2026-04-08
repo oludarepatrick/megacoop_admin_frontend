@@ -38,7 +38,7 @@ const DashboardOverview = () => {
     { 
         id: "4", 
         title: "Total Savings",
-        amount: data?.total_savings ? Number(data.total_savings) : undefined,
+        amount: data?.total_savings,
         icon: TrendingUp,
         growth: "+1.29%",
         iconbg:"bg-[#B6E2CA]/20",
